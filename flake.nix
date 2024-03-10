@@ -1,0 +1,78 @@
+{
+  description = "NixOS configuration";
+
+  nixConfig = { experimental-features = [ "nix-command" "flakes" ]; };
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    hardware.url = "github:NixOS/nixos-hardware/master";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # impermanence.url = "github:nix-community/impermanence";
+    sops-nix = {
+      url = "github:mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs";
+    };
+
+    firefox-gnome-theme = {
+      url = "github:rafaelmardojai/firefox-gnome-theme";
+      flake = false;
+    };
+  };
+
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+    let
+      inherit (self) outputs;
+      lib = nixpkgs.lib // home-manager.lib;
+      systems = [ "aarch64-linux" "x86_64-linux" ];
+      forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
+      pkgsFor = lib.genAttrs systems (system:
+        import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        });
+    in {
+      inherit lib;
+      nixosModules = import ./modules/nixos;
+      homeManagerModules = import ./modules/home-manager;
+
+      packages = forEachSystem (pkgs: import ./pkgs { inherit inputs pkgs; });
+
+      devShells = forEachSystem (pkgs: import ./shell.nix { inherit pkgs; });
+
+      overlays = import ./overlays { inherit inputs outputs; };
+
+      nixosConfigurations = {
+        # Main desktop
+        acrux = lib.nixosSystem {
+          modules = [ ./hosts/acrux ];
+          specialArgs = { inherit inputs outputs; };
+        };
+        # Personal laptop
+        # antares = lib.nixosSystem {
+        #   modules = [ ./hosts/antares ];
+        #   specialArgs = { inherit inputs outputs; };
+        # };
+      };
+
+      homeConfigurations = {
+        "honnip@acrux" = lib.homeManagerConfiguration {
+          modules = [ ./home/honnip/acrux.nix ];
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+        # "honnip@antares" = lib.homeManagerConfiguration {
+        #   modules = [ ./home/honnip/antares.nix ];
+        #   pkgs = pkgsFor.x86_64-linux;
+        #   extraSpecialArgs = { inherit inputs outputs; };
+        # };
+      };
+    };
+}

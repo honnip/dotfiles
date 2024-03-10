@@ -1,0 +1,28 @@
+keys:
+  # Users
+  - &users:
+    - &honnip E4DD51F7FA3FDCF1BAF6A72C576E43EF8482E415
+  - &hosts:
+    - &acrux age1k2af0z8tvnadee9zsjecz6x4u9hd38j3r2n4ayy57329uqvuz3msqkf0df
+    # - &antares agekey2
+
+creation_rules:
+  - path_regex: hosts/acrux/secrets.ya?ml$
+    key_group:
+    - age:
+      - *acrux
+      pgp:
+      - *honnip
+  # - path_regex: hosts/antares/secrets.ya?ml$
+  #   key_group:
+  #   - age:
+  #     - *antares
+  #     pgp:
+  #     - *honnip
+  - path_regex: hosts/modules/secrets.ya?ml$
+    key_groups:
+    - age:
+      - *acrux
+      # - *antares
+      pgp:
+      - *honnip
