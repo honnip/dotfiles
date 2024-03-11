@@ -6,18 +6,14 @@ stdenv.mkDerivation {
 
   inherit src;
 
-  dontConfigure = true;
   dontBuild = true;
-  doCheck = false;
 
-  installPhase = ''
-    mkdir -p $out/share/firefox-gnome-theme
-    cp -r theme/* $out/share/firefox-gnome-theme
-  '';
+  installPhase = "cp -r . $out";
 
   meta = with lib; {
     description = "GNOME theme for Firefox";
     homepage = "https://github.com/rafaelmardojai/firefox-gnome-theme";
+    license = licenses.unlicense;
     maintainers = with maintainers; [ honnip ];
     platforms = platforms.all;
   };

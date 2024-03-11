@@ -3,12 +3,20 @@
     enable = true;
     profiles.default = {
       settings = {
-        "widget.wayland.fractional-scale.enabled" = true;
         "browser.shell.checkDefaultBrowser" = false;
+        # experimental support for fractional scaling
+        "widget.wayland.fractional-scale.enabled" = true;
+        # firefox-gnome-theme
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        "svg.context-properties.content.enabled" = true;
       };
 
       userChrome = ''
-        @import "${pkgs.firefox-gnome-theme}/share/firefox-gnome-theme/gnome-theme.css";
+        @import "${pkgs.firefox-gnome-theme}/userChrome.css";
+      '';
+
+      userContent = ''
+        @import "${pkgs.firefox-gnome-theme}/userContent.css"
       '';
     };
   };
