@@ -95,7 +95,8 @@
         "hardware": "hardware",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "thunderbird-gnome-theme": "thunderbird-gnome-theme"
       }
     },
     "sops-nix": {
@@ -118,6 +119,22 @@
       "original": {
         "owner": "mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "thunderbird-gnome-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1701889124,
+        "narHash": "sha256-K+6oh7+J6RDBFkxphY/pzf0B+q5+IY54ZMKZrFSKXlc=",
+        "owner": "rafaelmardojai",
+        "repo": "thunderbird-gnome-theme",
+        "rev": "966e9dd54bd2ce9d36d51cd6af8c3bac7a764a68",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rafaelmardojai",
+        "repo": "thunderbird-gnome-theme",
         "type": "github"
       }
     }

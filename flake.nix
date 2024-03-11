@@ -25,6 +25,10 @@
       url = "github:rafaelmardojai/firefox-gnome-theme";
       flake = false;
     };
+    thunderbird-gnome-theme = {
+      url = "github:rafaelmardojai/thunderbird-gnome-theme";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
