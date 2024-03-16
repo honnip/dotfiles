@@ -7,7 +7,7 @@
     obs-studio
 
     fractal
-    tdesktop
+    paper-plane
   ];
 
   xdg.mimeApps.defaultApplications = {
