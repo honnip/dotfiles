@@ -21,7 +21,7 @@ in {
     '';
   };
 
-  home.packages = extensions ++ (with pkgs; [ wl-clipboard ]);
+  home.packages = extensions ++ (with pkgs; [ wl-clipboard-rs ]);
 
   dconf.settings = {
     "org/gnome/shell" = {
