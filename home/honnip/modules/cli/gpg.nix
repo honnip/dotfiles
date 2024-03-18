@@ -1,21 +1,16 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, ... }:
 let
   pinentry = if config.gtk.enable then {
-    packages = with pkgs; [ pinentry-gnome gcr ];
-    name = "gnome3";
+    package = pkgs.pinentry-gnome3;
   } else {
-    packages = with pkgs; [ pinentry-curses ];
-    name = "curses";
+    package = pkgs.pinentry-curses;
   };
 in {
-  home.packages = pinentry.packages;
-  # home.packages = with pkgs; [pinentry-gnome gcr];
-
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
     sshKeys = [ "2D2EE524704A372F2A78883F60512F0793EABAF5" ];
-    pinentryFlavor = pinentry.name;
+    pinentryPackage = pinentry.package;
     enableExtraSocket = true;
   };
 
