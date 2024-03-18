@@ -6,8 +6,6 @@
     ./nix.nix
     ./openssh.nix
     ./fish.nix
-    # TODO
-    # ./persistence.nix
     ./sops.nix
     ./systemd-initrd.nix
     ./tailscale.nix

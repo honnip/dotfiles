@@ -5,9 +5,6 @@ let
   hosts = outputs.nixosConfigurations;
   pubKey = host: ../../${host}/ssh_host_ed25519_key.pub;
   gitHost = hosts."acrux".config.networking.hostName;
-
-  # hasOptinPersistence = config.environment.persistence ? "/persist";
-  hasOptinPersistence = false;
 in {
   services.openssh = {
     enable = true;
@@ -20,9 +17,7 @@ in {
 
     # generate SSH host keys
     hostKeys = [{
-      path = "${
-          lib.optionalString hasOptinPersistence "/persist"
-        }/etc/ssh/ssh_host_ed25519_key";
+      path = "/etc/ssh/ssh_host_ed25519_key";
       type = "ed25519";
     }];
   };
