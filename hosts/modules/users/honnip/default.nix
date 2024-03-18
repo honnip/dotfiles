@@ -11,7 +11,7 @@ in {
       ++ ifTheyExist [ "network" "docker" "podman" "git" "libvirtd" ];
 
     openssh.authorizedKeys.keys =
-      [ (builtins.readFile ../../../../home/honnip/ssh.pub) ];
+      [ (builtins.readFile ../../../${config.networking.hostName}/ssh_host_ed25519_key.pub) (builtins.readFile ../../../../home/honnip/ssh.pub) ];
     hashedPasswordFile = config.sops.secrets.honnip-password.path;
     packages = with pkgs; [ home-manager ];
   };
