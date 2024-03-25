@@ -5,10 +5,11 @@ keys:
   - &hosts:
     - &acrux age1k2af0z8tvnadee9zsjecz6x4u9hd38j3r2n4ayy57329uqvuz3msqkf0df
     # - &antares agekey2
+    - &canopus age1jr2fxs3xxsc4dasmaw8e0crjluj77em3pk5qrn2pl20ryss6mymsq523za
 
 creation_rules:
   - path_regex: hosts/acrux/secrets.ya?ml$
-    key_group:
+    key_groups:
     - age:
       - *acrux
       pgp:
@@ -19,10 +20,17 @@ creation_rules:
   #     - *antares
   #     pgp:
   #     - *honnip
+  - path_regex: hosts/canopus/secrets.ya?ml$
+    key_groups:
+    - age:
+      - *canopus
+      pgp:
+      - *honnip
   - path_regex: hosts/modules/secrets.ya?ml$
     key_groups:
     - age:
       - *acrux
       # - *antares
+      - *canopus
       pgp:
       - *honnip

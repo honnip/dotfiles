@@ -1,0 +1,5 @@
+{
+  imports = [
+    ./adguard-home.nix
+  ];
+}

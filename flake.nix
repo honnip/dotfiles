@@ -63,6 +63,11 @@
         #   modules = [ ./hosts/antares ];
         #   specialArgs = { inherit inputs outputs; };
         # };
+        # Oracle Cloud Ampere A1 (a single core instance) in Osaka
+        canopus = lib.nixosSystem {
+          modules = [ ./hosts/canopus ];
+          specialArgs = { inherit inputs outputs; };
+        };
       };
 
       homeConfigurations = {
@@ -76,6 +81,11 @@
         #   pkgs = pkgsFor.x86_64-linux;
         #   extraSpecialArgs = { inherit inputs outputs; };
         # };
+        "honnip@canopus" = lib.homeManagerConfiguration {
+          modules = [ ./home/honnip/canopus.nix ];
+          pkgs = pkgsFor.aarch64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
       };
     };
 }
