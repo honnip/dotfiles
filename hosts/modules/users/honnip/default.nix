@@ -1,5 +1,6 @@
 { pkgs, config, ... }:
 let
+  inherit (config.networking) hostName;
   ifTheyExist = groups:
     builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in {
@@ -10,8 +11,10 @@ in {
     extraGroups = [ "wheel" "video" "audio" ]
       ++ ifTheyExist [ "network" "docker" "podman" "git" "libvirtd" ];
 
-    openssh.authorizedKeys.keys =
-      [ (builtins.readFile ../../../${config.networking.hostName}/ssh_host_ed25519_key.pub) (builtins.readFile ../../../../home/honnip/ssh.pub) ];
+    openssh.authorizedKeys.keys = [
+      (builtins.readFile ../../../${hostName}/ssh_host_ed25519_key.pub)
+      (builtins.readFile ../../../../home/honnip/ssh.pub)
+    ];
     hashedPasswordFile = config.sops.secrets.honnip-password.path;
     packages = with pkgs; [ home-manager ];
   };
