@@ -1,1 +1,1 @@
-{ imports = [ ./adguard-home.nix ]; }
+{ imports = [ ./blocky.nix ]; }
