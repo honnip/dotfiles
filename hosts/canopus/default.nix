@@ -6,6 +6,7 @@
     ../modules/users/honnip
 
     ../modules/tailscale-exit-node.nix
+    ../modules/node-exporter.nix
 
     ./services
   ];

@@ -1,1 +1,1 @@
-{ imports = [ ./blocky.nix ]; }
+{ imports = [ ./blocky.nix ./metrics.nix ]; }

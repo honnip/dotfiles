@@ -29,6 +29,8 @@
         };
         clientGroupsBlock.default = [ "ads" "tracker" "malicious" ];
       };
+      prometheus.enable = true;
+      httpPort = 4000;
     };
   };
 
