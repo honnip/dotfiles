@@ -1,7 +1,11 @@
-{
+{ config, ... }: {
   services.blocky = {
     enable = true;
     settings = {
+      ports = {
+        dns = 53;
+        http = 4000;
+      };
       upstreams.groups.default = [
         "https://dns.cloudflare.com/dns-query"
         "https://dns.google/dns-query"
@@ -30,9 +34,15 @@
         clientGroupsBlock.default = [ "ads" "tracker" "malicious" ];
       };
       prometheus.enable = true;
-      httpPort = 4000;
     };
   };
+
+  networking.firewall =
+    let inherit (config.services.blocky.settings.ports) dns http;
+    in {
+      allowedTCPPorts = [ dns http ];
+      allowedUDPPorts = [ dns ];
+    };
 
   services.tailscale.extraUpFlags = [ "--accept-dns=false" ];
 }
