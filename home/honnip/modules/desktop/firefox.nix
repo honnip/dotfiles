@@ -6,6 +6,8 @@
         "browser.shell.checkDefaultBrowser" = false;
         # experimental support for fractional scaling
         "widget.wayland.fractional-scale.enabled" = true;
+        # vaapi
+        "media.ffmpeg.vaapi.enabled" = true;
         # firefox-gnome-theme
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "svg.context-properties.content.enabled" = true;
