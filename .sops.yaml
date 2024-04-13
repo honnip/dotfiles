@@ -1,10 +1,9 @@
 keys:
-  # Users
   - &users:
     - &honnip E4DD51F7FA3FDCF1BAF6A72C576E43EF8482E415
   - &hosts:
     - &acrux age1k2af0z8tvnadee9zsjecz6x4u9hd38j3r2n4ayy57329uqvuz3msqkf0df
-    # - &antares agekey2
+    - &antares age10cyk506rm4n5ef0wh8rg53gup4uua6rr0kpnep5yge3emvvndfnqtr3m8u
     - &canopus age1jr2fxs3xxsc4dasmaw8e0crjluj77em3pk5qrn2pl20ryss6mymsq523za
 
 creation_rules:
@@ -14,12 +13,12 @@ creation_rules:
       - *acrux
       pgp:
       - *honnip
-  # - path_regex: hosts/antares/secrets.ya?ml$
-  #   key_group:
-  #   - age:
-  #     - *antares
-  #     pgp:
-  #     - *honnip
+  - path_regex: hosts/antares/secrets.ya?ml$
+    key_group:
+    - age:
+      - *antares
+      pgp:
+      - *honnip
   - path_regex: hosts/canopus/secrets.ya?ml$
     key_groups:
     - age:
@@ -30,7 +29,7 @@ creation_rules:
     key_groups:
     - age:
       - *acrux
-      # - *antares
+      - *antares
       - *canopus
       pgp:
       - *honnip

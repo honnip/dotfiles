@@ -20,7 +20,6 @@ in {
   };
 
   sops.secrets.honnip-password = {
-    sopsFile = ../../secrets.yaml;
     neededForUsers = true;
   };
 

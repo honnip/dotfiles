@@ -58,11 +58,11 @@
           modules = [ ./hosts/acrux ];
           specialArgs = { inherit inputs outputs; };
         };
-        # Personal laptop
-        # antares = lib.nixosSystem {
-        #   modules = [ ./hosts/antares ];
-        #   specialArgs = { inherit inputs outputs; };
-        # };
+        # Oracle Cloud Ampere A1 in Osaka
+        antares = lib.nixosSystem {
+          modules = [ ./hosts/antares ];
+          specialArgs = { inherit inputs outputs; };
+        };
         # Oracle Cloud Ampere A1 (a single core instance) in Osaka
         canopus = lib.nixosSystem {
           modules = [ ./hosts/canopus ];
@@ -76,11 +76,11 @@
           pkgs = pkgsFor.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
         };
-        # "honnip@antares" = lib.homeManagerConfiguration {
-        #   modules = [ ./home/honnip/antares.nix ];
-        #   pkgs = pkgsFor.x86_64-linux;
-        #   extraSpecialArgs = { inherit inputs outputs; };
-        # };
+        "honnip@antares" = lib.homeManagerConfiguration {
+          modules = [ ./home/honnip/antares.nix ];
+          pkgs = pkgsFor.aarch64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
         "honnip@canopus" = lib.homeManagerConfiguration {
           modules = [ ./home/honnip/canopus.nix ];
           pkgs = pkgsFor.aarch64-linux;
