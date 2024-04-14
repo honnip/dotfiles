@@ -11,6 +11,7 @@
     ../modules/global
     ../modules/users/honnip
 
+    ../modules/tailscale-exit-node.nix
     ../modules/quietboot.nix
     ../modules/gnome.nix
     ../modules/flatpak.nix
