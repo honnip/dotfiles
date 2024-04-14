@@ -21,6 +21,11 @@ in
               header_up X-Real-IP {remote_host}
             }
           }
+          handle_path /note/* {
+            reverse_proxy 127.0.0.1:${toString config.services.silverbullet.listenPort} {
+              header_up X-Real-IP {remote_host}
+            }
+          }
         '';
       };
     };
