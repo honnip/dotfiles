@@ -8,6 +8,8 @@
 
     fractal
     paper-plane
+
+    planify
   ];
 
   xdg.mimeApps.defaultApplications = {
