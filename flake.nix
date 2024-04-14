@@ -1,7 +1,12 @@
 {
   description = "NixOS configuration";
 
-  nixConfig = { experimental-features = [ "nix-command" "flakes" ]; };
+  nixConfig = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+  };
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -30,18 +35,30 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }@inputs:
     let
       inherit (self) outputs;
       lib = nixpkgs.lib // home-manager.lib;
-      systems = [ "aarch64-linux" "x86_64-linux" ];
+      systems = [
+        "aarch64-linux"
+        "x86_64-linux"
+      ];
       forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
-      pkgsFor = lib.genAttrs systems (system:
+      pkgsFor = lib.genAttrs systems (
+        system:
         import nixpkgs {
           inherit system;
           config.allowUnfree = true;
-        });
-    in {
+        }
+      );
+    in
+    {
       inherit lib;
       nixosModules = import ./modules/nixos;
       homeManagerModules = import ./modules/home-manager;
@@ -56,17 +73,23 @@
         # Main desktop
         acrux = lib.nixosSystem {
           modules = [ ./hosts/acrux ];
-          specialArgs = { inherit inputs outputs; };
+          specialArgs = {
+            inherit inputs outputs;
+          };
         };
         # Oracle Cloud Ampere A1 in Osaka
         antares = lib.nixosSystem {
           modules = [ ./hosts/antares ];
-          specialArgs = { inherit inputs outputs; };
+          specialArgs = {
+            inherit inputs outputs;
+          };
         };
         # Oracle Cloud Ampere A1 (a single core instance) in Osaka
         canopus = lib.nixosSystem {
           modules = [ ./hosts/canopus ];
-          specialArgs = { inherit inputs outputs; };
+          specialArgs = {
+            inherit inputs outputs;
+          };
         };
       };
 
@@ -74,17 +97,23 @@
         "honnip@acrux" = lib.homeManagerConfiguration {
           modules = [ ./home/honnip/acrux.nix ];
           pkgs = pkgsFor.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
         };
         "honnip@antares" = lib.homeManagerConfiguration {
           modules = [ ./home/honnip/antares.nix ];
           pkgs = pkgsFor.aarch64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
         };
         "honnip@canopus" = lib.homeManagerConfiguration {
           modules = [ ./home/honnip/canopus.nix ];
           pkgs = pkgsFor.aarch64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
         };
       };
     };

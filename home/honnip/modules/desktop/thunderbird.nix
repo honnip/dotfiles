@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.thunderbird = {
     enable = true;
     profiles.default = {

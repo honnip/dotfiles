@@ -1,16 +1,31 @@
-{ inputs, lib, pkgs, config, outputs, ... }: {
+{
+  inputs,
+  lib,
+  pkgs,
+  config,
+  outputs,
+  ...
+}:
+{
   imports = [
 
   ] ++ (builtins.attrValues outputs.homeManagerModules);
 
   nixpkgs = {
     overlays = builtins.attrValues outputs.overlays;
-    config = { allowUnfree = true; };
+    config = {
+      allowUnfree = true;
+    };
   };
 
   nix = {
     package = lib.mkDefault pkgs.nix;
-    settings = { experimental-features = [ "nix-command" "flakes" ]; };
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+    };
   };
 
   systemd.user.startServices = "sd-switch";

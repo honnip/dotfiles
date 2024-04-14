@@ -1,6 +1,13 @@
-{ config, lib, pkgs, ... }:
-let hasFlatpak = config.services.flatpak.enable;
-in {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  hasFlatpak = config.services.flatpak.enable;
+in
+{
   services = {
     xserver = {
       enable = true;
@@ -9,7 +16,8 @@ in {
     };
   };
 
-  environment.gnome.excludePackages = (with pkgs; [ gnome-tour ])
+  environment.gnome.excludePackages =
+    (with pkgs; [ gnome-tour ])
     ++ (with pkgs.gnome; [
       geary # email reader
       tali # pocker game
@@ -20,9 +28,9 @@ in {
       gnome-contacts
     ]);
 
-  environment.systemPackages = with pkgs.gnome;
-    [ gnome-tweaks ]
-    ++ (lib.optionals hasFlatpak [ pkgs.gnome.gnome-software ]);
+  environment.systemPackages =
+    with pkgs.gnome;
+    [ gnome-tweaks ] ++ (lib.optionals hasFlatpak [ pkgs.gnome.gnome-software ]);
 
   i18n = {
     inputMethod = {

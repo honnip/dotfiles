@@ -1,5 +1,11 @@
-{ pkgs, ... }: {
-  imports = [ ./discord.nix ./firefox.nix ./thunderbird.nix ./gnome.nix ];
+{ pkgs, ... }:
+{
+  imports = [
+    ./discord.nix
+    ./firefox.nix
+    ./thunderbird.nix
+    ./gnome.nix
+  ];
 
   home.packages = with pkgs; [
     libreoffice

@@ -1,10 +1,20 @@
-{ inputs, pkgs, ... }: {
-  imports = [ inputs.disko.nixosModules.disko ./disko.nix ];
+{ inputs, pkgs, ... }:
+{
+  imports = [
+    inputs.disko.nixosModules.disko
+    ./disko.nix
+  ];
 
   boot = {
     initrd = {
-      availableKernelModules =
-        [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
+      availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "ahci"
+        "usb_storage"
+        "usbhid"
+        "sd_mod"
+      ];
       kernelModules = [ "kvm-amd" ];
     };
     loader = {

@@ -1,4 +1,8 @@
-{ lib, stdenv, src }:
+{
+  lib,
+  stdenv,
+  src,
+}:
 
 stdenv.mkDerivation {
   pname = "firefox-gnome-theme";

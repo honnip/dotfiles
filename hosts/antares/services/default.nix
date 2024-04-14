@@ -1,1 +1,7 @@
-{ imports = [ ./caddy.nix ./freshrss.nix ./vaultwarden.nix ]; }
+{
+  imports = [
+    ./caddy.nix
+    ./freshrss.nix
+    ./vaultwarden.nix
+  ];
+}

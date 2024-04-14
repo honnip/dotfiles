@@ -1,11 +1,17 @@
-{ outputs, lib, config, ... }:
+{
+  outputs,
+  lib,
+  config,
+  ...
+}:
 
 let
   inherit (config.networking) hostName;
   hosts = outputs.nixosConfigurations;
   pubKey = host: ../../${host}/ssh_host_ed25519_key.pub;
   gitHost = hosts."acrux".config.networking.hostName;
-in {
+in
+{
   services.openssh = {
     enable = true;
     settings = {
@@ -16,16 +22,19 @@ in {
     };
 
     # generate SSH host keys
-    hostKeys = [{
-      path = "/etc/ssh/ssh_host_ed25519_key";
-      type = "ed25519";
-    }];
+    hostKeys = [
+      {
+        path = "/etc/ssh/ssh_host_ed25519_key";
+        type = "ed25519";
+      }
+    ];
   };
 
   programs.ssh = {
     knownHosts = builtins.mapAttrs (name: _: {
       publicKeyFile = pubKey name;
-      extraHostNames = (lib.optional (name == hostName) "localhost")
+      extraHostNames =
+        (lib.optional (name == hostName) "localhost")
         ++ (lib.optionals (name == gitHost) [
           "honnip.page"
           "git.honnip.page"

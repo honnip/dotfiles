@@ -12,7 +12,8 @@ let
       - targets:
         - localhost:9100
   '';
-in {
+in
+{
   services.victoriametrics = {
     enable = true;
     extraOptions = [ "-promscrape.config=${configuration}" ];

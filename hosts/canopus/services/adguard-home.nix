@@ -14,7 +14,11 @@
           "https://dns.quad9.net/dns-query"
           "1.1.1.1"
         ];
-        bootstrap_dns = [ "1.1.1.1" "8.8.8.8" "9.9.9.9" ];
+        bootstrap_dns = [
+          "1.1.1.1"
+          "8.8.8.8"
+          "9.9.9.9"
+        ];
         enable_dnssec = true;
         use_http3_upstreams = true;
       };

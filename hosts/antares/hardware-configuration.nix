@@ -1,9 +1,17 @@
-{ inputs, ... }: {
-  imports = [ inputs.disko.nixosModules.disko ./disko.nix ];
+{ inputs, ... }:
+{
+  imports = [
+    inputs.disko.nixosModules.disko
+    ./disko.nix
+  ];
 
   boot = {
-    initrd.availableKernelModules =
-      [ "xhci_pci" "virtio_pci" "virtio_scsi" "usbhid" ];
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "virtio_pci"
+      "virtio_scsi"
+      "usbhid"
+    ];
 
     # Load graphics driver in stage 1
     # initrd.kernelModules = [ "bochs_drm" ];

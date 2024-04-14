@@ -1,1 +1,6 @@
-{ imports = [ ./adguard-home.nix ./metrics.nix ]; }
+{
+  imports = [
+    ./adguard-home.nix
+    ./metrics.nix
+  ];
+}

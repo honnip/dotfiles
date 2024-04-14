@@ -1,7 +1,8 @@
 { config, ... }:
 let
   base = "${config.networking.hostName}.capybara-ide.ts.net";
-in {
+in
+{
   services = {
     caddy = {
       enable = true;

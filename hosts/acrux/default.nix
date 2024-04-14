@@ -1,4 +1,5 @@
-{ inputs, ... }: {
+{ inputs, ... }:
+{
   imports = [
     inputs.hardware.nixosModules.common-cpu-amd
     inputs.hardware.nixosModules.common-cpu-amd-pstate
@@ -19,7 +20,9 @@
     ../modules/pipewire.nix
   ];
 
-  networking = { hostName = "acrux"; };
+  networking = {
+    hostName = "acrux";
+  };
 
   system.stateVersion = "24.05";
 }

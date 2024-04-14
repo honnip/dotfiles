@@ -2,7 +2,8 @@
 let
   base = "${config.networking.hostName}.capybara-ide.ts.net";
   subpath = "/feed/";
-in {
+in
+{
   services = {
     freshrss = {
       enable = true;

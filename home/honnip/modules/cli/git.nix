@@ -1,4 +1,5 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+{
   home.packages = with pkgs; [ delta ];
 
   programs.git = {
@@ -6,27 +7,43 @@
     userName = "Honnip";
     userEmail = "me@honnip.page";
     extraConfig = {
-      init = { defaultBranch = "main"; };
+      init = {
+        defaultBranch = "main";
+      };
       gpg.program = "${config.programs.gpg.package}/bin/gpg2";
-      user = { signing.key = "576E43EF8482E415"; };
+      user = {
+        signing.key = "576E43EF8482E415";
+      };
       core = {
         editor = "hx";
         quotepath = false;
       };
-      color = { ui = "auto"; };
+      color = {
+        ui = "auto";
+      };
       commit = {
         gpgsign = true;
         verbose = true;
       };
-      push = { default = "current"; };
-      pull = { rebase = true; };
-      merge = { conflictstyle = "zdiff3"; };
-      diff = { algorithm = "histogram"; };
+      push = {
+        default = "current";
+      };
+      pull = {
+        rebase = true;
+      };
+      merge = {
+        conflictstyle = "zdiff3";
+      };
+      diff = {
+        algorithm = "histogram";
+      };
       tag = {
         gpgsign = true;
         sort = "taggerdate";
       };
-      branch = { sort = "committerdate"; };
+      branch = {
+        sort = "committerdate";
+      };
 
       # autocorrect typo
       help.autocorrect = "immediate";
@@ -50,6 +67,9 @@
       };
     };
     difftastic.enable = true;
-    ignores = [ ".direnv" "result" ];
+    ignores = [
+      ".direnv"
+      "result"
+    ];
   };
 }

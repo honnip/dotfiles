@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   imports = [
     ./bat.nix
     ./direnv.nix
@@ -16,8 +17,10 @@
     eza
 
     nil
-    nixfmt
+    nixfmt-rfc-style
   ];
 
-  systemd.user.sessionVariables = { COLORTERM = "truecolor"; };
+  systemd.user.sessionVariables = {
+    COLORTERM = "truecolor";
+  };
 }

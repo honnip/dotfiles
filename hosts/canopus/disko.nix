@@ -26,14 +26,19 @@
               # Subvolumes must set a mountpoint in order to be mounted,
               # unless their parent is mounted
               subvolumes = {
-                "/rootfs" = { mountpoint = "/"; };
+                "/rootfs" = {
+                  mountpoint = "/";
+                };
                 "/home" = {
                   mountpoint = "/home";
                   mountOptions = [ "compress=zstd" ];
                 };
                 "/nix" = {
                   mountpoint = "/nix";
-                  mountOptions = [ "compress=zstd" "noatime" ];
+                  mountOptions = [
+                    "compress=zstd"
+                    "noatime"
+                  ];
                 };
                 "/swap" = {
                   mountpoint = "/swap";
