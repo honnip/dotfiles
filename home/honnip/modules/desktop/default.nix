@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
+    ./spotify.nix
     ./discord.nix
     ./firefox.nix
     ./thunderbird.nix

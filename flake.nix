@@ -33,6 +33,11 @@
       url = "github:rafaelmardojai/thunderbird-gnome-theme";
       flake = false;
     };
+
+    spicetify-nix = {
+      url = "github:honnip/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
