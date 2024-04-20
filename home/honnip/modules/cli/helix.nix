@@ -1,8 +1,11 @@
+{ lib, pkgs, ... }:
 {
   programs.helix = {
     enable = true;
+    defaultEditor = true;
     settings = {
       editor = {
+        line-number = "relative";
         lsp.display-inlay-hints = true;
         color-modes = true;
         indent-guides.render = true;
@@ -30,9 +33,22 @@
         ];
       };
     };
-  };
-
-  systemd.user.sessionVariables = {
-    EDITOR = "hx";
+    languages = {
+      language-server = {
+        nil = {
+          command = lib.getExe pkgs.nil;
+        };
+      };
+      language = [
+        {
+          name = "nix";
+          auto-format = true;
+          language-servers = [ "nil" ];
+          formatter = {
+            command = lib.getExe pkgs.nixfmt-rfc-style;
+          };
+        }
+      ];
+    };
   };
 }

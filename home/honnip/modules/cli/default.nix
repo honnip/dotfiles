@@ -15,9 +15,6 @@
     fd
     jq
     eza
-
-    nil
-    nixfmt-rfc-style
   ];
 
   systemd.user.sessionVariables = {
