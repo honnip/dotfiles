@@ -35,15 +35,15 @@
     };
     languages = {
       language-server = {
-        nil = {
-          command = lib.getExe pkgs.nil;
+        nixd = {
+          command = lib.getExe pkgs.nixd;
         };
       };
       language = [
         {
           name = "nix";
           auto-format = true;
-          language-servers = [ "nil" ];
+          language-servers = [ "nixd" ];
           formatter = {
             command = lib.getExe pkgs.nixfmt-rfc-style;
           };
