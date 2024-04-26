@@ -9,7 +9,6 @@ let
   inherit (config.networking) hostName;
   hosts = outputs.nixosConfigurations;
   pubKey = host: ../../${host}/ssh_host_ed25519_key.pub;
-  gitHost = hosts."acrux".config.networking.hostName;
 in
 {
   services.openssh = {
@@ -33,12 +32,7 @@ in
   programs.ssh = {
     knownHosts = builtins.mapAttrs (name: _: {
       publicKeyFile = pubKey name;
-      extraHostNames =
-        (lib.optional (name == hostName) "localhost")
-        ++ (lib.optionals (name == gitHost) [
-          "honnip.page"
-          "git.honnip.page"
-        ]);
+      extraHostNames = (lib.optional (name == hostName) "localhost");
     }) hosts;
   };
 
