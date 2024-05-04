@@ -69,6 +69,7 @@
     difftastic.enable = true;
     ignores = [
       ".direnv"
+      ".envrc"
       "result"
     ];
   };
