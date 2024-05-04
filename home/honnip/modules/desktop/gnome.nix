@@ -7,7 +7,6 @@ let
     dock-from-dash
     just-perfection
     pano
-    rounded-window-corners
     smile-complementary-extension
     tailscale-qs
   ];
