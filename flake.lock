@@ -36,6 +36,22 @@
         "type": "github"
       }
     },
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1696426674,
+        "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
     "hardware": {
       "locked": {
         "lastModified": 1713864415,
@@ -125,20 +141,21 @@
     },
     "spicetify-nix": {
       "inputs": {
+        "flake-compat": "flake-compat",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1713983622,
-        "narHash": "sha256-eCmC3M7pzWZb3KorfN1RegxMFzUqQZtXxZ86lY5BCdM=",
-        "owner": "honnip",
+        "lastModified": 1715055125,
+        "narHash": "sha256-2Nf97yL8kMChwqpfqI7NFBlK7MLdNPbgD80YA71I3Tw=",
+        "owner": "Gerg-L",
         "repo": "spicetify-nix",
-        "rev": "cb806aeda2b9678483e6bdb58c3f8e7f85e86fee",
+        "rev": "d93ad47ce746b90a62c857afc996cb68e433832b",
         "type": "github"
       },
       "original": {
-        "owner": "honnip",
+        "owner": "Gerg-L",
         "repo": "spicetify-nix",
         "type": "github"
       }
