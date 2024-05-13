@@ -9,14 +9,17 @@
   ];
 
   home.packages = with pkgs; [
-    libreoffice
-
     obs-studio
 
     fractal
     paper-plane
 
+    libreoffice
     planify
+    varia
+    obsidian
+
+    vscode
   ];
 
   xdg.mimeApps.defaultApplications = {
