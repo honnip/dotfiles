@@ -29,7 +29,10 @@ in
       enabled-extensions = builtins.map (x: x.extensionUuid) extensions;
     };
     "org/gnome/mutter" = {
-      "experimental-features" = [ "scale-monitor-framebuffer" ];
+      "experimental-features" = [
+        "scale-monitor-framebuffer"
+        "variable-refresh-rate"
+      ];
     };
     "org/freedesktop/ibus/engine/hangul" = {
       "switch-keys" = "Hangul";
