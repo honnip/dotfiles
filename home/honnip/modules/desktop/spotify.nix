@@ -10,7 +10,7 @@ in
     colorScheme = "rose-pine-moon";
     enabledCustomApps = with spicePkgs.apps; [
       # marketplace
-      lyrics-plus
+      lyricsPlus
     ];
     enabledExtensions = with spicePkgs.extensions; [
       adblock
