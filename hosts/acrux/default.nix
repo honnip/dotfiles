@@ -17,6 +17,7 @@
     ../modules/flatpak.nix
     ../modules/printer.nix
     ../modules/pipewire.nix
+    ../modules/appimage.nix
   ];
 
   networking = {
