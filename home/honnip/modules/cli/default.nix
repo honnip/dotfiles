@@ -17,6 +17,8 @@
     eza
   ];
 
+  programs.nix-index-database.comma.enable = true;
+
   systemd.user.sessionVariables = {
     COLORTERM = "truecolor";
   };

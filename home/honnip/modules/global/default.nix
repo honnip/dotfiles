@@ -8,7 +8,7 @@
 }:
 {
   imports = [
-
+    inputs.nix-index-database.hmModules.nix-index
   ] ++ (builtins.attrValues outputs.homeManagerModules);
 
   nixpkgs = {
