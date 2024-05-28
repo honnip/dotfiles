@@ -1,6 +1,7 @@
 { inputs, outputs, ... }:
 {
   imports = [
+    inputs.lix-module.nixosModules.default
     inputs.home-manager.nixosModules.home-manager
     ./locale.nix
     ./font.nix
