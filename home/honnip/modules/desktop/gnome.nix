@@ -39,12 +39,19 @@ in
         "variable-refresh-rate"
       ];
     };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings" = {
-      custom0 = {
-        binding = "<Super>semicolon";
-        command = "smile";
-        name = "Smile; emoji picker";
-      };
+    "org/gnome/desktop/input-sources" = {
+      "sources" = [
+        (lib.hm.gvariant.mkTuple [
+          "ibus"
+          "hangul"
+        ])
+      ];
+      "xkb-options" = [ "korean:ralt_hangul" ];
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+      binding = "<Super>semicolon";
+      command = "smile";
+      name = "Smile; emoji picker";
     };
     "org/freedesktop/ibus/engine/hangul" = {
       "switch-keys" = "Hangul";
