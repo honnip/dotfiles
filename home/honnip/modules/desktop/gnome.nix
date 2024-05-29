@@ -20,7 +20,12 @@ in
     '';
   };
 
-  home.packages = extensions ++ (with pkgs; [ wl-clipboard ]);
+  home.packages =
+    extensions
+    ++ (with pkgs; [
+      wl-clipboard
+      smile
+    ]);
 
   dconf.settings = {
     "org/gnome/shell" = {
@@ -33,6 +38,13 @@ in
         "scale-monitor-framebuffer"
         "variable-refresh-rate"
       ];
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings" = {
+      custom0 = {
+        binding = "<Super>semicolon";
+        command = "smile";
+        name = "Smile; emoji picker";
+      };
     };
     "org/freedesktop/ibus/engine/hangul" = {
       "switch-keys" = "Hangul";
