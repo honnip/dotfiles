@@ -79,8 +79,8 @@
         }
         {
           enabled = true;
-          name = "oisd big";
-          url = "https://big.oisd.nl/domainswild";
+          name = "oisd small";
+          url = "https://small.oisd.nl";
           id = 10;
         }
         {
