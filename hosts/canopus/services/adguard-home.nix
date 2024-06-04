@@ -90,6 +90,7 @@
           id = 11;
         }
       ];
+      user_rules = [ "@@cdn.discordapp.com" ];
     };
   };
 
