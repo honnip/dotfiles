@@ -25,6 +25,7 @@ in
     ++ (with pkgs; [
       wl-clipboard
       smile
+      ptyxis
     ]);
 
   dconf.settings = {
