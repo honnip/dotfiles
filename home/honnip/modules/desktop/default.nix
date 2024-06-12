@@ -13,6 +13,7 @@
 
     fractal
     paper-plane
+    kiwitalk
 
     libreoffice
     planify
@@ -20,6 +21,8 @@
     obsidian
 
     vscode
+    fragments
+    rquickshare
   ];
 
   xdg.mimeApps.defaultApplications = {
