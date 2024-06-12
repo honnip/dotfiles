@@ -1,8 +1,18 @@
-{ lib, pkgs, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 {
   programs.helix = {
     enable = true;
     defaultEditor = true;
+    package = inputs.helix.packages.${pkgs.system}.default;
+    extraPackages = with pkgs; [
+      nixd
+      nixfmt-rfc-style
+    ];
     settings = {
       editor = {
         line-number = "relative";
@@ -36,7 +46,7 @@
     languages = {
       language-server = {
         nixd = {
-          command = lib.getExe pkgs.nixd;
+          command = "nixd";
         };
       };
       language = [
@@ -45,7 +55,7 @@
           auto-format = true;
           language-servers = [ "nixd" ];
           formatter = {
-            command = lib.getExe pkgs.nixfmt-rfc-style;
+            command = "nixfmt";
           };
         }
       ];
