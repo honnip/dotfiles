@@ -15,6 +15,8 @@
     fd
     jq
     eza
+
+    _7zz
   ];
 
   programs.nix-index-database.comma.enable = true;
