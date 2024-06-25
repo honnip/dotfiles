@@ -25,4 +25,6 @@
       allowUnfree = true;
     };
   };
+
+  services.dbus.implementation = "broker";
 }
