@@ -16,6 +16,14 @@
 
       userChrome = ''
         @import "${pkgs.firefox-gnome-theme}/userChrome.css";
+
+        #TabsToolbar {
+          display: none;
+        }
+
+        #sidebar-header {
+          display: none;
+        }
       '';
 
       userContent = ''
