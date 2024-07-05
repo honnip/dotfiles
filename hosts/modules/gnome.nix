@@ -17,20 +17,22 @@ in
   };
 
   environment.gnome.excludePackages =
-    (with pkgs; [ gnome-tour ])
-    ++ (with pkgs.gnome; [
+    (with pkgs; [
+      gnome-tour
       geary # email reader
+      yelp # help view
+    ])
+    ++ (with pkgs.gnome; [
       tali # pocker game
       iagno # go game
       hitori # sudoku game
       atomix # puzzle game
-      yelp # help view
       gnome-contacts
     ]);
 
-  environment.systemPackages =
-    with pkgs.gnome;
-    [ gnome-tweaks ] ++ (lib.optionals hasFlatpak [ pkgs.gnome.gnome-software ]);
+  environment.systemPackages = [
+    pkgs.gnome-tweaks
+  ] ++ (lib.optionals hasFlatpak [ pkgs.gnome.gnome-software ]);
 
   i18n = {
     inputMethod = {
