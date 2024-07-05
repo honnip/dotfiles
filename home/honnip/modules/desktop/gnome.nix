@@ -26,6 +26,8 @@ in
       wl-clipboard
       smile
       ptyxis
+      papers
+      foliate
     ]);
 
   dconf.settings = {

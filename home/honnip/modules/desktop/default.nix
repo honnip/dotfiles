@@ -16,8 +16,6 @@
     kiwitalk
 
     libreoffice
-    planify
-    varia
     obsidian
 
     vscode
