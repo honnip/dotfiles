@@ -69,6 +69,12 @@
     }
   );
 
+  fix = (
+    final: prev: {
+      ibus-engines.hangul = (prev.ibus-engines.hangul).override { python3 = final.python39; };
+    }
+  );
+
   additions =
     final: prev:
     import ../pkgs {
