@@ -24,10 +24,11 @@ in
     extensions
     ++ (with pkgs; [
       wl-clipboard
-      smile
-      ptyxis
-      papers
-      foliate
+      smile # emoji picker
+      ptyxis # terminal
+      papers # document viewer
+      foliate # ebook viewer
+      turtle # git interface for nautilus
     ]);
 
   dconf.settings = {
