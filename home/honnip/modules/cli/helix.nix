@@ -52,7 +52,6 @@
       language = [
         {
           name = "nix";
-          auto-format = true;
           language-servers = [ "nixd" ];
           formatter = {
             command = "nixfmt";
