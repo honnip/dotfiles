@@ -71,7 +71,7 @@
 
   fix = (
     final: prev: {
-      ibus-engines.hangul = (prev.ibus-engines.hangul).override { python3 = final.python39; };
+      ibus-engines.hangul = (prev.ibus-engines.hangul).override { python3 = final.python311; };
     }
   );
 
