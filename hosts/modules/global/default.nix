@@ -7,7 +7,6 @@
     ./font.nix
     ./nix.nix
     ./openssh.nix
-    ./fish.nix
     ./sops.nix
     ./systemd-initrd.nix
     ./tailscale.nix

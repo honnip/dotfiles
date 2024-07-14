@@ -7,7 +7,7 @@ in
   users.mutableUsers = false;
   users.users.honnip = {
     isNormalUser = true;
-    shell = pkgs.fish;
+    shell = pkgs.nushell;
     extraGroups =
       [
         "wheel"

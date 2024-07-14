@@ -3,7 +3,7 @@
   imports = [
     ./bat.nix
     ./direnv.nix
-    ./fish.nix
+    ./shell.nix
     ./helix.nix
     ./gpg.nix
     ./git.nix
