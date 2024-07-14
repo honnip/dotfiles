@@ -1,48 +1,25 @@
-{ pkgs, config, ... }:
-let
-  pinentry =
-    if config.gtk.enable then
-      { package = pkgs.pinentry-gnome3; }
-    else
-      { package = pkgs.pinentry-curses; };
-in
+{ pkgs, osConfig, ... }:
 {
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
     sshKeys = [ "2D2EE524704A372F2A78883F60512F0793EABAF5" ];
-    pinentryPackage = pinentry.package;
+    pinentryPackage = osConfig.programs.gnupg.agent.pinentryPackage;
     enableExtraSocket = true;
   };
 
-  programs =
-    let
-      fixGpg = # bash
-        ''
-          gpgconf --launch gpg-agent
-        '';
-    in
-    {
-      # Start gpg-agent if it's not running or tunneled in
-      # SSH does not start it automatically, so this is needed to avoid having to use a gpg command at startup
-      # https://www.gnupg.org/faq/whats-new-in-2.1.html#autostart
-      bash.profileExtra = fixGpg;
-      fish.loginShellInit = fixGpg;
-      zsh.loginExtra = fixGpg;
-
-      gpg = {
-        enable = true;
-        settings = {
-          trust-model = "tofu+pgp";
-        };
-        publicKeys = [
-          {
-            source = ../../public.asc;
-            trust = 5;
-          }
-        ];
-      };
+  programs.gpg = {
+    enable = true;
+    settings = {
+      trust-model = "tofu+pgp";
     };
+    publicKeys = [
+      {
+        source = ../../public.asc;
+        trust = 5;
+      }
+    ];
+  };
 
   systemd.user.services = {
     # Link /run/user/$UID/gnupg to ~/.gnupg-sockets
