@@ -28,7 +28,6 @@ in
       ptyxis # terminal
       papers # document viewer
       foliate # ebook viewer
-      turtle # git interface for nautilus
     ]);
 
   dconf.settings = {
