@@ -75,6 +75,16 @@
     }
   );
 
+  libreoffice = (
+    final: prev: {
+      libreoffice = (prev.libreoffice).override {
+        unwrapped = prev.libreoffice.unwrapped.override {
+          langs = [ "en-US" "ko" ];
+        };
+      };
+    }
+  );
+
   additions =
     final: prev:
     import ../pkgs {
