@@ -8,7 +8,7 @@
           hash = "sha256-cf1N4F55+aHKVZ+sMMH4Nl+hA0ZCL5/nlfdNd7nvfpI=";
         };
       });
-      gnome = prev.gnome.overrideScope' (
+      gnome = prev.gnome.overrideScope (
         gnomeFinal: gnomePrev: {
           mutter =
             (gnomePrev.mutter.overrideAttrs (old: {
