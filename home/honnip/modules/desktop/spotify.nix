@@ -9,13 +9,15 @@ in
     theme = spicePkgs.themes.comfy;
     colorScheme = "rose-pine-moon";
     enabledCustomApps = with spicePkgs.apps; [
-      # marketplace
       lyricsPlus
     ];
     enabledExtensions = with spicePkgs.extensions; [
       adblock
       betterGenres
       fullAlbumDate
+      songStats
+      copyToClipboard
+      copyLyrics
     ];
   };
 }
