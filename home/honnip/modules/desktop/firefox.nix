@@ -2,6 +2,7 @@
 {
   programs.firefox = {
     enable = true;
+    languagePacks = [ "ko" ];
     profiles.default = {
       settings = {
         "browser.shell.checkDefaultBrowser" = false;
