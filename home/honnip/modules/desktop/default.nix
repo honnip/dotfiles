@@ -19,6 +19,8 @@
     obsidian
 
     vscode
+    zed-editor
+    
     fragments
     rquickshare
   ];
