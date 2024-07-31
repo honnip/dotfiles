@@ -12,7 +12,7 @@ in
         remoteForwards = [
           {
             bind.address = "/%d/.gnupg-sockets/S.gpg-agent";
-            host.address = "/%d/.gnupg-sockets/S.gpg-agnet.extra";
+            host.address = "/%d/.gnupg-sockets/S.gpg-agent.extra";
           }
         ];
       };
