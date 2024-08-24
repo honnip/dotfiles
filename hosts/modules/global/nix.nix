@@ -1,11 +1,10 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 {
   nix = {
+    package = pkgs.lix;
     optimise.automatic = true;
     settings = {
-      trusted-users = [
-        "@wheel"
-      ];
+      trusted-users = [ "@wheel" ];
       auto-optimise-store = lib.mkDefault true;
       experimental-features = [
         "nix-command"
