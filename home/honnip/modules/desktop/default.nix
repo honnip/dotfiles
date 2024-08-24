@@ -10,6 +10,7 @@
 
   home.packages = with pkgs; [
     obs-studio
+    vlc
 
     fractal
     paper-plane
