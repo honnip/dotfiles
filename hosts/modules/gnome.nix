@@ -16,23 +16,23 @@ in
     };
   };
 
-  environment.gnome.excludePackages =
-    (with pkgs; [
+  environment.gnome.excludePackages = (
+    with pkgs;
+    [
       gnome-tour
       geary # email reader
       yelp # help view
-    ])
-    ++ (with pkgs.gnome; [
       tali # pocker game
       iagno # go game
       hitori # sudoku game
       atomix # puzzle game
       gnome-contacts
-    ]);
+    ]
+  );
 
   environment.systemPackages = [
     pkgs.gnome-tweaks
-  ] ++ (lib.optionals hasFlatpak [ pkgs.gnome.gnome-software ]);
+  ] ++ (lib.optionals hasFlatpak [ pkgs.gnome-software ]);
 
   i18n = {
     inputMethod = {
