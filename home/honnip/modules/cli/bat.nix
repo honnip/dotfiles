@@ -5,6 +5,7 @@
   };
 
   systemd.user.sessionVariables = {
-    MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+    MANROFFOPT = "-c";
+    MANPAGER = "sh -c 'col -bx | bat -plman --theme \"Monokai Extended\"'";
   };
 }
