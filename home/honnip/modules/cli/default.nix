@@ -17,6 +17,8 @@
     eza
 
     _7zz
+
+    nh
   ];
 
   programs.nix-index-database.comma.enable = true;
