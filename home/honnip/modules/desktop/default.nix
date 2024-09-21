@@ -20,7 +20,7 @@
     obsidian
 
     vscode
-    zed-editor
+    zed-editor.fhs
     
     fragments
     rquickshare
