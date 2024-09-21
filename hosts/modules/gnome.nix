@@ -1,12 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-let
-  hasFlatpak = config.services.flatpak.enable;
-in
+{ pkgs, ... }:
 {
   services = {
     xserver = {
@@ -27,12 +19,13 @@ in
       hitori # sudoku game
       atomix # puzzle game
       gnome-contacts
+      evince # replaced by papers
     ]
   );
 
-  environment.systemPackages = [
-    pkgs.gnome-tweaks
-  ] ++ (lib.optionals hasFlatpak [ pkgs.gnome-software ]);
+  environment.systemPackages = [ pkgs.gnome-tweaks ];
+
+  programs.nautilus-open-any-terminal.enable = true;
 
   i18n = {
     inputMethod = {
