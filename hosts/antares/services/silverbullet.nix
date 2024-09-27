@@ -1,1 +1,0 @@
-{ services.silverbullet.enable = true; }
