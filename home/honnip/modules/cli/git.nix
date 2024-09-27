@@ -64,6 +64,10 @@
           insteadOf = "gh:";
           pushInsteadOf = "https://github.com/";
         };
+        "git@ssh.gitlab.gnome.org:" = {
+          insteadOf = "gnome:";
+          pushInsteadOf = "https://gitlab.gnome.org/";
+        };
       };
     };
     difftastic.enable = true;
