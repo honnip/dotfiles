@@ -1,7 +1,5 @@
 {
   inputs,
-  lib,
-  pkgs,
   config,
   outputs,
   ...
@@ -15,16 +13,6 @@
     overlays = builtins.attrValues outputs.overlays;
     config = {
       allowUnfree = true;
-    };
-  };
-
-  nix = {
-    package = lib.mkDefault pkgs.nix;
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
     };
   };
 
