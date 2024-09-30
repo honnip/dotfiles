@@ -1,6 +1,7 @@
 { pkgs, config, ... }:
 {
   services.flatpak.enable = true;
+  environment.systemPackages = [ pkgs.flatpak-builder ];
   system.fsPackages = with pkgs; [ bindfs ];
   fileSystems =
     let
