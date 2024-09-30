@@ -25,8 +25,6 @@
 
   environment.systemPackages = [ pkgs.gnome-tweaks ];
 
-  programs.nautilus-open-any-terminal.enable = true;
-
   i18n = {
     inputMethod = {
       enable = true;
