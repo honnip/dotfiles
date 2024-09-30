@@ -70,7 +70,7 @@ in
       "text/csv" = "org.gnome.TextEditor.desktop";
       "text/markdown" = "org.gnome.TextEditor.desktop";
       "text/xml" = "org.gnome.TextEditor.desktop";
-      "application/pdf" = "org.gnome.Evince.desktop";
+      "application/pdf" = "org.gnome.Papers.desktop";
       "application/zip" = "org.gnome.FileRoller.desktop";
       # video & audio
       "audio/mp4" = "org.gnome.Totem.desktop";
