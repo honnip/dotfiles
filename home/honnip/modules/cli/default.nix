@@ -3,10 +3,11 @@
   imports = [
     ./bat.nix
     ./direnv.nix
-    ./shell.nix
-    ./helix.nix
-    ./gpg.nix
     ./git.nix
+    ./gpg.nix
+    ./helix.nix
+    ./neovim
+    ./shell.nix
     ./ssh.nix
     ./starship.nix
   ];
