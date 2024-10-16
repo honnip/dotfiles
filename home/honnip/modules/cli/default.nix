@@ -6,7 +6,6 @@
     ./git.nix
     ./gpg.nix
     ./helix.nix
-    ./neovim
     ./shell.nix
     ./ssh.nix
     ./starship.nix
