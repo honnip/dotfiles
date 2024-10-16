@@ -8,7 +8,6 @@
     ./helix.nix
     ./shell.nix
     ./ssh.nix
-    ./starship.nix
   ];
   home.packages = with pkgs; [
     ripgrep
