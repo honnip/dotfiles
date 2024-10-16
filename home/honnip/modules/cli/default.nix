@@ -19,6 +19,7 @@
     _7zz
 
     nh
+    nixpkgs-review
   ];
 
   programs.nix-index-database.comma.enable = true;
