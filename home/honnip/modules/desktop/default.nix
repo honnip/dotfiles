@@ -14,14 +14,13 @@
 
     fractal
     paper-plane
-    kiwitalk
 
     libreoffice
     obsidian
 
     vscode
     zed-editor.fhs
-    
+
     fragments
     rquickshare
   ];
