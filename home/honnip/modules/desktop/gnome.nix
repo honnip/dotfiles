@@ -31,9 +31,12 @@ in
     ]);
 
   dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      font-name = "Pretendard 11";
+      document-font-name = "Pretendard 11";
+    };
     "org/gnome/shell" = {
       disable-user-extensions = false;
-      # gsettings get org.gnome.shell asdf
       enabled-extensions = builtins.map (x: x.extensionUuid) extensions;
     };
     "org/gnome/mutter" = {
