@@ -18,7 +18,6 @@
     ../modules/printer.nix
     ../modules/pipewire.nix
     ../modules/appimage.nix
-    ../modules/tmpfs.nix
   ];
 
   networking = {
