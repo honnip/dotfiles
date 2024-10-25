@@ -12,6 +12,7 @@
     ../modules/global
     ../modules/users/honnip
 
+    ../modules/font.nix
     ../modules/quietboot.nix
     ../modules/gnome.nix
     ../modules/flatpak.nix

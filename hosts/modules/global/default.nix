@@ -3,7 +3,6 @@
   imports = [
     inputs.home-manager.nixosModules.home-manager
     ./locale.nix
-    ./font.nix
     ./nix.nix
     ./openssh.nix
     ./sops.nix
