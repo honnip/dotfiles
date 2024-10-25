@@ -9,5 +9,6 @@
     iosevka
     ibm-plex
     pretendard
+    (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
   ];
 }
