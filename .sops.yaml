@@ -14,7 +14,7 @@ creation_rules:
       pgp:
       - *honnip
   - path_regex: hosts/antares/secrets.ya?ml$
-    key_group:
+    key_groups:
     - age:
       - *antares
       pgp:
