@@ -9,6 +9,11 @@
 let
   version = "0.1.3";
 
+  deps = {
+    "x86_64-linux" = "sha256-3ks0rZIvb2+wnRjhdFnochrDUzeyAYKZa4SeaNsO/lQ=";
+    "aarch64-linux" = "sha256-egaZYNUg0CERmYfJReIg1xg72/u4YWSPHdn6H5WVRCg=";
+  };
+
   src = fetchFromGitHub {
     owner = "dahlia";
     repo = "hollo";
@@ -38,7 +43,7 @@ let
       cp -R ./node_modules $out
     '';
 
-    outputHash = "sha256-3ks0rZIvb2+wnRjhdFnochrDUzeyAYKZa4SeaNsO/lQ=";
+    outputHash = deps."${stdenv.system}";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
