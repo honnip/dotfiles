@@ -7,13 +7,13 @@
   makeBinaryWrapper,
 }:
 let
-  version = "0.1.2";
+  version = "0.1.3";
 
   src = fetchFromGitHub {
     owner = "dahlia";
     repo = "hollo";
     rev = "refs/tags/${version}";
-    hash = "sha256-BL3SLfmrgF3h/CJupSf6Ul80x2gUZWbSnUUjBjhrUkY=";
+    hash = "sha256-bZpndSnR9pCbqilla8dRNjSi3YdMEo6tgi481lCPMqA=";
   };
 
   node_modules = stdenv.mkDerivation {
@@ -38,7 +38,7 @@ let
       cp -R ./node_modules $out
     '';
 
-    outputHash = "sha256-qdJ65piKwvMNLQpT9XfZeTKo/6+cgZR9zasXvzk9JS0=";
+    outputHash = "sha256-3ks0rZIvb2+wnRjhdFnochrDUzeyAYKZa4SeaNsO/lQ=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
