@@ -18,13 +18,11 @@
 
   services.cloudflared = {
     enable = true;
-    tunnels.antares = {
+    tunnels."59e30a6e-ee6e-4047-8032-30365fa615bb" = {
       credentialsFile = config.sops.secrets.cf-tunnel.path;
       default = "http_status:404";
       ingress = {
-        "social.honnip.page" = {
-          service = "http://localhost:3000";
-        };
+        "c.honnip.page".service = "http://localhost:3000";
       };
     };
   };
@@ -32,6 +30,9 @@
   sops.secrets = {
     hollo-s3-key.sopsFile = ../secrets.yaml;
     hollo-secret.sopsFile = ../secrets.yaml;
-    cf-tunnel.sopsFile = ../secrets.yaml;
+    cf-tunnel = {
+      format = "binary";
+      sopsFile = ../cf-tunnel.json;
+    };
   };
 }
