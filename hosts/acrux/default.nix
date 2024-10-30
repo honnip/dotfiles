@@ -15,14 +15,21 @@
     ../modules/font.nix
     ../modules/quietboot.nix
     ../modules/gnome.nix
-    ../modules/flatpak.nix
     ../modules/printer.nix
     ../modules/pipewire.nix
     ../modules/appimage.nix
   ];
 
-  networking = {
-    hostName = "acrux";
+  networking.hostName = "acrux";
+
+  networking.firewall.allowedTCPPorts = [ 46431 ];
+  networking.firewall.allowedUDPPorts = [ 46431 ];
+
+  services.nixseparatedebuginfod.enable = true;
+
+  system.switch = {
+    enable = false;
+    enableNg = true;
   };
 
   system.stateVersion = "24.05";
