@@ -7,14 +7,15 @@
   vips,
   python3,
   node-gyp,
+  nodejs, srcOnly,
   ffmpeg-headless,
   makeBinaryWrapper,
 }:
 let
-  version = "0.1.4";
+  version = "0.1.5";
 
   deps = {
-    "x86_64-linux" = "sha256-3ks0rZIvb2+wnRjhdFnochrDUzeyAYKZa4SeaNsO/lQ=";
+    "x86_64-linux" = "sha256-eImsDk3rZdNZkiw+WHk4JozxWS+Rhf7CAgL1L25zucU=";
     "aarch64-linux" = "sha256-jar8WNcqsXC8+O9HpWsKJ9uDNPei2jpJkusInPJiMYA=";
   };
 
@@ -22,7 +23,22 @@ let
     owner = "dahlia";
     repo = "hollo";
     rev = "refs/tags/${version}";
-    hash = "sha256-6YJGEDSX+FZO3744E24ZxZSgd0fX7cPO33fmKOrXugQ=";
+    hash = "sha256-QpAtuMVkA9kzgvXGEEGmHQdzncbkjOA/MpL6PIJJAzM=";
+  };
+
+  node-addon-api = stdenv.mkDerivation rec {
+    pname = "node-addon-api";
+    version = "8.0.0";
+    src = fetchFromGitHub {
+      owner = "nodejs";
+      repo = "node-addon-api";
+      rev = "v${version}";
+      hash = "sha256-k3v8lK7uaEJvcaj1sucTjFZ6+i5A6w/0Uj9rYlPhjCE=";
+    };
+    installPhase = ''
+      mkdir $out
+      cp -r *.c *.h *.gyp *.gypi index.js package-support.json package.json tools $out/
+    '';
   };
 
   node_modules = stdenv.mkDerivation {
@@ -45,11 +61,22 @@ let
     dontConfigure = true;
     dontFixup = true;
 
+    preBuild = ''
+      pushd node_modules/sharp
+
+      mkdir node_modules
+      ln -s ${node-addon-api} node_modules/node-addon-api
+
+      ${lib.getExe nodejs} install/check
+
+      rm -r node_modules
+
+      popd
+      rm -r node_modules/@img/sharp*
+    '';
+
     buildPhase = ''
       bun install --no-progress --frozen-lockfile
-      # pushd node_modules/sharp
-      # bun install --no-progress --frozen-lockfile
-      # popd
     '';
 
     installPhase = ''
@@ -57,7 +84,7 @@ let
       cp -r ./node_modules $out
     '';
 
-    outputHash = deps."${stdenv.system}";
+    outputHash = deps.${stdenv.system};
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
