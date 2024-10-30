@@ -14,6 +14,16 @@ in
     services.hollo = {
       enable = lib.mkEnableOption "hollo";
       package = lib.mkPackageOption pkgs "hollo" { };
+      user = lib.mkOption {
+        type = lib.types.str;
+        default = "hollo";
+        description = "User under which Hollo runs";
+      };
+      group = lib.mkOption {
+        type = lib.types.str;
+        default = "hollo";
+        description = "Group under which Hollo runs";
+      };
       database = {
         createLocally = lib.mkOption {
           type = lib.types.bool;
@@ -125,52 +135,48 @@ in
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
-        ExecStart = "${cfg.package}/bin/hollo";
+        User = cfg.user;
+        Group = cfg.group;
         DynamicUser = true;
+        WorkingDirectory = "${cfg.package}/";
 
         LoadCredential = [
           "S3_ACCESS_KEY:${cfg.storage.secretAccessKeyFile}"
           "SECRET_KEY:${cfg.settings.secretKeyFile}"
         ] ++ (lib.optional (cfg.database.uriFile != null) "DB_URI:${cfg.database.uriFile}");
 
-        # Hardening
+        # Capabilities
         CapabilityBoundingSet = "";
+        # Proc FS
+        ProcSubset = "pid";
+        ProtectProc = "invisible";
+        # Sandbox
         LockPersonality = true;
-        NoNewPrivileges = true;
-        MemoryDenyWriteExecute = true;
         PrivateDevices = true;
         PrivateMounts = true;
-        PrivateTmp = true;
         PrivateUsers = true;
-        ProcSubset = "pid";
         ProtectClock = true;
         ProtectControlGroups = true;
-        ProtectHome = true;
         ProtectHostname = true;
         ProtectKernelLogs = true;
         ProtectKernelModules = true;
         ProtectKernelTunables = true;
-        ProtectProc = "invisible";
         ProtectSystem = "full";
-        RemoveIPC = true;
         RestrictAddressFamilies = [
           "AF_INET"
           "AF_INET6"
-          # Required for connecting to database sockets,
           "AF_UNIX"
         ];
         RestrictNamespaces = true;
         RestrictRealtime = true;
-        RestrictSUIDSGID = true;
         SystemCallArchitectures = "native";
         SystemCallFilter = [
           "@system-service"
-          "~@privileged"
         ];
         UMask = "0077";
       };
 
-      preStart =
+      script =
         ''
           export AWS_SECRET_ACCESS_KEY=$(< $CREDENTIALS_DIRECTORY/S3_ACCESS_KEY)
           export SECRET_KEY=$(< $CREDENTIALS_DIRECTORY/SECRET_KEY)
@@ -180,6 +186,9 @@ in
         ''
         + lib.optionalString (cfg.database.uriFile != null) ''
           export DATABASE_URL=$(< $CREDENTIALS_DIRECTORY/DB_URI)
+        ''
+        + ''
+          ${cfg.package}/bin/hollo
         '';
 
       environment = {
@@ -194,8 +203,17 @@ in
         S3_ENDPOINT_URL = cfg.storage.endpointUrl;
         S3_FORCE_PATH_STYLE = lib.boolToString cfg.storage.forcePathStyle;
         AWS_ACCESS_KEY_ID = cfg.storage.accessKeyId;
+        # Drizzle wants to make temp certs
+        XDG_DATA_HOME = "/tmp";
       };
     };
+
+    users.users.hollo = lib.mkIf (cfg.user == "hollo") {
+      group = cfg.group;
+      isSystemUser = true;
+    };
+
+    users.groups.hollo = lib.mkIf (cfg.group == "hollo") { };
 
     services.postgresql = lib.mkIf cfg.database.createLocally {
       enable = lib.mkDefault true;

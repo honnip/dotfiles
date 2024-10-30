@@ -3,22 +3,26 @@
   lib,
   fetchFromGitHub,
   bun,
+  pkg-config,
+  vips,
+  python3,
+  node-gyp,
   ffmpeg-headless,
   makeBinaryWrapper,
 }:
 let
-  version = "0.1.3";
+  version = "0.1.4";
 
   deps = {
     "x86_64-linux" = "sha256-3ks0rZIvb2+wnRjhdFnochrDUzeyAYKZa4SeaNsO/lQ=";
-    "aarch64-linux" = "sha256-egaZYNUg0CERmYfJReIg1xg72/u4YWSPHdn6H5WVRCg=";
+    "aarch64-linux" = "sha256-jar8WNcqsXC8+O9HpWsKJ9uDNPei2jpJkusInPJiMYA=";
   };
 
   src = fetchFromGitHub {
     owner = "dahlia";
     repo = "hollo";
     rev = "refs/tags/${version}";
-    hash = "sha256-bZpndSnR9pCbqilla8dRNjSi3YdMEo6tgi481lCPMqA=";
+    hash = "sha256-6YJGEDSX+FZO3744E24ZxZSgd0fX7cPO33fmKOrXugQ=";
   };
 
   node_modules = stdenv.mkDerivation {
@@ -30,17 +34,27 @@ let
       "SOCKS_SERVER"
     ];
 
-    nativeBuildInputs = [ bun ];
+    nativeBuildInputs = [
+      bun
+      pkg-config
+      python3
+      node-gyp
+    ];
+    buildInputs = [ vips ];
 
     dontConfigure = true;
+    dontFixup = true;
 
     buildPhase = ''
       bun install --no-progress --frozen-lockfile
+      # pushd node_modules/sharp
+      # bun install --no-progress --frozen-lockfile
+      # popd
     '';
 
     installPhase = ''
       mkdir -p $out/node_modules
-      cp -R ./node_modules $out
+      cp -r ./node_modules $out
     '';
 
     outputHash = deps."${stdenv.system}";
@@ -52,6 +66,7 @@ stdenv.mkDerivation {
   pname = "hollo";
   inherit version src;
   nativeBuildInputs = [ makeBinaryWrapper ];
+  buildInputs = [ ffmpeg-headless ];
 
   dontConfigure = true;
   dontBuild = true;
@@ -62,10 +77,10 @@ stdenv.mkDerivation {
     mkdir -p $out/bin
 
     ln -s ${node_modules}/node_modules $out
-    cp -R ./* $out
+    cp -r ./* $out
 
     makeBinaryWrapper ${bun}/bin/bun $out/bin/hollo \
-      --prefix PATH : ${lib.makeBinPath [ bun ffmpeg-headless ]} \
+      --prefix PATH : ${lib.makeBinPath [ bun ]} \
       --add-flags "run --prefer-offline --no-install --cwd $out prod"
 
     runHook postInstall
