@@ -108,6 +108,7 @@ stdenv.mkDerivation {
 
     makeBinaryWrapper ${bun}/bin/bun $out/bin/hollo \
       --prefix PATH : ${lib.makeBinPath [ bun ]} \
+      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ stdenv.cc.cc.lib ]} \
       --add-flags "run --prefer-offline --no-install --cwd $out prod"
 
     runHook postInstall
