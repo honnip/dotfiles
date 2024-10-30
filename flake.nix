@@ -21,6 +21,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
+    # nixpak = {
+    #   url = "github:nixpak/nixpak";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     firefox-gnome-theme = {
       url = "github:rafaelmardojai/firefox-gnome-theme";
@@ -50,14 +54,8 @@
         "aarch64-linux"
         "x86_64-linux"
       ];
+      pkgsFor = lib.genAttrs systems (system: import nixpkgs { inherit system; });
       forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
-      pkgsFor = lib.genAttrs systems (
-        system:
-        import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        }
-      );
     in
     {
       inherit lib;
