@@ -32,7 +32,7 @@ in
         };
         uri = lib.mkOption {
           type = lib.types.nullOr lib.types.str;
-          default = "postgresql:///hollo?host=/var/run/postgresql";
+          default = "postgresql:///hollo?host=/run/postgresql";
           description = "URI for PostgreSQL instance.";
           example = "postgresql://hollo@localhost:5432/hollo";
         };
@@ -138,7 +138,6 @@ in
         User = cfg.user;
         Group = cfg.group;
         DynamicUser = true;
-        WorkingDirectory = "${cfg.package}/";
 
         LoadCredential = [
           "S3_ACCESS_KEY:${cfg.storage.secretAccessKeyFile}"
@@ -188,7 +187,7 @@ in
           export DATABASE_URL=$(< $CREDENTIALS_DIRECTORY/DB_URI)
         ''
         + ''
-          ${cfg.package}/bin/hollo
+          ${lib.getExe cfg.package}
         '';
 
       environment = {
@@ -208,12 +207,16 @@ in
       };
     };
 
-    users.users.hollo = lib.mkIf (cfg.user == "hollo") {
-      group = cfg.group;
-      isSystemUser = true;
+    users.users = lib.mkIf (cfg.user == "hollo") {
+      hollo = {
+        group = cfg.group;
+        isSystemUser = true;
+      };
     };
 
-    users.groups.hollo = lib.mkIf (cfg.group == "hollo") { };
+    users.groups = lib.mkIf (cfg.group == "hollo") {
+      hollo = { };
+    };
 
     services.postgresql = lib.mkIf cfg.database.createLocally {
       enable = lib.mkDefault true;

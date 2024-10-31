@@ -16,14 +16,16 @@ let
 
   deps = {
     "x86_64-linux" = "sha256-eImsDk3rZdNZkiw+WHk4JozxWS+Rhf7CAgL1L25zucU=";
-    "aarch64-linux" = "sha256-jar8WNcqsXC8+O9HpWsKJ9uDNPei2jpJkusInPJiMYA=";
+    "aarch64-linux" = "sha256-JdICsp7yLAMlV8ihM2RLGMgLIu6vYC8Cb4pb+pDH/uE=";
   };
 
   src = fetchFromGitHub {
-    owner = "dahlia";
+    # owner = "dahlia";
+    owner = "honnip";
     repo = "hollo";
-    rev = "refs/tags/${version}";
-    hash = "sha256-QpAtuMVkA9kzgvXGEEGmHQdzncbkjOA/MpL6PIJJAzM=";
+    # rev = "refs/tags/${version}";
+    rev = "bc9ae7a7074f53aa4e312435823614520dad5976";
+    hash = "sha256-5Vv+AKucTBg68kUko6tu/m4mhKVnQRGsk2N79IdrUM8=";
   };
 
   node-addon-api = stdenv.mkDerivation rec {
@@ -93,7 +95,6 @@ stdenv.mkDerivation {
   pname = "hollo";
   inherit version src;
   nativeBuildInputs = [ makeBinaryWrapper ];
-  buildInputs = [ ffmpeg-headless ];
 
   dontConfigure = true;
   dontBuild = true;
@@ -107,7 +108,7 @@ stdenv.mkDerivation {
     cp -r ./* $out
 
     makeBinaryWrapper ${bun}/bin/bun $out/bin/hollo \
-      --prefix PATH : ${lib.makeBinPath [ bun ]} \
+      --prefix PATH : ${lib.makeBinPath [ bun ffmpeg-headless ]} \
       --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ stdenv.cc.cc.lib ]} \
       --add-flags "run --prefer-offline --no-install --cwd $out prod"
 
