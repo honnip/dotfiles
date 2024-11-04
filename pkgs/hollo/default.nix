@@ -7,7 +7,7 @@
   makeBinaryWrapper,
 }:
 let
-  version = "0.2.0";
+  version = "0.2.1";
 
   deps = {
     "x86_64-linux" = "sha256-Tw+A6RTnpwQFYYmQ4PeeMe5dWJRXbPH9+VC+qzy2jKk=";
@@ -18,7 +18,7 @@ let
     owner = "dahlia";
     repo = "hollo";
     rev = "refs/tags/${version}";
-    hash = "sha256-1jVOpvJTQWJWpYIgInbJjFb6m+t5bFg1A1TfdtDaI+Q=";
+    hash = "sha256-vAzb1wDxaw6VHCq9Yxxk4imUIyBs5vIsoX0/SKthDPw=";
   };
 
   node_modules = stdenv.mkDerivation {
