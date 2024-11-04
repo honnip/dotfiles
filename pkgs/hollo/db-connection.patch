@@ -1,0 +1,53 @@
+diff --git a/drizzle.config.ts b/drizzle.config.ts
+--- a/drizzle.config.ts
++++ b/drizzle.config.ts
+@@ -1,14 +1,14 @@
+ import type { Config } from "drizzle-kit";
+ 
+-// biome-ignore lint/complexity/useLiteralKeys: tsc rants about this (TS4111)
+-const databaseUrl = process.env["DATABASE_URL"];
+-if (databaseUrl == null) throw new Error("DATABASE_URL must be defined");
+-
+ export default {
+   schema: "./src/schema.ts",
+   out: "./drizzle",
+   dialect: "postgresql",
+   dbCredentials: {
+-    url: databaseUrl,
++    url: process.env["DATABASE_HOST"] ?? "localhost",
++    port: process.env["DATABASE_PORT"] ? parseInt(process.env["DATABASE_PORT"]) : undefined,
++    user: process.env["DATABASE_USER"] ?? undefined,
++    password: process.env["DATABASE_PASSWORD"] ?? undefined,
++    database: process.env["DATABASE_NAME"] ?? undefined
+   },
+ } satisfies Config;
+diff --git a/src/db.ts b/src/db.ts
+--- a/src/db.ts
++++ b/src/db.ts
+@@ -4,10 +4,6 @@ import { drizzle } from "drizzle-orm/postgres-js";
+ import createPostgres from "postgres";
+ import * as schema from "./schema";
+ 
+-// biome-ignore lint/complexity/useLiteralKeys: tsc rants about this (TS4111)
+-const databaseUrl = process.env["DATABASE_URL"];
+-if (databaseUrl == null) throw new Error("DATABASE_URL must be defined");
+-
+ class LogTapeLogger implements Logger {
+   readonly logger = getLogger("drizzle-orm");
+ 
+@@ -56,7 +52,14 @@ class LogTapeLogger implements Logger {
+   }
+ }
+ 
+-export const postgres = createPostgres(databaseUrl, { connect_timeout: 5 });
++export const postgres = createPostgres({
++  host: process.env["DATABASE_HOST"] ?? "localhost",
++  port: process.env["DATABASE_PORT"] ? parseInt(process.env["DATABASE_PORT"]) : undefined,
++  user: process.env["DATABASE_USER"] ?? undefined,
++  password: process.env["DATABASE_PASSWORD"] ?? undefined,
++  database: process.env["DATABASE_NAME"] ?? undefined,
++  connect_timeout: 5
++});
+ export const db = drizzle(postgres, { schema, logger: new LogTapeLogger() });
+ 
+ export default db;

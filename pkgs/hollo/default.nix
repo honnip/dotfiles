@@ -3,44 +3,22 @@
   lib,
   fetchFromGitHub,
   bun,
-  pkg-config,
-  vips,
-  python3,
-  node-gyp,
-  nodejs, srcOnly,
   ffmpeg-headless,
   makeBinaryWrapper,
 }:
 let
-  version = "0.1.5";
+  version = "0.2.0";
 
   deps = {
-    "x86_64-linux" = "sha256-eImsDk3rZdNZkiw+WHk4JozxWS+Rhf7CAgL1L25zucU=";
-    "aarch64-linux" = "sha256-JdICsp7yLAMlV8ihM2RLGMgLIu6vYC8Cb4pb+pDH/uE=";
+    "x86_64-linux" = "sha256-Tw+A6RTnpwQFYYmQ4PeeMe5dWJRXbPH9+VC+qzy2jKk=";
+    "aarch64-linux" = "sha256-qKmkW+Pj3wPJwnyNor9J2kqxOR58JFxFmCDT5vMF0ss=";
   };
 
   src = fetchFromGitHub {
-    # owner = "dahlia";
-    owner = "honnip";
+    owner = "dahlia";
     repo = "hollo";
-    # rev = "refs/tags/${version}";
-    rev = "bc9ae7a7074f53aa4e312435823614520dad5976";
-    hash = "sha256-5Vv+AKucTBg68kUko6tu/m4mhKVnQRGsk2N79IdrUM8=";
-  };
-
-  node-addon-api = stdenv.mkDerivation rec {
-    pname = "node-addon-api";
-    version = "8.0.0";
-    src = fetchFromGitHub {
-      owner = "nodejs";
-      repo = "node-addon-api";
-      rev = "v${version}";
-      hash = "sha256-k3v8lK7uaEJvcaj1sucTjFZ6+i5A6w/0Uj9rYlPhjCE=";
-    };
-    installPhase = ''
-      mkdir $out
-      cp -r *.c *.h *.gyp *.gypi index.js package-support.json package.json tools $out/
-    '';
+    rev = "refs/tags/${version}";
+    hash = "sha256-1jVOpvJTQWJWpYIgInbJjFb6m+t5bFg1A1TfdtDaI+Q=";
   };
 
   node_modules = stdenv.mkDerivation {
@@ -52,33 +30,13 @@ let
       "SOCKS_SERVER"
     ];
 
-    nativeBuildInputs = [
-      bun
-      pkg-config
-      python3
-      node-gyp
-    ];
-    buildInputs = [ vips ];
+    nativeBuildInputs = [ bun ];
 
     dontConfigure = true;
     dontFixup = true;
 
-    preBuild = ''
-      pushd node_modules/sharp
-
-      mkdir node_modules
-      ln -s ${node-addon-api} node_modules/node-addon-api
-
-      ${lib.getExe nodejs} install/check
-
-      rm -r node_modules
-
-      popd
-      rm -r node_modules/@img/sharp*
-    '';
-
     buildPhase = ''
-      bun install --no-progress --frozen-lockfile
+      bun install --no-progress --frozen-lockfile --no-cache
     '';
 
     installPhase = ''
@@ -99,6 +57,11 @@ stdenv.mkDerivation {
   dontConfigure = true;
   dontBuild = true;
 
+  # TODO: remove when https://github.com/dahlia/hollo/issues/56 is resolved
+  patches = [
+    ./db-connection.patch
+  ];
+
   installPhase = ''
     runHook preInstall
 
@@ -108,7 +71,12 @@ stdenv.mkDerivation {
     cp -r ./* $out
 
     makeBinaryWrapper ${bun}/bin/bun $out/bin/hollo \
-      --prefix PATH : ${lib.makeBinPath [ bun ffmpeg-headless ]} \
+      --prefix PATH : ${
+        lib.makeBinPath [
+          bun
+          ffmpeg-headless
+        ]
+      } \
       --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ stdenv.cc.cc.lib ]} \
       --add-flags "run --prefer-offline --no-install --cwd $out prod"
 

@@ -30,17 +30,33 @@ in
           default = true;
           description = "Create the database locally";
         };
-        uri = lib.mkOption {
-          type = lib.types.nullOr lib.types.str;
-          default = "postgresql:///hollo?host=/run/postgresql";
-          description = "URI for PostgreSQL instance.";
-          example = "postgresql://hollo@localhost:5432/hollo";
+        # For now, this depends on the pkg's patch
+        # https://github.com/dahlia/hollo/issues/56
+        host = lib.mkOption {
+          type = lib.types.str;
+          default = "/run/postgresql";
+          description = "Database host address.";
         };
-        uriFile = lib.mkOption {
+        port = lib.mkOption {
+          type = lib.types.nullOr lib.types.port;
+          default = null;
+          description = "Database port.";
+        };
+        name = lib.mkOption {
+          type = lib.types.str;
+          default = "hollo";
+          description = "Database name.";
+        };
+        user = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = "hollo";
+          description = "Database user.";
+        };
+        passwordFile = lib.mkOption {
           type = lib.types.nullOr lib.types.path;
           default = null;
-          description = "URI for PostgreSQL instance.";
-          example = "/run/secrets/hollo-db-uri";
+          example = "/run/secrets/hollo-db-pw";
+          description = "Database password.";
         };
       };
       storage = {
@@ -76,6 +92,11 @@ in
         };
       };
       settings = {
+        port = lib.mkOption {
+          type = lib.types.port;
+          default = 3000;
+          description = "The port number to listen on.";
+        };
         homeUrl = lib.mkOption {
           type = lib.types.nullOr lib.types.str;
           default = null;
@@ -111,6 +132,11 @@ in
           default = false;
           description = "Whether Hollo is behind a reverse proxy.";
         };
+        allowPrivateAddress = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Setting this to true disables SSRF (Server-Side Request Forgery) protection.";
+        };
       };
     };
   };
@@ -142,7 +168,7 @@ in
         LoadCredential = [
           "S3_ACCESS_KEY:${cfg.storage.secretAccessKeyFile}"
           "SECRET_KEY:${cfg.settings.secretKeyFile}"
-        ] ++ (lib.optional (cfg.database.uriFile != null) "DB_URI:${cfg.database.uriFile}");
+        ] ++ (lib.optional (cfg.database.passwordFile != null "DB_PW:${cfg.database.passwordFile}"));
 
         # Capabilities
         CapabilityBoundingSet = "";
@@ -180,22 +206,33 @@ in
           export AWS_SECRET_ACCESS_KEY=$(< $CREDENTIALS_DIRECTORY/S3_ACCESS_KEY)
           export SECRET_KEY=$(< $CREDENTIALS_DIRECTORY/SECRET_KEY)
         ''
-        + lib.optionalString (cfg.database.uri != null) ''
-          export DATABASE_URL=${cfg.database.uri}
+        + lib.optionalString (cfg.database.host != null) ''
+          export DATABASE_HOST=${cfg.database.host}
         ''
-        + lib.optionalString (cfg.database.uriFile != null) ''
-          export DATABASE_URL=$(< $CREDENTIALS_DIRECTORY/DB_URI)
+        + lib.optionalString (cfg.database.port != null) ''
+          export DATABASE_PORT=${cfg.database.port}
+        ''
+        + lib.optionalString (cfg.database.user != null) ''
+          export DATABASE_USER=${cfg.database.user}
+        ''
+        + lib.optionalString (cfg.database.name != null) ''
+          export DATABASE_NAME=${cfg.database.name}
+        ''
+        + lib.optionalString (cfg.database.passwordFile != null) ''
+          export DATABASE_PASSWORD=$(< $CREDENTIALS_DIRECTORY/DB_PW)
         ''
         + ''
           ${lib.getExe cfg.package}
         '';
 
       environment = {
+        PORT = cfg.settings.port;
         HOME_URL = cfg.settings.homeUrl;
         REMOTE_ACTOR_FETCH_POSTS = builtins.toString cfg.settings.remoteActorFetchPosts;
         LOG_LEVEL = cfg.settings.logLevel;
         LOG_QUERY = lib.boolToString cfg.settings.logQuery;
         BEHIND_PROXY = lib.boolToString cfg.settings.behindProxy;
+        ALLOW_PRIVATE_ADDRESS = lib.boolToString cfg.settings.allowPrivateAddress;
         S3_REGION = cfg.storage.region;
         S3_BUCKET = cfg.storage.bucket;
         S3_URL_BASE = cfg.storage.urlBase;
