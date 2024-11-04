@@ -24,4 +24,6 @@
   };
 
   services.dbus.implementation = "broker";
+
+  system.stateVersion = "24.11";
 }

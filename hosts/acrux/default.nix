@@ -31,6 +31,4 @@
     enable = false;
     enableNg = true;
   };
-
-  system.stateVersion = "24.05";
 }

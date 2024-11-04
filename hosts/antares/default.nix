@@ -11,9 +11,5 @@
     ./services
   ];
 
-  networking = {
-    hostName = "antares";
-  };
-
-  system.stateVersion = "24.05";
+  networking.hostName = "antares";
 }

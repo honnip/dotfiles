@@ -26,7 +26,7 @@
   home = {
     username = "honnip";
     homeDirectory = "/home/${config.home.username}";
-    stateVersion = "24.05";
+    stateVersion = "24.11";
   };
 
   xdg.userDirs = {
