@@ -14,7 +14,7 @@ diff --git a/drizzle.config.ts b/drizzle.config.ts
    dialect: "postgresql",
    dbCredentials: {
 -    url: databaseUrl,
-+    url: process.env["DATABASE_HOST"] ?? "localhost",
++    host: process.env["DATABASE_HOST"] ?? "localhost",
 +    port: process.env["DATABASE_PORT"] ? parseInt(process.env["DATABASE_PORT"]) : undefined,
 +    user: process.env["DATABASE_USER"] ?? undefined,
 +    password: process.env["DATABASE_PASSWORD"] ?? undefined,

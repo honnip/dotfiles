@@ -14,16 +14,6 @@ in
     services.hollo = {
       enable = lib.mkEnableOption "hollo";
       package = lib.mkPackageOption pkgs "hollo" { };
-      user = lib.mkOption {
-        type = lib.types.str;
-        default = "hollo";
-        description = "User under which Hollo runs";
-      };
-      group = lib.mkOption {
-        type = lib.types.str;
-        default = "hollo";
-        description = "Group under which Hollo runs";
-      };
       database = {
         createLocally = lib.mkOption {
           type = lib.types.bool;
@@ -39,7 +29,7 @@ in
         };
         port = lib.mkOption {
           type = lib.types.nullOr lib.types.port;
-          default = null;
+          default = 5432;
           description = "Database port.";
         };
         name = lib.mkOption {
@@ -144,12 +134,9 @@ in
   config = lib.mkIf cfg.enable {
     assertions = [
       {
-        assertion = cfg.database.uri == null -> cfg.database.uriFile != null;
-        message = "Must set one of `services.hollo.database.uri` and `services.hollo.database.uriFile`";
-      }
-      {
-        assertion = cfg.database.uri != null -> cfg.database.uriFile == null;
-        message = "Cannot set both `services.hollo.database.uri` and `services.hollo.database.uriFile`";
+        assertion =
+          cfg.database.createLocally -> cfg.database.user == "hollo" && cfg.database.name == "hollo";
+        message = "System user and database user and name should be `hollo` when create the database locally.";
       }
     ];
     systemd.services.hollo = {
@@ -168,7 +155,7 @@ in
         LoadCredential = [
           "S3_ACCESS_KEY:${cfg.storage.secretAccessKeyFile}"
           "SECRET_KEY:${cfg.settings.secretKeyFile}"
-        ] ++ (lib.optional (cfg.database.passwordFile != null "DB_PW:${cfg.database.passwordFile}"));
+        ] ++ (lib.optional (cfg.database.passwordFile != null) "DB_PW:${cfg.database.passwordFile}");
 
         # Capabilities
         CapabilityBoundingSet = "";
@@ -210,7 +197,7 @@ in
           export DATABASE_HOST=${cfg.database.host}
         ''
         + lib.optionalString (cfg.database.port != null) ''
-          export DATABASE_PORT=${cfg.database.port}
+          export DATABASE_PORT=${builtins.toString cfg.database.port}
         ''
         + lib.optionalString (cfg.database.user != null) ''
           export DATABASE_USER=${cfg.database.user}
@@ -226,7 +213,7 @@ in
         '';
 
       environment = {
-        PORT = cfg.settings.port;
+        PORT = builtins.toString cfg.settings.port;
         HOME_URL = cfg.settings.homeUrl;
         REMOTE_ACTOR_FETCH_POSTS = builtins.toString cfg.settings.remoteActorFetchPosts;
         LOG_LEVEL = cfg.settings.logLevel;
@@ -244,16 +231,12 @@ in
       };
     };
 
-    users.users = lib.mkIf (cfg.user == "hollo") {
-      hollo = {
-        group = cfg.group;
-        isSystemUser = true;
-      };
+    users.users.hollo = {
+      isSystemUser = true;
+      group = "hollo";
     };
 
-    users.groups = lib.mkIf (cfg.group == "hollo") {
-      hollo = { };
-    };
+    users.groups.hollo = { };
 
     services.postgresql = lib.mkIf cfg.database.createLocally {
       enable = lib.mkDefault true;

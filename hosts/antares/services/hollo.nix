@@ -12,7 +12,6 @@
     };
     settings = {
       secretKeyFile = config.sops.secrets.hollo-secret.path;
-      behindProxy = true;
     };
   };
 
