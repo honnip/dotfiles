@@ -148,8 +148,8 @@ in
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
-        User = cfg.user;
-        Group = cfg.group;
+        User = "hollo";
+        Group = "hollo";
         DynamicUser = true;
 
         LoadCredential = [
@@ -230,13 +230,6 @@ in
         XDG_DATA_HOME = "/tmp";
       };
     };
-
-    users.users.hollo = {
-      isSystemUser = true;
-      group = "hollo";
-    };
-
-    users.groups.hollo = { };
 
     services.postgresql = lib.mkIf cfg.database.createLocally {
       enable = lib.mkDefault true;
