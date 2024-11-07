@@ -12,6 +12,8 @@
     };
     settings = {
       secretKeyFile = config.sops.secrets.hollo-secret.path;
+      allowPrivateAddress = true;
+      remoteActorFetchPosts = 35;
     };
   };
 
