@@ -19,12 +19,7 @@
     sops-nix = {
       url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs";
     };
-    # nixpak = {
-    #   url = "github:nixpak/nixpak";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
 
     firefox-gnome-theme = {
       url = "github:rafaelmardojai/firefox-gnome-theme";
