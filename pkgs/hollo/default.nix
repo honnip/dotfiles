@@ -7,18 +7,18 @@
   makeBinaryWrapper,
 }:
 let
-  version = "0.2.2";
+  version = "0.2.3";
 
   deps = {
-    "x86_64-linux" = "sha256-Tw+A6RTnpwQFYYmQ4PeeMe5dWJRXbPH9+VC+qzy2jKk=";
-    "aarch64-linux" = "sha256-qKmkW+Pj3wPJwnyNor9J2kqxOR58JFxFmCDT5vMF0ss=";
+    "x86_64-linux" = "sha256-YdI+yV62u9/si/bs1hU8X2GxSebrJmbGPnOLkMOVO9c=";
+    "aarch64-linux" = "sha256-npE7IGq4qFT2UfKQgfsb5uSDwyN06i0rbS0XIe1K5yQ=";
   };
 
   src = fetchFromGitHub {
     owner = "dahlia";
     repo = "hollo";
     rev = "refs/tags/${version}";
-    hash = "sha256-Ff4wQOTonCuQe62ZLyBJXmVLitQgZD38898JTlqHnaE=";
+    hash = "sha256-/elP2SKks0gQC/C5CUygVRcI6QeLTM6pvEZhO9kH488=";
   };
 
   node_modules = stdenv.mkDerivation {
