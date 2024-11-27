@@ -13,7 +13,6 @@
     ripgrep
     fd
     jq
-    eza
 
     _7zz
 
