@@ -3,7 +3,7 @@
   imports = [
     ./spotify.nix
     ./discord.nix
-    ./firefox.nix
+    ./browser.nix
     ./thunderbird.nix
     ./gnome.nix
   ];
