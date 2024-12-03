@@ -50,21 +50,35 @@ in
         };
       };
       storage = {
+        type = lib.mkOption {
+          type = lib.types.enum [
+            "s3"
+            "fs"
+          ];
+          description = "The disk driver used by Hollo to store blobs such as avatars, custom emojis, and other media. Valid values are fs (local filesystem) and s3 (S3-compatible object storage).";
+        };
+        # fs options
+        fsAssetPath = lib.mkOption {
+          type = lib.types.path;
+          default = "/var/lib/hollo";
+          description = "The path in the local filesystem where blob assets are stored.";
+        };
+        # S3 options
         region = lib.mkOption {
           type = lib.types.str;
           default = "auto";
           description = "Region of the S3-compatible object storage.";
         };
         bucket = lib.mkOption {
-          type = lib.types.str;
+          type = lib.types.nullOr lib.types.str;
           description = "Bucket name of the S3-compatible object storage.";
         };
         urlBase = lib.mkOption {
-          type = lib.types.str;
+          type = lib.types.nullOr lib.types.str;
           description = "Public URL base of the S3-compatible object storage.";
         };
         endpointUrl = lib.mkOption {
-          type = lib.types.str;
+          type = lib.types.nullOr lib.types.str;
           description = "Endpoint URL for S3-compatible object storage.";
         };
         forcePathStyle = lib.mkOption {
@@ -73,11 +87,11 @@ in
           description = "Whether to force path-style URLs for S3-compatible object storage.";
         };
         accessKeyId = lib.mkOption {
-          type = lib.types.str;
+          type = lib.types.nullOr lib.types.str;
           description = "Access key for S3-compatible object storage.";
         };
         secretAccessKeyFile = lib.mkOption {
-          type = lib.types.path;
+          type = lib.types.nullOr lib.types.path;
           description = "Secret key for S3-compatible object storage.";
         };
       };
@@ -127,6 +141,11 @@ in
           default = false;
           description = "Setting this to true disables SSRF (Server-Side Request Forgery) protection.";
         };
+        sentryDSN = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = "The DSN of the Sentry project to send error reports and traces to.";
+        };
       };
     };
   };
@@ -137,6 +156,17 @@ in
         assertion =
           cfg.database.createLocally -> cfg.database.user == "hollo" && cfg.database.name == "hollo";
         message = "System user and database user and name should be `hollo` when create the database locally.";
+      }
+      {
+        assertion =
+          cfg.storage.type == "s3"
+          ->
+            cfg.storage.bucket != null
+            && cfg.storage.urlBase != null
+            && cfg.storage.endpointUrl != null
+            && cfg.storage.accessKeyId != null
+            && cfg.storage.secretAccessKeyFile != null;
+        message = "`services.hollo.storage.bucket`, `services.hollo.storage.urlBase`, `services.hollo.storage.endpointUrl`, `services.hollo.storage.accessKeyId`, `services.hollo.storage.secretAccessKeyFile` must be set when `services.hollo.storage.type` is `s3`";
       }
     ];
     systemd.services.hollo = {
@@ -152,10 +182,12 @@ in
         Group = "hollo";
         DynamicUser = true;
 
-        LoadCredential = [
-          "S3_ACCESS_KEY:${cfg.storage.secretAccessKeyFile}"
-          "SECRET_KEY:${cfg.settings.secretKeyFile}"
-        ] ++ (lib.optional (cfg.database.passwordFile != null) "DB_PW:${cfg.database.passwordFile}");
+        LoadCredential =
+          [
+            "SECRET_KEY:${cfg.settings.secretKeyFile}"
+          ]
+          ++ (lib.optional (cfg.database.passwordFile != null) "DB_PW:${cfg.database.passwordFile}")
+          ++ (lib.optional (cfg.storage.type == "s3") "S3_ACCESS_KEY:${cfg.storage.secretAccessKeyFile}");
 
         # Capabilities
         CapabilityBoundingSet = "";
@@ -190,23 +222,13 @@ in
 
       script =
         ''
-          export AWS_SECRET_ACCESS_KEY=$(< $CREDENTIALS_DIRECTORY/S3_ACCESS_KEY)
           export SECRET_KEY=$(< $CREDENTIALS_DIRECTORY/SECRET_KEY)
-        ''
-        + lib.optionalString (cfg.database.host != null) ''
-          export DATABASE_HOST=${cfg.database.host}
-        ''
-        + lib.optionalString (cfg.database.port != null) ''
-          export DATABASE_PORT=${builtins.toString cfg.database.port}
-        ''
-        + lib.optionalString (cfg.database.user != null) ''
-          export DATABASE_USER=${cfg.database.user}
-        ''
-        + lib.optionalString (cfg.database.name != null) ''
-          export DATABASE_NAME=${cfg.database.name}
         ''
         + lib.optionalString (cfg.database.passwordFile != null) ''
           export DATABASE_PASSWORD=$(< $CREDENTIALS_DIRECTORY/DB_PW)
+        ''
+        + lib.optionalString (cfg.storage.type == "s3") ''
+          export AWS_SECRET_ACCESS_KEY=$(< $CREDENTIALS_DIRECTORY/S3_ACCESS_KEY)
         ''
         + ''
           ${lib.getExe cfg.package}
@@ -220,9 +242,18 @@ in
         LOG_QUERY = lib.boolToString cfg.settings.logQuery;
         BEHIND_PROXY = lib.boolToString cfg.settings.behindProxy;
         ALLOW_PRIVATE_ADDRESS = lib.boolToString cfg.settings.allowPrivateAddress;
+        SENTRY_DSN = cfg.settings.sentryDSN;
+        # database
+        DATABASE_HOST = cfg.database.host;
+        DATABASE_PORT = builtins.toString cfg.database.port;
+        DATABASE_USER = cfg.database.user;
+        DATABASE_NAME = cfg.database.name;
+        # storage
+        DRIVE_DISK = cfg.storage.type;
+        FS_ASSET_PATH = cfg.storage.fsAssetPath;
         S3_REGION = cfg.storage.region;
         S3_BUCKET = cfg.storage.bucket;
-        S3_URL_BASE = cfg.storage.urlBase;
+        ASSET_URL_BASE = cfg.storage.urlBase;
         S3_ENDPOINT_URL = cfg.storage.endpointUrl;
         S3_FORCE_PATH_STYLE = lib.boolToString cfg.storage.forcePathStyle;
         AWS_ACCESS_KEY_ID = cfg.storage.accessKeyId;
@@ -241,5 +272,12 @@ in
         }
       ];
     };
+
+    users.users.hollo = {
+      group = "hollo";
+      home = "/var/lib/hollo";
+      isSystemUser = true;
+    };
+    users.groups.hollo = { };
   };
 }

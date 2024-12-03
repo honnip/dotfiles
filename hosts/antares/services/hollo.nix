@@ -3,6 +3,7 @@
   services.hollo = {
     enable = true;
     storage = {
+      type = "s3";
       bucket = "hollo";
       urlBase = "https://object.honnip.page";
       endpointUrl = "https://cfa56eee59e349d44849b0adb3c94c37.r2.cloudflarestorage.com";
