@@ -36,28 +36,6 @@
       };
     };
 
-  bump-pano = final: prev: {
-    gnomeExtensions = prev.gnomeExtensions // {
-      pano = prev.gnomeExtensions.pano.overrideAttrs (
-        finalAttrs: prevAttrs: {
-          version = "v23-alpha3";
-          src = prev.fetchzip {
-            url = "https://github.com/oae/gnome-shell-pano/releases/download/${finalAttrs.version}/pano@elhan.io.zip";
-            hash = "sha256-LYpxsl/PC8hwz0ZdH5cDdSZPRmkniBPUCqHQxB4KNhc=";
-            stripRoot = false;
-          };
-          # patch is outdated
-          patches = [ ];
-          preInstall = ''
-            substituteInPlace extension.js \
-              --replace-warn "import Gda from 'gi://Gda?version>=5.0'" "imports.gi.GIRepository.Repository.prepend_search_path('${final.libgda}/lib/girepository-1.0'); const Gda = (await import('gi://Gda')).default" \
-              --replace-warn "import GSound from 'gi://GSound'" "imports.gi.GIRepository.Repository.prepend_search_path('${final.gsound}/lib/girepository-1.0'); const GSound = (await import('gi://GSound')).default"
-          '';
-        }
-      );
-    };
-  };
-
   additions =
     final: prev:
     import ../pkgs {
