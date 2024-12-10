@@ -7,7 +7,7 @@ in
   users.mutableUsers = false;
   users.users.honnip = {
     isNormalUser = true;
-    shell = pkgs.nushell;
+    shell = pkgs.fish;
     extraGroups =
       [
         "wheel"
@@ -29,6 +29,8 @@ in
     hashedPasswordFile = config.sops.secrets.honnip-password.path;
     packages = with pkgs; [ home-manager ];
   };
+
+  programs.fish.enable = true;
 
   sops.secrets.honnip-password = {
     neededForUsers = true;

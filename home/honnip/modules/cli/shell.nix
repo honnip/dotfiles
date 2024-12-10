@@ -1,65 +1,72 @@
+{ pkgs, ... }:
 {
-  programs.nushell = {
+  programs.fish = {
     enable = true;
-    envFile.text = # nu
+    plugins =
+      let
+        plugins = with pkgs.fishPlugins; [
+          autopair
+          async-prompt
+        ];
+      in
+      builtins.map (pkg: {
+        name = pkg.pname;
+        src = pkg.src;
+      }) plugins;
+    functions = {
+      _git_branch_name = {
+        body = "fish_vcs_prompt";
+      };
+      _git_branch_name_loading_indicator = {
+        body = "echo (set_color brblack)…(set_color normal)";
+      };
+      fish_prompt = {
+        body = # fish
+          ''
+            function fish_prompt --description 'Write out the prompt'
+              set -l last_pipestatus $pipestatus
+              set -lx __fish_last_status $status # Export for __fish_print_pipestatus.
+              set -l normal (set_color normal)
+              set -q fish_color_status
+              or set -g fish_color_status red
+
+              # Color the prompt differently when we're root
+              set -l color_cwd $fish_color_cwd
+              set -l suffix '>'
+              if functions -q fish_is_root_user; and fish_is_root_user
+                  if set -q fish_color_cwd_root
+                      set color_cwd $fish_color_cwd_root
+                  end
+                  set suffix '#'
+              end
+
+              # Write pipestatus
+              # If the status was carried over (if no command is issued or if `set` leaves the status untouched), don't bold it.
+              set -l bold_flag --bold
+              set -q __fish_prompt_status_generation; or set -g __fish_prompt_status_generation $status_generation
+              if test $__fish_prompt_status_generation = $status_generation
+                  set bold_flag
+              end
+              set __fish_prompt_status_generation $status_generation
+              set -l status_color (set_color $fish_color_status)
+              set -l statusb_color (set_color $bold_flag $fish_color_status)
+              set -l prompt_status (__fish_print_pipestatus "[" "]" "|" "$status_color" "$statusb_color" $last_pipestatus)
+
+              echo -n -s (prompt_login)' ' (set_color $color_cwd) (prompt_pwd) $normal (_git_branch_name) $normal " "$prompt_status $suffix " "
+            end
+          '';
+      };
+      fish_right_prompt = {
+        body = "date '+%Y/%m/%d %H:%M:%S'";
+      };
+    };
+    interactiveShellInit = # fish
       ''
-        def create_left_prompt [] {
-          let dir = match (do --ignore-shell-errors { $env.PWD | path relative-to $nu.home-path }) {
-            null => $env.PWD
-            "" => '~'
-            $relative_pwd => ([~ $relative_pwd] | path join)
-          }
-
-          let path_color = (if (is-admin) { ansi red_bold } else { ansi green_bold })
-          let separator_color = (if (is-admin) { ansi light_red_bold } else { ansi light_green_bold })
-          let path_segment = $"($path_color)($dir)(ansi reset)"
-
-          $path_segment | str replace --all (char path_sep) $"($separator_color)(char path_sep)($path_color)"
-        }
-
-        def create_right_prompt [] {
-          # create a right prompt in magenta with green separators and am/pm underlined
-          let time_segment = ([
-            (ansi reset)
-            (ansi magenta)
-            (date now | format date '%x %X') # try to respect user's locale
-          ] | str join | str replace --regex --all "([/:])" $"(ansi green)''${1}(ansi magenta)" |
-              str replace --regex --all "([AP]M)" $"(ansi magenta_underline)''${1}")
-
-          let last_exit_code = if ($env.LAST_EXIT_CODE != 0) {([
-              (ansi rb)
-              ($env.LAST_EXIT_CODE)
-          ] | str join)
-          } else { "" }
-
-          ([$last_exit_code, (char space), $time_segment] | str join)
-        }
-
-        # Use nushell functions to define your right and left prompt
-        $env.PROMPT_COMMAND = {|| create_left_prompt }
-        # FIXME: This default is not implemented in rust code as of 2023-09-08.
-        $env.PROMPT_COMMAND_RIGHT = {|| create_right_prompt }
-
-        # The prompt indicators are environmental variables that represent
-        # the state of the prompt
-        $env.PROMPT_INDICATOR = {|| "> " }
-        $env.PROMPT_INDICATOR_VI_INSERT = {|| ": " }
-        $env.PROMPT_INDICATOR_VI_NORMAL = {|| "> " }
-        $env.PROMPT_MULTILINE_INDICATOR = {|| "::: " }
-      '';
-    configFile.text = # nu
-      ''
-        $env.config = {
-          show_banner: false,
-          shell_integration: {
-            osc2: true,
-            osc7: true,
-            osc8: true,
-          }
-        }
+        set async_prompt_functions _git_branch_name
       '';
   };
 
+  programs.eza.enable = true;
   programs.mcfly.enable = true;
   programs.carapace.enable = true;
 }
