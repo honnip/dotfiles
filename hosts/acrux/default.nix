@@ -18,6 +18,7 @@
     ../modules/printer.nix
     ../modules/pipewire.nix
     ../modules/appimage.nix
+    ../modules/syncthing.nix
   ];
 
   networking.hostName = "acrux";

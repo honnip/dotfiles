@@ -3,6 +3,5 @@
   imports = [
     ./modules/global
     ./modules/cli
-    ./modules/syncthing.nix
   ];
 }

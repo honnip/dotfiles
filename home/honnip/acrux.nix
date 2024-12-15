@@ -4,6 +4,5 @@
     ./modules/global
     ./modules/cli
     ./modules/desktop
-    ./modules/syncthing.nix
   ];
 }
