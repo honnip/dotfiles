@@ -4,7 +4,7 @@
     mutableSettings = false;
     settings = {
       http = {
-        address = "127.0.0.1:3053";
+        address = "0.0.0.0:3053";
       };
       dns = {
         bind_hosts = [ "0.0.0.0" ];
