@@ -10,6 +10,8 @@
         "widget.wayland.fractional-scale.enabled" = true;
         # vaapi
         "media.ffmpeg.vaapi.enabled" = true;
+        # always use the DE's file picker
+        "widget.use-xdg-desktop-portal.file-picker" = 1;
         # firefox-gnome-theme
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "svg.context-properties.content.enabled" = true;
