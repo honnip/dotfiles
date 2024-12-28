@@ -131,6 +131,11 @@ in
           default = false;
           description = "Whether to log SQL queries.";
         };
+        TZ = lib.mkOption {
+          type = lib.types.str;
+          default = "UTC";
+          description = "The time zone of the application. It has to be a valid time zone identifier, e.g., `UTC`, `America/New_York`, `Asia/Tokyo`.";
+        };
         behindProxy = lib.mkOption {
           type = lib.types.bool;
           default = false;
