@@ -23,7 +23,10 @@
     ]
   );
 
-  environment.systemPackages = [ pkgs.gnome-tweaks ];
+  environment.systemPackages = with pkgs; [
+    gnome-tweaks
+    hunspellDicts.ko_KR
+  ];
 
   i18n = {
     inputMethod = {
