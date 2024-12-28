@@ -13,6 +13,7 @@
     };
     settings = {
       secretKeyFile = config.sops.secrets.hollo-secret.path;
+      TZ = "Asia/Seoul";
       allowPrivateAddress = true;
       remoteActorFetchPosts = 35;
     };
