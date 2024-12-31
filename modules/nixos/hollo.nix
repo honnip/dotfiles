@@ -131,6 +131,11 @@ in
           default = false;
           description = "Whether to log SQL queries.";
         };
+        logFile = lib.mkOption {
+          type = lib.types.nullOr lib.types.path;
+          default = null;
+          description = "The path to the log file. Unlike console output, the log file is written in JSON Lines format which is suitable for structured logging.";
+        };
         TZ = lib.mkOption {
           type = lib.types.str;
           default = "UTC";
@@ -186,6 +191,7 @@ in
         User = "hollo";
         Group = "hollo";
         DynamicUser = true;
+        WorkingDirectory = cfg.package;
 
         LoadCredential =
           [
@@ -245,6 +251,7 @@ in
         REMOTE_ACTOR_FETCH_POSTS = builtins.toString cfg.settings.remoteActorFetchPosts;
         LOG_LEVEL = cfg.settings.logLevel;
         LOG_QUERY = lib.boolToString cfg.settings.logQuery;
+        LOG_FILE = cfg.settings.logFile;
         BEHIND_PROXY = lib.boolToString cfg.settings.behindProxy;
         ALLOW_PRIVATE_ADDRESS = lib.boolToString cfg.settings.allowPrivateAddress;
         SENTRY_DSN = cfg.settings.sentryDSN;

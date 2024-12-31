@@ -2,60 +2,33 @@
   stdenv,
   lib,
   fetchFromGitHub,
-  bun,
+  nodejs_23,
+  pnpm_9,
   ffmpeg-headless,
   makeBinaryWrapper,
 }:
-let
-  version = "0.3.5";
 
-  deps = {
-    "x86_64-linux" = "sha256-Kesm8QjV80JDk8R+poleJfeyc/10V55u+rXAjOEkgTg=";
-    "aarch64-linux" = "sha256-4CEgmdsQeLtewRUljnxcX0Ffwd9mwp0O7Hw3V+bwtmQ=";
-  };
+stdenv.mkDerivation (finalAttrs: {
+  pname = "hollo";
+  version = "0.4.2";
 
   src = fetchFromGitHub {
     owner = "dahlia";
     repo = "hollo";
-    rev = "refs/tags/${version}";
-    hash = "sha256-qyHx5eToiK970+JG0WIEd4Ee/WS0BdW31gvQ3qQmMhs=";
+    rev = "refs/tags/${finalAttrs.version}";
+    hash = "sha256-WSzAOcBng993IvZWrM3DqF4zQSYU7exIsSoxhvU/Zrs=";
   };
 
-  node_modules = stdenv.mkDerivation {
-    pname = "hollo-deps";
-    version = version;
-    inherit src;
-    impureEnvVars = lib.fetchers.proxyImpureEnvVars ++ [
-      "GIT_PROXY_COMMAND"
-      "SOCKS_SERVER"
-    ];
+  nativeBuildInputs = [
+    makeBinaryWrapper
+    nodejs_23
+    pnpm_9.configHook
+  ];
 
-    nativeBuildInputs = [ bun ];
-
-    dontConfigure = true;
-    dontFixup = true;
-
-    buildPhase = ''
-      bun install --no-progress --frozen-lockfile --no-cache
-    '';
-
-    installPhase = ''
-      mkdir -p $out/node_modules
-      cp -r ./node_modules $out
-    '';
-
-    outputHash = deps.${stdenv.system};
-    outputHashAlgo = "sha256";
-    outputHashMode = "recursive";
+  pnpmDeps = pnpm_9.fetchDeps {
+    inherit (finalAttrs) pname version src;
+    hash = "sha256-cFWydfBvc6fsdropiWLiIQhaDcTchlP1XK7IOB/oNhQ=";
   };
-in
-stdenv.mkDerivation {
-  pname = "hollo";
-  inherit version src;
-  nativeBuildInputs = [ makeBinaryWrapper ];
-
-  dontConfigure = true;
-  dontBuild = true;
 
   # TODO: remove when https://github.com/dahlia/hollo/issues/56 is resolved
   patches = [
@@ -65,34 +38,27 @@ stdenv.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/bin
+    cp -r . $out
 
-    ln -s ${node_modules}/node_modules $out
-    cp -r ./* $out
-
-    makeBinaryWrapper ${bun}/bin/bun $out/bin/hollo \
+    makeBinaryWrapper ${lib.getExe pnpm_9} $out/bin/hollo \
       --prefix PATH : ${
         lib.makeBinPath [
-          bun
+          nodejs_23
           ffmpeg-headless
         ]
       } \
-      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ stdenv.cc.cc.lib ]} \
-      --add-flags "run --prefer-offline --no-install --cwd $out prod"
+      --add-flags "run prod"
 
     runHook postInstall
   '';
 
   meta = {
     homepage = "https://docs.hollo.social";
-    changelog = "https://github.com/dahlia/hollo/releases/tag/${version}";
+    changelog = "https://github.com/dahlia/hollo/releases/tag/${finalAttrs.version}";
     description = "Federated single-user microblogging software";
     mainProgram = "hollo";
     maintainers = [ lib.maintainers.honnip ];
     license = lib.licenses.agpl3Only;
-    platforms = [
-      "x86_64-linux"
-      "aarch64-linux"
-    ];
+    platforms = nodejs_23.meta.platforms;
   };
-}
+})
