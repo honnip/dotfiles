@@ -68,5 +68,4 @@
 
   programs.eza.enable = true;
   programs.mcfly.enable = true;
-  programs.carapace.enable = true;
 }
