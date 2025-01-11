@@ -10,13 +10,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hollo";
-  version = "0.4.2";
+  version = "0.4.3";
 
   src = fetchFromGitHub {
     owner = "dahlia";
     repo = "hollo";
-    rev = "refs/tags/${finalAttrs.version}";
-    hash = "sha256-WSzAOcBng993IvZWrM3DqF4zQSYU7exIsSoxhvU/Zrs=";
+    tag = finalAttrs.version;
+    hash = "sha256-jgUITs2G8f5+WL/3788Ln5n/TQzL5nq3pinnHMU+HU0=";
   };
 
   nativeBuildInputs = [
@@ -44,6 +44,7 @@ stdenv.mkDerivation (finalAttrs: {
       --prefix PATH : ${
         lib.makeBinPath [
           nodejs_23
+          pnpm_9
           ffmpeg-headless
         ]
       } \
