@@ -10,13 +10,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hollo";
-  version = "0.4.3";
+  version = "0.4.4";
 
   src = fetchFromGitHub {
     owner = "dahlia";
     repo = "hollo";
     tag = finalAttrs.version;
-    hash = "sha256-jgUITs2G8f5+WL/3788Ln5n/TQzL5nq3pinnHMU+HU0=";
+    hash = "sha256-PvFSkP+SS7kmo8LDNwvzQvK26388yl2rXn83Iv6U63A=";
   };
 
   nativeBuildInputs = [
@@ -27,7 +27,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   pnpmDeps = pnpm_9.fetchDeps {
     inherit (finalAttrs) pname version src;
-    hash = "sha256-cFWydfBvc6fsdropiWLiIQhaDcTchlP1XK7IOB/oNhQ=";
+    hash = "sha256-aCtuEUUl0LnNPSdZmOsQfnbt+ePQ1PfnQoK/dhIBqB4=";
   };
 
   # TODO: remove when https://github.com/dahlia/hollo/issues/56 is resolved
@@ -48,7 +48,7 @@ stdenv.mkDerivation (finalAttrs: {
           ffmpeg-headless
         ]
       } \
-      --add-flags "run prod"
+      --add-flags "run --dir $out prod"
 
     runHook postInstall
   '';

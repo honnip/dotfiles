@@ -191,7 +191,6 @@ in
         User = "hollo";
         Group = "hollo";
         DynamicUser = true;
-        WorkingDirectory = cfg.package;
 
         LoadCredential =
           [
