@@ -40,6 +40,7 @@ stdenv.mkDerivation (finalAttrs: {
 
     cp -r . $out
 
+    echo "shell-emulator=true" > $out/.npmrc
     makeBinaryWrapper ${lib.getExe pnpm_9} $out/bin/hollo \
       --prefix PATH : ${
         lib.makeBinPath [

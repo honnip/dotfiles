@@ -190,7 +190,8 @@ in
       serviceConfig = {
         User = "hollo";
         Group = "hollo";
-        DynamicUser = true;
+
+        ReadWritePaths = cfg.storage.fsAssetPath;
 
         LoadCredential =
           [
@@ -286,7 +287,8 @@ in
 
     users.users.hollo = {
       group = "hollo";
-      home = "/var/lib/hollo";
+      home = cfg.storage.fsAssetPath;
+      createHome = true;
       isSystemUser = true;
     };
     users.groups.hollo = { };
