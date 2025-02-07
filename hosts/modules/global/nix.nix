@@ -1,7 +1,13 @@
-{ lib, pkgs, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 {
   nix = {
     package = pkgs.lix;
+    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
     optimise.automatic = true;
     settings = {
       trusted-users = [ "@wheel" ];
