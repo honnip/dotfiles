@@ -115,6 +115,11 @@ in
           default = 10;
           description = "Number of recent public posts to fetch from remote actors when they are encountered first time.";
         };
+        allowHTML = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Setting this to `true` allows raw HTML inside Markdown, which is used for formatting posts, bio, etc. This is useful for allowing users to use broader formatting options outside of Markdown, but to avoid XSS attacks, it is still limited to a subset of HTML tags and attributes.";
+        };
         logLevel = lib.mkOption {
           type = lib.types.enum [
             "debug"
@@ -249,9 +254,11 @@ in
         PORT = builtins.toString cfg.settings.port;
         HOME_URL = cfg.settings.homeUrl;
         REMOTE_ACTOR_FETCH_POSTS = builtins.toString cfg.settings.remoteActorFetchPosts;
+        ALLOW_HTML = lib.boolToString cfg.settings.allowHTML;
         LOG_LEVEL = cfg.settings.logLevel;
         LOG_QUERY = lib.boolToString cfg.settings.logQuery;
         LOG_FILE = cfg.settings.logFile;
+        TZ = cfg.settings.TZ;
         BEHIND_PROXY = lib.boolToString cfg.settings.behindProxy;
         ALLOW_PRIVATE_ADDRESS = lib.boolToString cfg.settings.allowPrivateAddress;
         SENTRY_DSN = cfg.settings.sentryDSN;
