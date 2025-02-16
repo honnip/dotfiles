@@ -91,6 +91,18 @@
             return $ret
           '';
       };
+      mkcd = {
+        description = "Creates a directory then `cd` to it";
+        body = # fish
+          ''
+            if test (count $argv) -eq 0
+              echo "mkcd: missing directory operand"
+              echo "Usage: mkcd DIRECTORY"
+              return 1
+            end
+            mkdir -p "$argv[1]"; and cd "$argv[1]"
+          '';
+      };
     };
     interactiveShellInit = # fish
       ''
