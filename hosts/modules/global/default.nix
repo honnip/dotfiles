@@ -8,6 +8,7 @@
     ./sops.nix
     ./systemd-initrd.nix
     ./tailscale.nix
+    ./node-exporter.nix
   ] ++ (builtins.attrValues outputs.nixosModules);
 
   home-manager.extraSpecialArgs = {
