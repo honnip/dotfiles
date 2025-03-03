@@ -12,6 +12,7 @@
       secretAccessKeyFile = config.sops.secrets.hollo-s3-key.path;
     };
     settings = {
+      logLevel = "debug";
       secretKeyFile = config.sops.secrets.hollo-secret.path;
       TZ = "Asia/Seoul";
       allowPrivateAddress = true;
