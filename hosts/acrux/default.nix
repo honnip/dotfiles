@@ -19,6 +19,7 @@
     ../modules/pipewire.nix
     ../modules/appimage.nix
     ../modules/syncthing.nix
+    ../modules/remote-build.nix
   ];
 
   networking.hostName = "acrux";
@@ -32,4 +33,6 @@
     enable = false;
     enableNg = true;
   };
+
+  nix.settings.max-jobs = 10;
 }
