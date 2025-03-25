@@ -12,6 +12,7 @@ let
     {
       hostName = hostname;
       sshUser = "honnip";
+      protocol = "ssh-ng";
       systems = [ config.nixpkgs.hostPlatform.system ];
       maxJobs = config.nix.settings.max-jobs;
       supportedFeatures = config.nix.settings.system-features;
