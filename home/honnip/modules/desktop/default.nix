@@ -35,6 +35,8 @@
       };
       extraJavaOpts = "-Djosm.restart=true -Djava.net.useSystemProxies=true -Dawt.toolkit.name=WLToolkit -Dsun.java2d.vulkan=true";
     })
+
+    bottles
   ];
 
   xdg.mimeApps.defaultApplications = {
