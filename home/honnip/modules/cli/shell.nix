@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   programs.fish = {
     enable = true;
@@ -110,6 +110,6 @@
       '';
   };
 
-  programs.eza.enable = true;
-  programs.mcfly.enable = true;
+  programs.eza.enable = lib.mkDefault true;
+  programs.mcfly.enable = lib.mkDefault true;
 }

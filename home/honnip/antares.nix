@@ -3,5 +3,6 @@
   imports = [
     ./modules/global
     ./modules/cli
+    ./modules/server.nix
   ];
 }

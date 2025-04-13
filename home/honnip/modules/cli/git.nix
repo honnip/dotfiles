@@ -1,12 +1,5 @@
+{ osConfig, config, ... }:
 {
-  pkgs,
-  config,
-  osConfig,
-  ...
-}:
-{
-  home.packages = with pkgs; [ delta ];
-
   programs.git = {
     enable = true;
     package = osConfig.programs.git.package;

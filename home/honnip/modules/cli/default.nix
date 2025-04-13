@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   imports = [
     ./bat.nix
@@ -20,8 +20,8 @@
     nixpkgs-review
   ];
 
-  programs.nix-index.enable = true;
-  programs.nix-index-database.comma.enable = true;
+  programs.nix-index.enable = lib.mkDefault true;
+  programs.nix-index-database.comma.enable = lib.mkDefault true;
 
   systemd.user.sessionVariables = {
     COLORTERM = "truecolor";

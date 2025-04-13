@@ -2,6 +2,7 @@
   inputs,
   config,
   outputs,
+  lib,
   ...
 }:
 {
@@ -18,10 +19,7 @@
 
   systemd.user.startServices = "sd-switch";
 
-  programs = {
-    home-manager.enable = true;
-    git.enable = true;
-  };
+  programs.home-manager.enable = true;
 
   home = {
     username = "honnip";
@@ -30,7 +28,7 @@
   };
 
   xdg.userDirs = {
-    enable = true;
+    enable = lib.mkDefault true;
     createDirectories = true;
   };
 }
