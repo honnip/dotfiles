@@ -71,7 +71,6 @@ in
     defaultApplications = {
       # document
       "text/plain" = "org.gnome.TextEditor.desktop";
-      "text/csv" = "org.gnome.TextEditor.desktop";
       "text/markdown" = "org.gnome.TextEditor.desktop";
       "text/xml" = "org.gnome.TextEditor.desktop";
       "application/pdf" = "org.gnome.Papers.desktop";

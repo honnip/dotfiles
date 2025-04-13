@@ -24,6 +24,5 @@
 
   xdg.mimeApps.defaultApplications = {
     "x-scheme-handler/mailto" = "thunderbird.desktop";
-    "text/calendar" = "thunderbird.desktop";
   };
 }
