@@ -1,21 +1,21 @@
 {
-  inputs,
   lib,
   pkgs,
+  config,
+  inputs,
   ...
 }:
 {
   nix = {
     package = pkgs.lix;
     nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
-    optimise.automatic = true;
+    # the store is host-managed
+    optimise.automatic = lib.mkDefault (!config.boot.isContainer);
     settings = {
       trusted-users = [ "@wheel" ];
-      auto-optimise-store = lib.mkDefault true;
       experimental-features = [
         "nix-command"
         "flakes"
-        "repl-flake"
       ];
       substituters = [
         "https://cache.lix.systems"
@@ -26,8 +26,5 @@
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
     };
-    extraOptions = ''
-      keep-outputs = true
-    '';
   };
 }
