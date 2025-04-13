@@ -1,4 +1,9 @@
-{ inputs, outputs, ... }:
+{
+  inputs,
+  outputs,
+  lib,
+  ...
+}:
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
@@ -15,14 +20,16 @@
     inherit inputs outputs;
   };
 
-  hardware.enableRedistributableFirmware = true;
-
   nixpkgs = {
     overlays = builtins.attrValues outputs.overlays;
     config = {
       allowUnfree = true;
     };
   };
+
+  hardware.enableRedistributableFirmware = true;
+
+  boot.tmp.cleanOnBoot = lib.mkDefault true;
 
   services.dbus.implementation = "broker";
 
