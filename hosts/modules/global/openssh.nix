@@ -1,14 +1,7 @@
-{
-  outputs,
-  lib,
-  config,
-  ...
-}:
+{ outputs, lib, ... }:
 
 let
-  inherit (config.networking) hostName;
-  hosts = outputs.nixosConfigurations;
-  pubKey = host: ../../${host}/ssh_host_ed25519_key.pub;
+  hosts = lib.attrNames outputs.nixosConfigurations;
 in
 {
   services.openssh = {
@@ -30,10 +23,18 @@ in
   };
 
   programs.ssh = {
-    knownHosts = builtins.mapAttrs (name: _: {
-      publicKeyFile = pubKey name;
-      extraHostNames = (lib.optional (name == hostName) "localhost");
-    }) hosts;
+    knownHosts =
+      lib.genAttrs hosts (hostname: {
+        publicKeyFile = ../../${hostname}/ssh_host_ed25519_key.pub;
+      })
+      // {
+        "github.com".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
+        "gitlab.com".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf";
+        "git.sr.ht".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZvRd4EtM7R+IHVMWmDkVU3VLQTSwQDSAvW0t2Tkj60";
+      };
   };
 
   # Skip the password prompt when SSH'ing with keys
