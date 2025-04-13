@@ -3,6 +3,7 @@
   nixpkgs-review-lix = final: prev: {
     nixpkgs-review = prev.nixpkgs-review.override {
       nix = final.lix;
+      git = final.gitMinimal;
       withNom = true;
     };
   };
