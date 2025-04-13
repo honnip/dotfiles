@@ -9,6 +9,7 @@
     ../modules/node-exporter.nix
     ../modules/syncthing.nix
     ../modules/remote-build.nix
+    ../modules/server.nix
 
     ./services
   ];
