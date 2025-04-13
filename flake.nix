@@ -60,8 +60,6 @@
 
       packages = forEachSystem (pkgs: import ./pkgs { inherit inputs pkgs; });
 
-      devShells = forEachSystem (pkgs: import ./shell.nix { inherit pkgs; });
-
       overlays = import ./overlays { inherit inputs outputs; };
 
       nixosConfigurations = {
