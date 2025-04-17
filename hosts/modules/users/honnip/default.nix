@@ -27,7 +27,6 @@ in
       (builtins.readFile ../../../../home/honnip/ssh.pub)
     ];
     hashedPasswordFile = config.sops.secrets.honnip-password.path;
-    packages = with pkgs; [ home-manager ];
   };
 
   programs.fish.enable = true;

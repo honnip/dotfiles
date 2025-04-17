@@ -19,8 +19,6 @@
 
   systemd.user.startServices = "sd-switch";
 
-  programs.home-manager.enable = true;
-
   home = {
     username = "honnip";
     homeDirectory = "/home/${config.home.username}";
