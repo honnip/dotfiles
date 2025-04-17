@@ -1,6 +1,9 @@
 { pkgs, ... }:
 {
   home.packages = [
-    pkgs.discord
+    (pkgs.discord.override {
+      withOpenASAR = true;
+      withVencord = true;
+    })
   ];
 }
