@@ -36,4 +36,5 @@ in
   };
 
   home-manager.users.honnip = import ../../../../home/honnip/${config.networking.hostName}.nix;
+  home-manager.useGlobalPkgs = true;
 }

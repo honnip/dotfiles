@@ -8,7 +8,7 @@
 {
   nix = {
     package = pkgs.lix;
-    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+    channel.enable = false;
     # the store is host-managed
     optimise.automatic = lib.mkDefault (!config.boot.isContainer);
     settings = {
