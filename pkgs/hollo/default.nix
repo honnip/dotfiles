@@ -10,13 +10,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hollo";
-  version = "0.5.5";
+  version = "0.5.6";
 
   src = fetchFromGitHub {
     owner = "fedify-dev";
     repo = "hollo";
     tag = finalAttrs.version;
-    hash = "sha256-duIXYaN7fOneUSyXwLBsjS1rasX0/xWFbTrtezU1T/0=";
+    hash = "sha256-ncjrn3YZxjhkED2FKpIl3DzvkN4xgmfJtPJPvrK5eIM=";
   };
 
   nativeBuildInputs = [
@@ -27,7 +27,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   pnpmDeps = pnpm_9.fetchDeps {
     inherit (finalAttrs) pname version src;
-    hash = "sha256-IlyTLXxAb57E5rzCQsqiyTE8JnuhW+mDyuoKIc/iRf4=";
+    hash = "sha256-QxYY+IiYQqNsODQqbLaNAIFtL0PbVSn0745aLmFknRE=";
   };
 
   # TODO: remove when https://github.com/dahlia/hollo/issues/56 is resolved
