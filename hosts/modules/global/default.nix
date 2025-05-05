@@ -2,6 +2,7 @@
   inputs,
   outputs,
   lib,
+  pkgs,
   ...
 }:
 {
@@ -32,6 +33,8 @@
   boot.tmp.cleanOnBoot = lib.mkDefault true;
 
   services.dbus.implementation = "broker";
+
+  programs.git.package = lib.mkDefault pkgs.gitMinimal;
 
   system.stateVersion = "24.11";
 }

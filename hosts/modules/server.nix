@@ -1,12 +1,9 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }:
 {
-  programs.git.package = lib.mkDefault pkgs.gitMinimal;
-
   environment = {
     variables.BROWSER = "echo";
     stub-ld.enable = lib.mkDefault false;
