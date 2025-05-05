@@ -17,7 +17,6 @@
     ../modules/gnome.nix
     ../modules/printer.nix
     ../modules/pipewire.nix
-    ../modules/appimage.nix
     ../modules/syncthing.nix
     ../modules/remote-build.nix
   ];
