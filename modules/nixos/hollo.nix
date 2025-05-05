@@ -1,3 +1,4 @@
+self:
 {
   config,
   pkgs,
@@ -13,7 +14,11 @@ in
   options = {
     services.hollo = {
       enable = lib.mkEnableOption "hollo";
-      package = lib.mkPackageOption pkgs "hollo" { };
+      package = lib.mkOption {
+        type = lib.types.package;
+        default = self.packages.${pkgs.system}.hollo;
+        description = "Package to use for hollo";
+      };
       database = {
         createLocally = lib.mkOption {
           type = lib.types.bool;

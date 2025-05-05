@@ -3,8 +3,8 @@
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
+    pinentry.package = osConfig.programs.gnupg.agent.pinentryPackage;
     sshKeys = [ "2D2EE524704A372F2A78883F60512F0793EABAF5" ];
-    pinentryPackage = osConfig.programs.gnupg.agent.pinentryPackage;
     enableExtraSocket = true;
   };
 

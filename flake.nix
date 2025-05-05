@@ -39,12 +39,11 @@
     {
       self,
       nixpkgs,
-      home-manager,
       ...
     }@inputs:
     let
       inherit (self) outputs;
-      lib = nixpkgs.lib // home-manager.lib;
+      lib = nixpkgs.lib;
       systems = [
         "aarch64-linux"
         "x86_64-linux"
@@ -54,7 +53,7 @@
     in
     {
       inherit lib;
-      nixosModules = import ./modules/nixos;
+      nixosModules = import ./modules/nixos { inherit lib self; };
       homeManagerModules = import ./modules/home-manager;
 
       packages = forEachSystem (pkgs: import ./pkgs { inherit inputs pkgs; });

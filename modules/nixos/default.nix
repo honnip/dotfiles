@@ -1,3 +1,4 @@
+{ self, lib, ... }:
 {
-  hollo = import ./hollo.nix;
+  hollo = lib.modules.importApply ./hollo.nix self;
 }
