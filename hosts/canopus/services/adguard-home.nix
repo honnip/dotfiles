@@ -11,7 +11,6 @@
         upstream_dns = [
           "https://dns.cloudflare.com/dns-query"
           "https://dns.google/dns-query"
-          "https://dns.quad9.net/dns-query"
           "1.1.1.1"
         ];
         bootstrap_dns = [
