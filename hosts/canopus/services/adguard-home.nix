@@ -18,8 +18,13 @@
           "8.8.8.8"
           "9.9.9.9"
         ];
-        enable_dnssec = true;
         use_http3_upstreams = true;
+        edns_client_subnet = {
+          enabled = true;
+          use_custom = true;
+          custom_ip = "43.224.104.0"; # random ip from seoul
+        };
+        enable_dnssec = true;
       };
       filters = [
         {
