@@ -3,9 +3,6 @@
     enable = true;
     mutableSettings = false;
     settings = {
-      http = {
-        address = "0.0.0.0:3053";
-      };
       dns = {
         bind_hosts = [ "0.0.0.0" ];
         upstream_dns = [
