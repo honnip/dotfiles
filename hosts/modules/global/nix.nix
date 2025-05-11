@@ -1,13 +1,6 @@
-{
-  lib,
-  pkgs,
-  config,
-  inputs,
-  ...
-}:
+{ lib, config, ... }:
 {
   nix = {
-    package = pkgs.lix;
     channel.enable = false;
     # the store is host-managed
     optimise.automatic = lib.mkDefault (!config.boot.isContainer);

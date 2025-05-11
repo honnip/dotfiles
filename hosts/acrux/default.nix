@@ -1,6 +1,7 @@
 { inputs, ... }:
 {
   imports = [
+    inputs.lix-module.nixosModules.default
     inputs.hardware.nixosModules.common-cpu-amd
     inputs.hardware.nixosModules.common-cpu-amd-pstate
     inputs.hardware.nixosModules.common-gpu-amd
