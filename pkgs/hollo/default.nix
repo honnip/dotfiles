@@ -2,7 +2,7 @@
   stdenv,
   lib,
   fetchFromGitHub,
-  nodejs_23,
+  nodejs,
   pnpm_9,
   ffmpeg-headless,
   makeBinaryWrapper,
@@ -21,7 +21,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [
     makeBinaryWrapper
-    nodejs_23
+    nodejs
     pnpm_9.configHook
   ];
 
@@ -44,7 +44,7 @@ stdenv.mkDerivation (finalAttrs: {
     makeBinaryWrapper ${lib.getExe pnpm_9} $out/bin/hollo \
       --prefix PATH : ${
         lib.makeBinPath [
-          nodejs_23
+          nodejs
           pnpm_9
           ffmpeg-headless
         ]
@@ -61,6 +61,6 @@ stdenv.mkDerivation (finalAttrs: {
     mainProgram = "hollo";
     maintainers = [ lib.maintainers.honnip ];
     license = lib.licenses.agpl3Only;
-    platforms = nodejs_23.meta.platforms;
+    platforms = nodejs.meta.platforms;
   };
 })
