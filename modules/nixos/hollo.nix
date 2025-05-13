@@ -76,14 +76,17 @@ in
         };
         bucket = lib.mkOption {
           type = lib.types.nullOr lib.types.str;
+          default = null;
           description = "Bucket name of the S3-compatible object storage.";
         };
         urlBase = lib.mkOption {
           type = lib.types.nullOr lib.types.str;
+          default = null;
           description = "Public URL base of the S3-compatible object storage.";
         };
         endpointUrl = lib.mkOption {
           type = lib.types.nullOr lib.types.str;
+          default = null;
           description = "Endpoint URL for S3-compatible object storage.";
         };
         forcePathStyle = lib.mkOption {
@@ -93,10 +96,12 @@ in
         };
         accessKeyId = lib.mkOption {
           type = lib.types.nullOr lib.types.str;
+          default = null;
           description = "Access key for S3-compatible object storage.";
         };
         secretAccessKeyFile = lib.mkOption {
           type = lib.types.nullOr lib.types.path;
+          default = null;
           description = "Secret key for S3-compatible object storage.";
         };
       };
