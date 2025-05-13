@@ -243,7 +243,7 @@ in
         SystemCallFilter = [
           "@system-service"
         ];
-        UMask = "0077";
+        UMask = "0022";
       };
 
       script =
