@@ -60,7 +60,7 @@ stdenv.mkDerivation (finalAttrs: {
     description = "Federated single-user microblogging software";
     mainProgram = "hollo";
     maintainers = [ lib.maintainers.honnip ];
-    license = lib.licenses.agpl3Only;
+    license = lib.licenses.agpl3Plus;
     platforms = nodejs.meta.platforms;
   };
 })
