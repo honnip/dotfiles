@@ -9,8 +9,6 @@ let
   cfg = config.services.hollo;
 in
 {
-  meta.maintainers = [ lib.maintainers.honnip ];
-
   options = {
     services.hollo = {
       enable = lib.mkEnableOption "hollo";
@@ -69,20 +67,21 @@ in
           description = "The path in the local filesystem where blob assets are stored.";
         };
         # S3 options
+        urlBase = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = "Public URL base of the S3-compatible object storage.";
+        };
         region = lib.mkOption {
-          type = lib.types.str;
-          default = "auto";
-          description = "Region of the S3-compatible object storage.";
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          example = "us-east-1";
+          description = "Region of the S3-compatible object storage. On some non-S3 services, this can be omitted.";
         };
         bucket = lib.mkOption {
           type = lib.types.nullOr lib.types.str;
           default = null;
           description = "Bucket name of the S3-compatible object storage.";
-        };
-        urlBase = lib.mkOption {
-          type = lib.types.nullOr lib.types.str;
-          default = null;
-          description = "Public URL base of the S3-compatible object storage.";
         };
         endpointUrl = lib.mkOption {
           type = lib.types.nullOr lib.types.str;
@@ -111,19 +110,40 @@ in
           default = 3000;
           description = "The port number to listen on.";
         };
+        secretKeyFile = lib.mkOption {
+          type = lib.types.path;
+          description = "Secret key for securing the session";
+        };
+        TZ = lib.mkOption {
+          type = lib.types.str;
+          default = "UTC";
+          example = "America/New_York";
+          description = "The time zone of the application. It has to be a valid time zone identifier.";
+        };
+        behindProxy = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Whether Hollo is behind a reverse proxy.";
+        };
+        allowPrivateAddress = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Setting this to true disables SSRF (Server-Side Request Forgery) protection.";
+        };
         homeUrl = lib.mkOption {
           type = lib.types.nullOr lib.types.str;
           default = null;
           description = "URL to which the homepage will redirect. If not set, the homepage will show the list of accounts on the instance.";
         };
-        secretKeyFile = lib.mkOption {
-          type = lib.types.path;
-          description = "Secret key for securing the session";
-        };
         remoteActorFetchPosts = lib.mkOption {
           type = lib.types.int;
           default = 10;
           description = "Number of recent public posts to fetch from remote actors when they are encountered first time.";
+        };
+        timelineInboxes = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Setting this to true lets your timelines work like inboxes: all posts visible to your timeline are physically stored in the database, rather than being filtered in real-time as they are displayed. This is useful for relatively larger instances with many incoming posts.";
         };
         allowHTML = lib.mkOption {
           type = lib.types.bool;
@@ -151,21 +171,6 @@ in
           default = null;
           description = "The path to the log file. Unlike console output, the log file is written in JSON Lines format which is suitable for structured logging.";
         };
-        TZ = lib.mkOption {
-          type = lib.types.str;
-          default = "UTC";
-          description = "The time zone of the application. It has to be a valid time zone identifier, e.g., `UTC`, `America/New_York`, `Asia/Tokyo`.";
-        };
-        behindProxy = lib.mkOption {
-          type = lib.types.bool;
-          default = false;
-          description = "Whether Hollo is behind a reverse proxy.";
-        };
-        allowPrivateAddress = lib.mkOption {
-          type = lib.types.bool;
-          default = false;
-          description = "Setting this to true disables SSRF (Server-Side Request Forgery) protection.";
-        };
         sentryDSN = lib.mkOption {
           type = lib.types.nullOr lib.types.str;
           default = null;
@@ -180,18 +185,19 @@ in
       {
         assertion =
           cfg.database.createLocally -> cfg.database.user == "hollo" && cfg.database.name == "hollo";
-        message = "System user and database user and name should be `hollo` when create the database locally.";
+        message = "Database user and name should be `hollo` when create the database locally.";
       }
       {
         assertion =
           cfg.storage.type == "s3"
           ->
-            cfg.storage.bucket != null
-            && cfg.storage.urlBase != null
+            cfg.storage.urlBase != null
+            && cfg.storage.region != null
+            && cfg.storage.bucket != null
             && cfg.storage.endpointUrl != null
             && cfg.storage.accessKeyId != null
             && cfg.storage.secretAccessKeyFile != null;
-        message = "`services.hollo.storage.bucket`, `services.hollo.storage.urlBase`, `services.hollo.storage.endpointUrl`, `services.hollo.storage.accessKeyId`, `services.hollo.storage.secretAccessKeyFile` must be set when `services.hollo.storage.type` is `s3`";
+        message = "<option>services.hollo.storage.urlBase</option>, <option>services.hollo.storage.region</option>, <option>services.hollo.storage.bucket</option>, <option>services.hollo.storage.endpointUrl</option>, <option>services.hollo.storage.accessKeyId</option>, <option>services.hollo.storage.secretAccessKeyFile</option> need to be set when <option>services.hollo.storage.type</option> is `s3`";
       }
     ];
     systemd.services.hollo = {
@@ -206,7 +212,7 @@ in
         User = "hollo";
         Group = "hollo";
 
-        ReadWritePaths = cfg.storage.fsAssetPath;
+        StateDirectory = lib.mkIf (cfg.storage.fsAssetPath == "/var/lib/hollo") "hollo";
 
         LoadCredential =
           [
@@ -262,15 +268,16 @@ in
 
       environment = {
         PORT = builtins.toString cfg.settings.port;
+        TZ = cfg.settings.TZ;
+        BEHIND_PROXY = lib.boolToString cfg.settings.behindProxy;
+        ALLOW_PRIVATE_ADDRESS = lib.boolToString cfg.settings.allowPrivateAddress;
         HOME_URL = cfg.settings.homeUrl;
         REMOTE_ACTOR_FETCH_POSTS = builtins.toString cfg.settings.remoteActorFetchPosts;
+        TIMELINE_INBOXES = lib.boolToString cfg.settings.timelineInboxes;
         ALLOW_HTML = lib.boolToString cfg.settings.allowHTML;
         LOG_LEVEL = cfg.settings.logLevel;
         LOG_QUERY = lib.boolToString cfg.settings.logQuery;
         LOG_FILE = cfg.settings.logFile;
-        TZ = cfg.settings.TZ;
-        BEHIND_PROXY = lib.boolToString cfg.settings.behindProxy;
-        ALLOW_PRIVATE_ADDRESS = lib.boolToString cfg.settings.allowPrivateAddress;
         SENTRY_DSN = cfg.settings.sentryDSN;
         # database
         DATABASE_HOST = cfg.database.host;
@@ -280,9 +287,9 @@ in
         # storage
         DRIVE_DISK = cfg.storage.type;
         FS_ASSET_PATH = cfg.storage.fsAssetPath;
+        ASSET_URL_BASE = cfg.storage.urlBase;
         S3_REGION = cfg.storage.region;
         S3_BUCKET = cfg.storage.bucket;
-        ASSET_URL_BASE = cfg.storage.urlBase;
         S3_ENDPOINT_URL = cfg.storage.endpointUrl;
         S3_FORCE_PATH_STYLE = lib.boolToString cfg.storage.forcePathStyle;
         AWS_ACCESS_KEY_ID = cfg.storage.accessKeyId;
@@ -304,10 +311,10 @@ in
 
     users.users.hollo = {
       group = "hollo";
-      home = cfg.storage.fsAssetPath;
-      createHome = true;
       isSystemUser = true;
     };
     users.groups.hollo = { };
   };
+
+  meta.maintainers = [ lib.maintainers.honnip ];
 }
