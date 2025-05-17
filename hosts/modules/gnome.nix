@@ -24,7 +24,7 @@
   );
 
   environment.systemPackages = with pkgs; [
-    gnome-tweaks
+    hunspellDicts.en_US
     hunspellDicts.ko_KR
   ];
 

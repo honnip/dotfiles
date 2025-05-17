@@ -7,17 +7,6 @@
     };
   };
 
-  mutter-wayland-fix = final: prev: {
-    mutter = prev.mutter.overrideAttrs (old: {
-      patches = (old.patches or [ ]) ++ [
-        (final.fetchpatch {
-          url = "https://gitlab.gnome.org/GNOME/mutter/-/commit/60098ed2c7a578202e34b9b19540b0b3da120368.diff";
-          hash = "sha256-5Xpjamtbvr+lb/5jv8uudxJUnxz6AQGuQr9HJFF3E+Y=";
-        })
-      ];
-    });
-  };
-
   obsidian-wayland =
     final: prev:
     let
