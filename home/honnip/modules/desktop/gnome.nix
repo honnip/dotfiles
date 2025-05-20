@@ -25,9 +25,6 @@ in
     ++ (with pkgs; [
       wl-clipboard
       smile # emoji picker
-      ptyxis # terminal
-      papers # document viewer
-      foliate # ebook viewer
     ]);
 
   dconf.settings = {

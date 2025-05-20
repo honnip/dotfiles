@@ -12,7 +12,7 @@
     with pkgs;
     [
       gnome-tour
-      geary # email reader
+      geary # email client
       yelp # help view
       tali # pocker game
       iagno # go game
@@ -26,6 +26,9 @@
   environment.systemPackages = with pkgs; [
     hunspellDicts.en_US
     hunspellDicts.ko_KR
+
+    papers
+    ptyxis
   ];
 
   i18n = {
