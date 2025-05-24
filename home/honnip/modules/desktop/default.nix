@@ -13,7 +13,6 @@
     vlc
 
     fractal
-    paper-plane
 
     libreoffice
     obsidian
@@ -39,7 +38,6 @@
   ];
 
   xdg.mimeApps.defaultApplications = {
-    "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
     "text/csv" = "calc.desktop";
   };
 }
