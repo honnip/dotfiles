@@ -5,4 +5,5 @@
     src = inputs.thunderbird-gnome-theme;
   };
   hollo = pkgs.callPackage ./hollo { };
+  packet = pkgs.callPackage ./packet { };
 }
