@@ -23,9 +23,8 @@
   ];
 
   networking.hostName = "acrux";
-
-  networking.firewall.allowedTCPPorts = [ 46431 ];
-  networking.firewall.allowedUDPPorts = [ 46431 ];
+  networking.firewall.allowedTCPPorts = [ 9300 ];
+  networking.firewall.allowedUDPPorts = [ 9300 ];
 
   services.nixseparatedebuginfod.enable = true;
 

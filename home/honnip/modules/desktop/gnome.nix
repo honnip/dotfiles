@@ -25,6 +25,7 @@ in
     ++ (with pkgs; [
       wl-clipboard
       smile # emoji picker
+      packet # quick share client
     ]);
 
   dconf.settings = {
