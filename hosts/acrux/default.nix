@@ -1,7 +1,6 @@
 { inputs, ... }:
 {
   imports = [
-    inputs.lix-module.nixosModules.default
     inputs.hardware.nixosModules.common-cpu-amd
     inputs.hardware.nixosModules.common-cpu-amd-pstate
     inputs.hardware.nixosModules.common-gpu-amd
@@ -20,6 +19,7 @@
     ../modules/pipewire.nix
     ../modules/syncthing.nix
     ../modules/remote-build.nix
+    ../modules/lix.nix
   ];
 
   networking.hostName = "acrux";
