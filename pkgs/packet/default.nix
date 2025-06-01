@@ -14,24 +14,22 @@
   protobuf,
   dbus,
   libadwaita,
-  libsecret,
-  tinysparql,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "packet";
-  version = "0.3.0";
+  version = "0.3.1";
 
   src = fetchFromGitHub {
     owner = "nozwock";
     repo = "packet";
     tag = finalAttrs.version;
-    hash = "sha256-wDndMoPPu5akimH8FTAZqYLrGKYkcx3G+DyPxY/lbRI=";
+    hash = "sha256-Bk2J38NNrfixkYMveNQb9KkNG/pF3V9LgD1YGgmxg1c=";
   };
 
   cargoDeps = rustPlatform.fetchCargoVendor {
     inherit (finalAttrs) pname version src;
-    hash = "sha256-3Bq1ZKIrnj5/J9fFTBS6nB0rB1MTMTa57ZBQa4MdDtU=";
+    hash = "sha256-ZoL8N407G7U5VQwDbQSgMv96mSHAeytL6qJ1iR9LvkM=";
   };
 
   nativeBuildInputs = [
@@ -50,8 +48,6 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs = [
     dbus
     libadwaita
-    libsecret
-    tinysparql
   ];
 
   meta = {
