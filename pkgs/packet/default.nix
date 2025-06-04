@@ -14,17 +14,18 @@
   protobuf,
   dbus,
   libadwaita,
+  appstream,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "packet";
-  version = "0.3.2";
+  version = "0.3.4";
 
   src = fetchFromGitHub {
     owner = "nozwock";
     repo = "packet";
     tag = finalAttrs.version;
-    hash = "sha256-9v7rwpPdcTYNUsyjW9LKGH4SdUI5J7vTuFqTGB0IWWI=";
+    hash = "sha256-s3R/RDfQAQR6Jdehco5TD+2GpG4y9sEl0moWMxv3PZE=";
   };
 
   cargoDeps = rustPlatform.fetchCargoVendor {
@@ -43,6 +44,7 @@ stdenv.mkDerivation (finalAttrs: {
     blueprint-compiler
     desktop-file-utils
     protobuf
+    appstream
   ];
 
   buildInputs = [
