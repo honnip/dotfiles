@@ -1,12 +1,14 @@
 self:
 {
   config,
+  options,
   pkgs,
   lib,
   ...
 }:
 let
   cfg = config.services.hollo;
+  opts = options.services.hollo;
 in
 {
   options = {
@@ -60,21 +62,21 @@ in
           ];
           description = "The disk driver used by Hollo to store blobs such as avatars, custom emojis, and other media. Valid values are fs (local filesystem) and s3 (S3-compatible object storage).";
         };
-        # fs options
-        fsAssetPath = lib.mkOption {
-          type = lib.types.path;
-          default = "/var/lib/hollo";
-          description = "The path in the local filesystem where blob assets are stored.";
-        };
-        # S3 options
         urlBase = lib.mkOption {
           type = lib.types.nullOr lib.types.str;
           default = null;
           description = "Public URL base of the S3-compatible object storage.";
         };
+        # fs options
+        fsPath = lib.mkOption {
+          type = lib.types.path;
+          default = "/var/lib/hollo";
+          description = "The path in the local filesystem where blob assets are stored.";
+        };
+        # S3 options
         region = lib.mkOption {
           type = lib.types.nullOr lib.types.str;
-          default = null;
+          default = "auto";
           example = "us-east-1";
           description = "Region of the S3-compatible object storage. On some non-S3 services, this can be omitted.";
         };
@@ -191,13 +193,12 @@ in
         assertion =
           cfg.storage.type == "s3"
           ->
-            cfg.storage.urlBase != null
-            && cfg.storage.region != null
+            cfg.storage.region != null
             && cfg.storage.bucket != null
             && cfg.storage.endpointUrl != null
             && cfg.storage.accessKeyId != null
             && cfg.storage.secretAccessKeyFile != null;
-        message = "<option>services.hollo.storage.urlBase</option>, <option>services.hollo.storage.region</option>, <option>services.hollo.storage.bucket</option>, <option>services.hollo.storage.endpointUrl</option>, <option>services.hollo.storage.accessKeyId</option>, <option>services.hollo.storage.secretAccessKeyFile</option> need to be set when <option>services.hollo.storage.type</option> is `s3`";
+        message = "${opts.storage.region}, ${opts.storage.bucket}, ${opts.storage.endpointUrl}, ${opts.storage.accessKeyId}, ${opts.storage.secretAccessKeyFile} need to be set when ${opts.storage.type} is `s3`";
       }
     ];
     systemd.services.hollo = {
@@ -212,7 +213,7 @@ in
         User = "hollo";
         Group = "hollo";
 
-        StateDirectory = lib.mkIf (cfg.storage.fsAssetPath == "/var/lib/hollo") "hollo";
+        StateDirectory = lib.mkIf (cfg.storage.fsPath == "/var/lib/hollo") "hollo";
 
         LoadCredential =
           [
@@ -286,8 +287,8 @@ in
         DATABASE_NAME = cfg.database.name;
         # storage
         DRIVE_DISK = cfg.storage.type;
-        FS_ASSET_PATH = cfg.storage.fsAssetPath;
-        ASSET_URL_BASE = cfg.storage.urlBase;
+        STORAGE_URL_BASE = cfg.storage.urlBase;
+        FS_STORAGE_PATH = cfg.storage.fsPath;
         S3_REGION = cfg.storage.region;
         S3_BUCKET = cfg.storage.bucket;
         S3_ENDPOINT_URL = cfg.storage.endpointUrl;
