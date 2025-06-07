@@ -15,6 +15,7 @@
       atomix # puzzle game
       gnome-contacts
       evince # replaced by papers
+      totem # video player
     ]
   );
 
@@ -24,6 +25,7 @@
 
     papers
     ptyxis
+    showtime
   ];
 
   i18n = {

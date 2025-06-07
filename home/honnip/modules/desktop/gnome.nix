@@ -74,9 +74,9 @@ in
       "application/pdf" = "org.gnome.Papers.desktop";
       "application/zip" = "org.gnome.FileRoller.desktop";
       # video & audio
-      "audio/mp4" = "org.gnome.Totem.desktop";
-      "video/mp4" = "org.gnome.Totem.desktop";
-      "video/webm" = "org.gnome.Totem.desktop";
+      "audio/mp4" = "org.gnome.Showtime.desktop";
+      "video/mp4" = "org.gnome.Showtime.desktop";
+      "video/webm" = "org.gnome.Showtime.desktop";
       # image
       "image/avif" = "org.gnome.Loupe.desktop";
       "image/bmp" = "org.gnome.Loupe.desktop";
