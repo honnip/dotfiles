@@ -10,13 +10,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hollo";
-  version = "0.6.1";
+  version = "0.6.2";
 
   src = fetchFromGitHub {
     owner = "fedify-dev";
     repo = "hollo";
     tag = finalAttrs.version;
-    hash = "sha256-jD/xd7NHD7pyLE83avZgetLAeG6Bgg7Ijey6icW0xAQ=";
+    hash = "sha256-vMnXOkbH30pPixlju7OlG/nOGM8ZNPiqNEJImUd85mA=";
   };
 
   nativeBuildInputs = [
