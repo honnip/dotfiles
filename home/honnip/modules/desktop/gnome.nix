@@ -77,6 +77,7 @@ in
       "audio/mp4" = "org.gnome.Showtime.desktop";
       "video/mp4" = "org.gnome.Showtime.desktop";
       "video/webm" = "org.gnome.Showtime.desktop";
+      "video/x-matroska" = "org.gnome.Showtime.desktop";
       # image
       "image/avif" = "org.gnome.Loupe.desktop";
       "image/bmp" = "org.gnome.Loupe.desktop";
