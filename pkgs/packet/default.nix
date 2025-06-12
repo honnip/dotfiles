@@ -15,11 +15,12 @@
   dbus,
   libadwaita,
   appstream,
+  python3Packages,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "packet";
-  version = "0.4.0";
+  version = "0.5.1";
 
   strictDeps = true;
 
@@ -27,12 +28,12 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "nozwock";
     repo = "packet";
     tag = finalAttrs.version;
-    hash = "sha256-MnDXwgzSnz8bLEAZE4PORKKIP8Ao5ZiImRqRzlQzYU8=";
+    hash = "sha256-MZdZf4fLtUd30LncPLVkcNdjuzw+Wi33A1MJqQbEurk=";
   };
 
   cargoDeps = rustPlatform.fetchCargoVendor {
     inherit (finalAttrs) pname version src;
-    hash = "sha256-LlqJoxAWHAQ47VlYB/sOtk/UkNa+E5CQS/3FQnAYFsI=";
+    hash = "sha256-ODrM8oGQpi+DpG4YQYibtVHbicuHOjZAlZ1wW2Gulec=";
   };
 
   nativeBuildInputs = [
@@ -52,7 +53,15 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs = [
     dbus
     libadwaita
+    python3Packages.wrapPython
   ];
+
+  postFixup = ''
+    buildPythonPath ${python3Packages.dbus-python}
+    patchPythonScript $out/share/packet/plugins/packet_nautilus.py
+    mkdir -p $out/share/nautilus-python
+    ln -s $out/share/packet/plugins $out/share/nautilus-python/extensions
+  '';
 
   meta = {
     description = "Quick Share client for Linux";
