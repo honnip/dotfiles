@@ -6,7 +6,6 @@
     ../modules/users/honnip
 
     ../modules/tailscale-exit-node.nix
-    ../modules/node-exporter.nix
     ../modules/remote-build.nix
     ../modules/server.nix
 
