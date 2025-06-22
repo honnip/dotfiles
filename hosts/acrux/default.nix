@@ -31,10 +31,5 @@
 
   services.nixseparatedebuginfod.enable = true;
 
-  system.switch = {
-    enable = false;
-    enableNg = true;
-  };
-
   nix.settings.max-jobs = 10;
 }
