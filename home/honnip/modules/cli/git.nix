@@ -1,4 +1,4 @@
-{ osConfig, config, ... }:
+{ osConfig, ... }:
 {
   programs.git = {
     enable = true;
@@ -9,7 +9,6 @@
       init = {
         defaultBranch = "main";
       };
-      gpg.program = "${config.programs.gpg.package}/bin/gpg2";
       user = {
         signing.key = "576E43EF8482E415";
       };
