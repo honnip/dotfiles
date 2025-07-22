@@ -19,7 +19,6 @@
     ../modules/pipewire.nix
     ../modules/syncthing.nix
     ../modules/remote-build.nix
-    ../modules/lix.nix
   ];
 
   networking.hostName = "acrux";
