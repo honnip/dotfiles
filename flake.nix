@@ -3,7 +3,7 @@
 
   inputs = {
     lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/release-2.91.tar.gz";
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/release-2.93.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
