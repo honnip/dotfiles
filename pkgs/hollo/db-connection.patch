@@ -24,7 +24,7 @@ diff --git a/drizzle.config.ts b/drizzle.config.ts
 diff --git a/src/db.ts b/src/db.ts
 --- a/src/db.ts
 +++ b/src/db.ts
-@@ -4,10 +4,6 @@ import { drizzle } from "drizzle-orm/postgres-js";
+@@ -8,11 +8,12 @@ import {
  import createPostgres from "postgres";
  import * as schema from "./schema";
  
@@ -32,13 +32,6 @@ diff --git a/src/db.ts b/src/db.ts
 -const databaseUrl = process.env["DATABASE_URL"];
 -if (databaseUrl == null) throw new Error("DATABASE_URL must be defined");
 -
- class LogTapeLogger implements Logger {
-   readonly logger = getLogger("drizzle-orm");
- 
-@@ -56,7 +52,12 @@ class LogTapeLogger implements Logger {
-   }
- }
- 
 -export const postgres = createPostgres(databaseUrl, {
 +export const postgres = createPostgres({
 +  host: process.env["DATABASE_HOST"] ?? "localhost",

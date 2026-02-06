@@ -4,31 +4,35 @@
   fetchFromGitHub,
   nodejs,
   pnpm_9,
+  pnpmConfigHook,
+  fetchPnpmDeps,
   ffmpeg-headless,
   makeBinaryWrapper,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hollo";
-  version = "0.6.10";
+  version = "0.7.1";
 
   src = fetchFromGitHub {
     owner = "fedify-dev";
     repo = "hollo";
     tag = finalAttrs.version;
-    hash = "sha256-WFUx5OZZbI9kQWVmm1snWdAx3usE4R++ZhpfAzIa62o=";
+    hash = "sha256-YvxzxIsb7tMrQ8mP7EeT3xK7bqDaIIUyNiRKfipzo6Q=";
   };
 
   nativeBuildInputs = [
     makeBinaryWrapper
     nodejs
-    pnpm_9.configHook
+    pnpm_9
+    pnpmConfigHook
   ];
 
-  pnpmDeps = pnpm_9.fetchDeps {
+  pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
-    fetcherVersion = 2;
-    hash = "sha256-3n+Z49sh6vDF1SxlLLkUg6MlnJ5u7uaOrWg2Oheqd5Y=";
+    pnpm = pnpm_9;
+    fetcherVersion = 3;
+    hash = "sha256-e5WgYKdGKnmRB3AvNarWts++kl2beVAxgbxU7QE8plY=";
   };
 
   # TODO: remove when https://github.com/dahlia/hollo/issues/56 is resolved
