@@ -28,7 +28,7 @@
   environment.systemPackages = with pkgs; [ nautilus-python ];
   environment.pathsToLink = [ "/share/nautilus-python/extensions" ];
 
-  services.nixseparatedebuginfod.enable = true;
+  services.nixseparatedebuginfod2.enable = true;
 
   nix.settings.max-jobs = 10;
 }
