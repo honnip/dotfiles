@@ -8,7 +8,6 @@ let
     just-perfection
     pano
     smile-complementary-extension
-    tailscale-qs
   ];
 in
 {
@@ -51,6 +50,8 @@ in
       "use-event-forwarding" = false;
     };
   };
+
+  services.tailscale-systray.enable = true;
 
   xdg.mimeApps = {
     enable = true;
