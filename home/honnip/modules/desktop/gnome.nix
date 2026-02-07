@@ -4,7 +4,7 @@ let
     alphabetical-app-grid
     appindicator
     blur-my-shell
-    dock-from-dash
+    dash-to-dock
     just-perfection
     pano
     smile-complementary-extension
