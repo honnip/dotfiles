@@ -2,12 +2,11 @@
   description = "NixOS configuration";
 
   inputs = {
-    lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/release-2.93.tar.gz";
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
+    hardware = {
+      url = "github:NixOS/nixos-hardware/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
-    hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";

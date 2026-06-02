@@ -6,8 +6,16 @@ let
     blur-my-shell
     dash-to-dock
     just-perfection
-    pano
     smile-complementary-extension
+
+    (copyous.overrideAttrs (old: {
+      buildInputs = [
+        pkgs.libgda5
+      ];
+      preInstall = ''
+        sed -i "1i import GIRepository from 'gi://GIRepository';\nGIRepository.Repository.dup_default().prepend_search_path('${pkgs.libgda5}/lib/girepository-1.0');\nGIRepository.Repository.dup_default().prepend_search_path('${pkgs.gsound}/lib/girepository-1.0');\n" lib/preferences/dependencies/dependencies.js
+      '';
+    }))
   ];
 in
 {

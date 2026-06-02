@@ -1,12 +1,22 @@
 {
   lib,
+  pkgs,
   config,
-  inputs,
   ...
 }:
 {
-  imports = [ inputs.lix-module.nixosModules.lixFromNixpkgs ];
+  nixpkgs.overlays = [
+    (final: prev: {
+      inherit (prev.lixPackageSets.stable)
+        nixpkgs-review
+        nix-eval-jobs
+        nix-fast-build
+        colmena
+        ;
+    })
+  ];
   nix = {
+    package = pkgs.lixPackageSets.stable.lix;
     channel.enable = false;
     # the store is host-managed
     optimise.automatic = lib.mkDefault (!config.boot.isContainer);

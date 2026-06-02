@@ -3,13 +3,13 @@
   programs.git = {
     enable = true;
     package = osConfig.programs.git.package;
-    userName = "Honnip";
-    userEmail = "me@honnip.page";
-    extraConfig = {
+    settings = {
       init = {
         defaultBranch = "main";
       };
       user = {
+        name = "Honnip";
+        email = "me@honnip.page";
         signing.key = "576E43EF8482E415";
       };
       core = {
@@ -72,11 +72,15 @@
         };
       };
     };
-    difftastic.enable = true;
     ignores = [
       ".direnv"
       ".envrc"
       "result"
     ];
+  };
+
+  programs.difftastic = {
+    enable = true;
+    git.enable = true;
   };
 }

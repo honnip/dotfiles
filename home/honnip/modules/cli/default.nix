@@ -17,7 +17,6 @@
     _7zz
 
     nh
-    nixpkgs-review
   ];
 
   programs.nix-index.enable = lib.mkDefault true;
