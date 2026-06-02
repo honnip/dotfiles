@@ -13,8 +13,6 @@
 
   fonts.fontconfig.enable = lib.mkDefault false;
 
-  programs.command-not-found.enable = lib.mkDefault false;
-
   xdg.autostart.enable = lib.mkDefault false;
   xdg.icons.enable = lib.mkDefault false;
   xdg.menus.enable = lib.mkDefault false;
