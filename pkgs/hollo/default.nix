@@ -12,13 +12,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hollo";
-  version = "0.7.1";
+  version = "0.9.5";
 
   src = fetchFromGitHub {
     owner = "fedify-dev";
     repo = "hollo";
     tag = finalAttrs.version;
-    hash = "sha256-YvxzxIsb7tMrQ8mP7EeT3xK7bqDaIIUyNiRKfipzo6Q=";
+    hash = "sha256-Iw03ZABz3EG9nD5H27rvEMs7tn2k/HEgJFk1KERmy2o=";
   };
 
   nativeBuildInputs = [
@@ -32,7 +32,7 @@ stdenv.mkDerivation (finalAttrs: {
     inherit (finalAttrs) pname version src;
     pnpm = pnpm_9;
     fetcherVersion = 3;
-    hash = "sha256-e5WgYKdGKnmRB3AvNarWts++kl2beVAxgbxU7QE8plY=";
+    hash = "sha256-GW2CLk5pd0NwtmCTTDWSgte+Io4vvD2qDYLN5PeVVgc=";
   };
 
   # TODO: remove when https://github.com/dahlia/hollo/issues/56 is resolved
@@ -43,9 +43,12 @@ stdenv.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
 
+    pnpm run build
+
     cp -r . $out
 
     echo "shell-emulator=true" > $out/.npmrc
+
     makeBinaryWrapper ${lib.getExe pnpm_9} $out/bin/hollo \
       --prefix PATH : ${
         lib.makeBinPath [

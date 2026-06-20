@@ -1,44 +1,57 @@
 diff --git a/drizzle.config.ts b/drizzle.config.ts
 --- a/drizzle.config.ts
 +++ b/drizzle.config.ts
-@@ -1,14 +1,14 @@
+@@ -1,14 +1,16 @@
  import type { Config } from "drizzle-kit";
  
--// biome-ignore lint/complexity/useLiteralKeys: tsc rants about this (TS4111)
+-// oxlint-disable-next-line typescript/dot-notation
 -const databaseUrl = process.env["DATABASE_URL"];
 -if (databaseUrl == null) throw new Error("DATABASE_URL must be defined");
--
- export default {
-   schema: "./src/schema.ts",
-   out: "./drizzle",
-   dialect: "postgresql",
-   dbCredentials: {
--    url: databaseUrl,
-+    host: process.env["DATABASE_HOST"] ?? "localhost",
-+    port: process.env["DATABASE_PORT"] ? parseInt(process.env["DATABASE_PORT"]) : undefined,
-+    user: process.env["DATABASE_USER"] ?? undefined,
-+    password: process.env["DATABASE_PASSWORD"] ?? undefined,
-+    database: process.env["DATABASE_NAME"] ?? undefined
-   },
- } satisfies Config;
-diff --git a/src/db.ts b/src/db.ts
---- a/src/db.ts
-+++ b/src/db.ts
-@@ -8,11 +8,12 @@ import {
- import createPostgres from "postgres";
- import * as schema from "./schema";
- 
--// biome-ignore lint/complexity/useLiteralKeys: tsc rants about this (TS4111)
--const databaseUrl = process.env["DATABASE_URL"];
--if (databaseUrl == null) throw new Error("DATABASE_URL must be defined");
--
--export const postgres = createPostgres(databaseUrl, {
-+export const postgres = createPostgres({
++const credentials = {
 +  host: process.env["DATABASE_HOST"] ?? "localhost",
 +  port: process.env["DATABASE_PORT"] ? parseInt(process.env["DATABASE_PORT"]) : undefined,
 +  user: process.env["DATABASE_USER"] ?? undefined,
 +  password: process.env["DATABASE_PASSWORD"] ?? undefined,
-+  database: process.env["DATABASE_NAME"] ?? undefined,
-   connect_timeout: 5,
-   connection: { IntervalStyle: "iso_8601" },
- });
++  database: process.env["DATABASE_NAME"] ?? undefined
++}
+ 
+ export default {
+   schema: "./src/schema.ts",
+   out: "./drizzle",
+   dialect: "postgresql",
+-  dbCredentials: {
+-    url: databaseUrl,
+-  },
++  dbCredentials: credentials,
+ } satisfies Config;
+diff --git a/src/db.ts b/src/db.ts
+--- a/src/db.ts
++++ b/src/db.ts
+@@ -9,18 +9,23 @@ import createPostgres from "postgres";
+ import { wrapPostgresClient } from "./db-cancel";
+ import { relations } from "./relations";
+ 
+-// oxlint-disable-next-line typescript/dot-notation
+-const databaseUrl = process.env["DATABASE_URL"];
+-if (databaseUrl == null) throw new Error("DATABASE_URL must be defined");
++const credentials = {
++  host: process.env["DATABASE_HOST"] ?? "localhost",
++  port: process.env["DATABASE_PORT"] ? parseInt(process.env["DATABASE_PORT"]) : undefined,
++  user: process.env["DATABASE_USER"] ?? undefined,
++  password: process.env["DATABASE_PASSWORD"] ?? undefined,
++  database: process.env["DATABASE_NAME"] ?? undefined
++}
+ 
+ export const postgres = wrapPostgresClient(
+-  createPostgres(databaseUrl, {
++  createPostgres({
+     // The pool size needs to exceed the ParallelMessageQueue concurrency (10)
+     // to leave headroom for HTTP handlers and KV store queries.  The default
+     // of 10 can cause connection starvation under federation load.
+     max: 20,
+     connect_timeout: 5,
+     connection: { IntervalStyle: "iso_8601" },
++    ...credentials
+   }),
+ );
+ export const db = drizzle({ client: postgres, relations, logger: getLogger() });
