@@ -1,56 +1,21 @@
 { pkgs, ... }:
 {
-  programs.firefox = {
-    enable = true;
-    languagePacks = [ "ko" ];
-    profiles.default = {
-      settings = {
-        "browser.shell.checkDefaultBrowser" = false;
-        # experimental support for fractional scaling
-        "widget.wayland.fractional-scale.enabled" = true;
-        # vaapi
-        "media.ffmpeg.vaapi.enabled" = true;
-        # always use the DE's file picker
-        "widget.use-xdg-desktop-portal.file-picker" = 1;
-        # firefox-gnome-theme
-        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-        "svg.context-properties.content.enabled" = true;
-      };
-
-      userChrome = ''
-        @import "${pkgs.firefox-gnome-theme}/userChrome.css";
-
-        #TabsToolbar {
-          display: none;
-        }
-
-        #sidebar-header {
-          display: none;
-        }
-      '';
-
-      userContent = ''
-        @import "${pkgs.firefox-gnome-theme}/userContent.css"
-      '';
-    };
-  };
-
   programs.chromium = {
     enable = true;
     package = pkgs.google-chrome;
   };
 
   xdg.mimeApps.defaultApplications = {
-    "text/html" = "firefox.desktop";
-    "text/xml" = "firefox.desktop";
-    "x-scheme-handler/http" = "firefox.desktop";
-    "x-scheme-handler/https" = "firefox.desktop";
-    "x-scheme-handler/chrome" = "firefox.desktop";
-    "application/xhtml+xml" = "firefox.desktop";
-    "application/x-extension-htm" = "firefox.desktop";
-    "application/x-extension-html" = "firefox.desktop";
-    "application/x-extension-shtml" = "firefox.desktop";
-    "application/x-extension-xhtml" = "firefox.desktop";
-    "application/x-extension-xht" = "firefox.desktop";
+    "text/html" = "google-chrome.desktop";
+    "text/xml" = "google-chrome.desktop";
+    "x-scheme-handler/http" = "google-chrome.desktop";
+    "x-scheme-handler/https" = "google-chrome.desktop";
+    "x-scheme-handler/chrome" = "google-chrome.desktop";
+    "application/xhtml+xml" = "google-chrome.desktop";
+    "application/x-extension-htm" = "google-chrome.desktop";
+    "application/x-extension-html" = "google-chrome.desktop";
+    "application/x-extension-shtml" = "google-chrome.desktop";
+    "application/x-extension-xhtml" = "google-chrome.desktop";
+    "application/x-extension-xht" = "google-chrome.desktop";
   };
 }
