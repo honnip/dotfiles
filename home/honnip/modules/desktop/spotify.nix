@@ -6,6 +6,7 @@ in
   imports = [ inputs.spicetify-nix.homeManagerModules.default ];
   programs.spicetify = {
     enable = true;
+    wayland = true;
     theme = spicePkgs.themes.comfy;
     colorScheme = "rose-pine-moon";
     enabledCustomApps = with spicePkgs.apps; [
@@ -16,8 +17,6 @@ in
       betterGenres
       fullAlbumDate
       songStats
-      copyToClipboard
-      copyLyrics
     ];
   };
 }
