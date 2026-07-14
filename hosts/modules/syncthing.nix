@@ -21,6 +21,9 @@ in
         "s23" = {
           id = "574VYXD-LVW64J3-RWWDHVO-G6FVGNE-RGFPGI6-LWDMZFW-XGV3FL3-ND7LNQK";
         };
+        "s26" = {
+          id = "EG6NUJO-CHJXAGK-2KKZHCJ-IC4556A-W6BFWKX-353WC4A-EUOAC32-XVPLGAZ";
+        };
       };
       folders = (
         filterByName hostname {
@@ -30,6 +33,7 @@ in
               "acrux"
               "antares"
               "s23"
+              "s26"
             ];
           };
           "Music" = {
@@ -37,6 +41,7 @@ in
             devices = [
               "acrux"
               "s23"
+              "s26"
             ];
           };
           "Stickers" = {
@@ -45,6 +50,7 @@ in
               "acrux"
               "antares"
               "s23"
+              "s26"
             ];
           };
         }
