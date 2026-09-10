@@ -20,8 +20,6 @@
     vscode
 
     fragments
-
-    bottles
   ];
 
   xdg.mimeApps.defaultApplications = {
