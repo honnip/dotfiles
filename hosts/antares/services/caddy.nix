@@ -21,6 +21,9 @@ in
               header_up X-Real-IP {remote_host}
             }
           }
+          handle /hister/* {
+            reverse_proxy 127.0.0.1:${toString config.services.hister.port}
+          }
         '';
       };
     };
