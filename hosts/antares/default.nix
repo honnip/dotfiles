@@ -1,5 +1,6 @@
-{
+{ inputs, ... }: {
   imports = [
+    inputs.hermes.nixosModules.default
     ./hardware-configuration.nix
 
     ../modules/global
@@ -14,6 +15,7 @@
   ];
 
   services.syncthing.guiAddress = "0.0.0.0:8384";
+  virtualisation.oci-containers.backend = "podman";
 
   nix.settings.max-jobs = 2;
 
