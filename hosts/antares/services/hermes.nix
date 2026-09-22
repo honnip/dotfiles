@@ -22,6 +22,7 @@
     extraPackages = with pkgs; [
       legalize
     ];
+    extraPlugins = [ pkgs.superpowers ];
     configFile = pkgs.writeText "config.yaml" (
       builtins.toJSON {
         model = {
@@ -57,6 +58,7 @@
             timeout = 30;
           };
         };
+        plugins.enabled = [ "superpowers" ];
       }
     );
     hermesHomeFiles = {

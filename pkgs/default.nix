@@ -4,5 +4,6 @@
   thunderbird-gnome-theme = pkgs.callPackage ./thunderbird-gnome-theme {
     src = inputs.thunderbird-gnome-theme;
   };
-  legalize = pkgs.callPackage ./legalize.nix { };
+  legalize = pkgs.callPackage ./legalize { };
+  superpowers = pkgs.callPackage ./superpowers { };
 }
