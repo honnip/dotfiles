@@ -21,6 +21,17 @@
     ];
     extraPackages = with pkgs; [
       legalize
+      git
+      gh
+      jq
+      yq
+      unzip
+      _7zz
+      sqlite
+      python3
+      uv
+      poppler-utils
+      pandoc
     ];
     extraPlugins = [ pkgs.superpowers ];
     configFile = pkgs.writeText "config.yaml" (
