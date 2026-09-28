@@ -37,9 +37,35 @@
     configFile = pkgs.writeText "config.yaml" (
       builtins.toJSON {
         model = {
-          default = "deepseek/deepseek-v4.1-flash";
+          provider = "xiaomi";
+          model = "mimo-v2.6-pro";
+        };
+        fallback_providers = {
+          provider = "deepseek";
+          model = "deepseek-flash";
+        };
+        auxiliary = {
+          title_generation = {
+            provider = "xiaomi";
+            model = "mimo-v2.6-flash";
+          };
+          compression = {
+            provider = "xiaomi";
+            model = "mimo-v2.6-flash";
+          };
+          vision = {
+            provider = "deepseek";
+            model = "deepseek-flash";
+          };
+          approval = {
+            provider = "xiaomi";
+            model = "mimo-v2.6-flash";
+          };
         };
         terminal.cwd = config.services.hermes-agent.workingDirectory;
+        approvals = {
+          mode = "smart";
+        };
         compression = {
           enabled = true;
           threshold = 0.85;
@@ -49,6 +75,7 @@
           provider = "hindsight";
         };
         display = {
+          language = "ko";
           compact = false;
           personality = "kawaii";
         };

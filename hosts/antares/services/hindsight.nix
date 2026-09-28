@@ -36,9 +36,8 @@
       HINDSIGHT_API_VECTOR_EXTENSION = "pgvector";
       HINDSIGHT_API_TEXT_SEARCH_EXTENSION = "pgroonga";
 
-      HINDSIGHT_API_LLM_PROVIDER = "openrouter";
-      HINDSIGHT_API_LLM_MODEL = "deepseek/deepseek-v4.1-flash";
-      HINDSIGHT_API_LLM_BASE_URL = "https://openrouter.ai/api/v1";
+      HINDSIGHT_API_LLM_PROVIDER = "deepseek";
+      HINDSIGHT_API_LLM_MODEL = "deepseek-flash";
       HINDSIGHT_API_WORKER_ID = "hindsight";
       HINDSIGHT_API_EMBEDDINGS_LOCAL_MODEL = "BAAI/bge-m3";
       HINDSIGHT_API_RERANKER_LOCAL_MODEL = "BAAI/bge-reranker-v2-m3";
