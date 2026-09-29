@@ -87,6 +87,10 @@
           require_mention = false;
           dm_auto_thread = true;
         };
+        gateway = {
+          strict = true;
+          media_delivery_allow_dirs = [ config.services.hermes-agent.workingDirectory ];
+        };
         checkpoints.enabled = true;
         security.allow_lazy_installs = false;
         mcp_servers = {
