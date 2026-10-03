@@ -13,10 +13,10 @@
     image = "hindsight:latest";
     imageFile = pkgs.dockerTools.pullImage {
       imageName = "ghcr.io/vectorize-io/hindsight";
-      imageDigest = "sha256:ba349b5bc2d8af4dd9acaa59f3c04f224c4652a0d9409e42026f8e5282842061";
-      hash = "sha256-7DF7fHVsbpX2delRcEvmakGEy+PG1vhl/YnahNo+H2k=";
+      imageDigest = "sha256:d1840062a5b79940ab7a9f4809ceb90fc776d4ad737cd9329e9b5836cc64ab70";
+      hash = "sha256-PlT0Nsu9EBtt2OomizKn6ZUIVSEnQwFKfXSd+WOTbOA=";
       finalImageName = "hindsight";
-      finalImageTag = "latest";
+      finalImageTag = "0.10.2";
     };
     autoStart = true;
     pull = "never";
