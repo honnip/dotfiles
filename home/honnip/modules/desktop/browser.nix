@@ -1,21 +1,25 @@
-{ pkgs, ... }:
 {
-  programs.chromium = {
+  programs.firefox = {
     enable = true;
-    package = pkgs.google-chrome;
+    languagePacks = [ "ko" ];
+    profiles.default = {
+      settings = {
+        "widget.use-xdg-desktop-portal.file-picker" = 1;
+      };
+    };
   };
 
   xdg.mimeApps.defaultApplications = {
-    "text/html" = "google-chrome.desktop";
-    "text/xml" = "google-chrome.desktop";
-    "x-scheme-handler/http" = "google-chrome.desktop";
-    "x-scheme-handler/https" = "google-chrome.desktop";
-    "x-scheme-handler/chrome" = "google-chrome.desktop";
-    "application/xhtml+xml" = "google-chrome.desktop";
-    "application/x-extension-htm" = "google-chrome.desktop";
-    "application/x-extension-html" = "google-chrome.desktop";
-    "application/x-extension-shtml" = "google-chrome.desktop";
-    "application/x-extension-xhtml" = "google-chrome.desktop";
-    "application/x-extension-xht" = "google-chrome.desktop";
+    "text/html" = "firefox.desktop";
+    "text/xml" = "firefox.desktop";
+    "x-scheme-handler/http" = "firefox.desktop";
+    "x-scheme-handler/https" = "firefox.desktop";
+    "x-scheme-handler/chrome" = "firefox.desktop";
+    "application/xhtml+xml" = "firefox.desktop";
+    "application/x-extension-htm" = "firefox.desktop";
+    "application/x-extension-html" = "firefox.desktop";
+    "application/x-extension-shtml" = "firefox.desktop";
+    "application/x-extension-xhtml" = "firefox.desktop";
+    "application/x-extension-xht" = "firefox.desktop";
   };
 }
