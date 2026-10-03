@@ -14,7 +14,6 @@ in
     ];
     enabledExtensions = with spicePkgs.extensions; [
       adblock
-      betterGenres
       fullAlbumDate
       songStats
     ];
