@@ -1,10 +1,10 @@
 {
   lib,
-  stdenv,
+  stdenvNoCC,
   src,
 }:
 
-stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   pname = "thunderbird-gnome-theme";
   version = "unstable";
 
@@ -14,11 +14,11 @@ stdenv.mkDerivation {
 
   installPhase = "cp -r . $out";
 
-  meta = with lib; {
+  meta = {
     description = "GNOME theme for Thunderbird";
     homepage = "https://github.com/rafaelmardojai/thunderbird-gnome-theme";
-    license = licenses.unlicense;
-    maintainers = with maintainers; [ honnip ];
-    platforms = platforms.all;
+    license = lib.licenses.unlicense;
+    maintainers = [ lib.maintainers.honnip ];
+    platforms = lib.platforms.all;
   };
 }

@@ -1,10 +1,10 @@
 {
   lib,
-  stdenv,
+  stdenvNoCC,
   src,
 }:
 
-stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   pname = "firefox-gnome-theme";
   version = "unstable";
 
@@ -12,13 +12,17 @@ stdenv.mkDerivation {
 
   dontBuild = true;
 
-  installPhase = "cp -r . $out";
+  installPhase = ''
+    preInstall
+    cp -r . $out
+    postInstall
+  '';
 
-  meta = with lib; {
+  meta = {
     description = "GNOME theme for Firefox";
     homepage = "https://github.com/rafaelmardojai/firefox-gnome-theme";
-    license = licenses.unlicense;
-    maintainers = with maintainers; [ honnip ];
-    platforms = platforms.all;
+    license = lib.licenses.unlicense;
+    maintainers = [ lib.maintainers.honnip ];
+    platforms = lib.platforms.all;
   };
 }
