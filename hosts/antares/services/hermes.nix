@@ -116,6 +116,8 @@
         builtins.toJSON {
           mode = "local_external";
           api_url = "http://localhost:8888";
+          # always timeout
+          prefetch_waits_for_retain = false;
         }
       );
     };

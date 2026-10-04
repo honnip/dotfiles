@@ -42,6 +42,7 @@
       HINDSIGHT_API_EMBEDDINGS_LOCAL_MODEL = "BAAI/bge-m3";
       HINDSIGHT_API_RERANKER_LOCAL_MODEL = "BAAI/bge-reranker-v2-m3";
 
+      HINDSIGHT_API_ENABLE_RERANKING = "false";
       HINDSIGHT_API_LOG_LEVEL = "info";
     };
 
