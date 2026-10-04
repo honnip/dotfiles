@@ -40,6 +40,26 @@
       url = "github:NousResearch/hermes-agent";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    legalize-cli = {
+      url = "github:legalize-kr/cli-tools?ref=v0.4.0";
+      flake = false;
+    };
+    legalize-skills = {
+      url = "github:legalize-kr/agent-skills?&ref=v0.1.1";
+      flake = false;
+    };
+    superpowers = {
+      url = "github:obra/superpowers?ref=v6.4.2";
+      flake = false;
+    };
+    humanizer = {
+      url = "github:blader/humanizer?ref=v3.1.0";
+      flake = false;
+    };
+    simple-english = {
+      url = "github:AminBlg/SimpleEnglish?ref=v2.1.1";
+      flake = false;
+    };
   };
 
   outputs =

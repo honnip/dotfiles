@@ -20,7 +20,7 @@
       "hindsight"
     ];
     extraPackages = with pkgs; [
-      legalize
+      legalize-cli
       git
       gh
       jq

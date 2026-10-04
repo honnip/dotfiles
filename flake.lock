@@ -91,11 +91,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1791041044,
-        "narHash": "sha256-uXhtSw6K+KKJ6SsKQOkO2TT+oxme0FRv7oWMUsK03UI=",
+        "lastModified": 1791065845,
+        "narHash": "sha256-+14P/oM9OCh5Lat/xKdu/6fYoKo7Uf4b19qxeGRJgSw=",
         "owner": "NousResearch",
         "repo": "hermes-agent",
-        "rev": "db45b44ab72af81974adfb01c9ecd6967f5bec29",
+        "rev": "158fd638da1629c8e62caf9ade1515d162def8ab",
         "type": "github"
       },
       "original": {
@@ -142,6 +142,57 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "humanizer": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790574878,
+        "narHash": "sha256-n8cbTzhlGf8VnWpPukq7XD2mucIrqyE1XMpAAc5oA8A=",
+        "owner": "blader",
+        "repo": "humanizer",
+        "rev": "225a6f39ac85f76ee48dbad772ea4abe4ed6c9d8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "blader",
+        "ref": "v3.1.0",
+        "repo": "humanizer",
+        "type": "github"
+      }
+    },
+    "legalize-cli": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1788613497,
+        "narHash": "sha256-XbojMQo+nNRYUyKkzjQuPl+BfRPNbzUhcLz44S8rhcE=",
+        "owner": "legalize-kr",
+        "repo": "cli-tools",
+        "rev": "cb04e56977484756e761e9f3263746c07e0cfe7d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "legalize-kr",
+        "ref": "v0.4.0",
+        "repo": "cli-tools",
+        "type": "github"
+      }
+    },
+    "legalize-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782916716,
+        "narHash": "sha256-boPAmhoeb9xsAGDA4/oWEd7LaYlE0PUmiz4uVFdTjTA=",
+        "owner": "legalize-kr",
+        "repo": "agent-skills",
+        "rev": "0ce6ce596e755d7a65aa4c41a3cc09a1dab3fdf8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "legalize-kr",
+        "ref": "v0.1.1",
+        "repo": "agent-skills",
         "type": "github"
       }
     },
@@ -256,11 +307,33 @@
         "hardware": "hardware",
         "hermes": "hermes",
         "home-manager": "home-manager_2",
+        "humanizer": "humanizer",
+        "legalize-cli": "legalize-cli",
+        "legalize-skills": "legalize-skills",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
+        "simple-english": "simple-english",
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix",
+        "superpowers": "superpowers",
         "thunderbird-gnome-theme": "thunderbird-gnome-theme"
+      }
+    },
+    "simple-english": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790781264,
+        "narHash": "sha256-mWs9n465FMiMcyxD9diTV6olXWuTy2wW+bZ475Vc3to=",
+        "owner": "AminBlg",
+        "repo": "SimpleEnglish",
+        "rev": "32ea2d3f4404bfbff162c1861e5ae4f1bcc628b3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AminBlg",
+        "ref": "v2.1.1",
+        "repo": "SimpleEnglish",
+        "type": "github"
       }
     },
     "sops-nix": {
@@ -301,6 +374,23 @@
       "original": {
         "owner": "Gerg-L",
         "repo": "spicetify-nix",
+        "type": "github"
+      }
+    },
+    "superpowers": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790359587,
+        "narHash": "sha256-BWPiXoXV+jePP+wn/Z+Af4iehIL7oei00plaWaTzq8s=",
+        "owner": "obra",
+        "repo": "superpowers",
+        "rev": "8ca22dba9a94f28898bbce59f2537ff4d87c747d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "obra",
+        "ref": "v6.4.2",
+        "repo": "superpowers",
         "type": "github"
       }
     },
