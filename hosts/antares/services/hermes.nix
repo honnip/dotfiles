@@ -10,14 +10,9 @@
     package = inputs.hermes.packages.${pkgs.system}.minimal;
     addToSystemPackages = true;
     environmentFiles = [ config.sops.secrets.hermes.path ];
-    environment = {
-      # https://github.com/NousResearch/hermes-agent/pull/96039
-      MATRIX_DM_AUTO_THREAD = "true";
-    };
     extraDependencyGroups = [
       "matrix"
       "firecrawl"
-      "hindsight"
     ];
     extraPackages = with pkgs; [
       legalize-cli
@@ -59,7 +54,7 @@
           };
           approval = {
             provider = "xiaomi";
-            model = "mimo-v2.6-flash";
+            model = "deepseek-flash";
           };
         };
         terminal.cwd = config.services.hermes-agent.workingDirectory;
@@ -93,6 +88,13 @@
         };
         checkpoints.enabled = true;
         security.allow_lazy_installs = false;
+        skills = {
+          external_dirs = with pkgs; [
+            legalize-skills
+            simple-english
+            humanizer
+          ];
+        };
         mcp_servers = {
           legalize = {
             command = "legalize-mcp";
@@ -100,7 +102,10 @@
             timeout = 30;
           };
         };
-        plugins.enabled = [ "superpowers" ];
+        plugins.enabled = [
+          "hindsight"
+          "superpowers"
+        ];
       }
     );
     hermesHomeFiles = {
