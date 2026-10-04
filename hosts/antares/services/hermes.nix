@@ -9,6 +9,9 @@
     enable = true;
     package = inputs.hermes.packages.${pkgs.system}.minimal;
     addToSystemPackages = true;
+    environment = {
+      MATRIX_DM_AUTO_THREAD = "true";
+    };
     environmentFiles = [ config.sops.secrets.hermes.path ];
     extraDependencyGroups = [
       "matrix"
