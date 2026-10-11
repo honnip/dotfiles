@@ -111,28 +111,5 @@
         };
       };
 
-      homeConfigurations = {
-        "honnip@acrux" = lib.homeManagerConfiguration {
-          modules = [ ./home/honnip/acrux.nix ];
-          pkgs = pkgsFor.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-          };
-        };
-        "honnip@antares" = lib.homeManagerConfiguration {
-          modules = [ ./home/honnip/antares.nix ];
-          pkgs = pkgsFor.aarch64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-          };
-        };
-        "honnip@canopus" = lib.homeManagerConfiguration {
-          modules = [ ./home/honnip/canopus.nix ];
-          pkgs = pkgsFor.aarch64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-          };
-        };
-      };
     };
 }
