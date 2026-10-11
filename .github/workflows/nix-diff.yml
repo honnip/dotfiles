@@ -1,0 +1,39 @@
+name: Nix Diff
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  nix-diff:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Install Nix
+        uses: nixbuild/nix-quick-install-action@9f63be77f412a248c9d9a65a4c82cf066cdf8f0c # v35
+      - name: Caches the inputs
+        uses: nix-community/cache-nix-action@7df957e333c1e5da7721f60227dbba6d06080569 # v7.0.2
+        with:
+          primary-key: eval-${{ hashFiles('**/flake.lock') }}
+          restore-prefixes-first-match: eval-
+      - name: Compare derivations and comment
+        uses: natsukium/nix-diff-action@4091452e4c7b3c7ea4ecbaec84be7f0066d810d7 # v1.1.1
+        with:
+          build: false
+          attributes: |
+            - displayName: acrux
+              attribute: nixosConfigurations.acrux.config.system.build.toplevel
+            - displayName: antares
+              attribute: nixosConfigurations.antares.config.system.build.toplevel
+            - displayName: canopus
+              attribute: nixosConfigurations.canopus.config.system.build.toplevel
