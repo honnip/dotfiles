@@ -1,0 +1,45 @@
+name: check
+
+on:
+  pull_request:
+    paths-ignore: ['**.md']
+  push:
+    branches: [main]
+    paths-ignore: ['**.md']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: nixbuild/nix-quick-install-action@v35
+
+      # The store content this job cares about = the flake inputs, which only
+      # change when flake.lock changes. Key on the lock alone: .nix-only
+      # changes then hit the cache (skip re-downloading inputs) and skip
+      # saving a duplicate. No gc/purge needed since saves only happen on
+      # lock changes -- and gc would evict the unreferenced flake inputs
+      # first (NixOS/nix#6895).
+      - name: Restore and save Nix cache
+        uses: nix-community/cache-nix-action@v7
+        with:
+          primary-key: check-${{ hashFiles('**/flake.lock') }}
+          restore-prefixes-first-match: check-
+
+      - name: Flake metadata (lock file sanity)
+        run: nix flake metadata --no-update-lock-file
+
+      # Checks packages, overlays, and nixosConfigurations.<name>.config.system.build.toplevel
+      # for every host regardless of architecture -- the same eval as
+      # `nix build .#nixosConfigurations.<host>.config.system.build.toplevel`, minus the build.
+      - name: nix flake check
+        run: nix flake check --no-update-lock-file --keep-going
