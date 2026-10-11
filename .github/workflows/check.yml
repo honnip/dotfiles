@@ -27,8 +27,8 @@ jobs:
       - name: Caches the inputs
         uses: nix-community/cache-nix-action@7df957e333c1e5da7721f60227dbba6d06080569 # v7.0.2
         with:
-          - primary‐key: eval-${{ hashFiles('**/flake.lock') }}
-          - restore-prefixes-first-match: eval-
+          primary-key: eval-${{ hashFiles('**/flake.lock') }}
+          restore-prefixes-first-match: eval-
       - name: Check lockfile sanity
         run: nix flake metadata --no-update-lock-file
       - name: Flake eval check
