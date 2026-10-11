@@ -127,6 +127,6 @@
     restartUnits = [ "hermes-agent.service" ];
   };
   systemd.services.hermes-agent.restartTriggers = [
-    (builtins.readFile config.services.hermes-agent.configFile)
+    config.services.hermes-agent.configFile
   ];
 }
