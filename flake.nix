@@ -47,7 +47,7 @@
       flake = false;
     };
     legalize-skills = {
-      url = "github:legalize-kr/agent-skills?&ref=v0.1.1";
+      url = "github:legalize-kr/agent-skills?&ref=v0.2.2";
       flake = false;
     };
     superpowers = {
