@@ -9,6 +9,9 @@ on:
       - "**.md"
   workflow_dispatch:
 
+env:
+  NIX_CONFIG: "allow-import-from-derivation = false"
+
 permissions:
   contents: read
 
