@@ -18,6 +18,10 @@ jobs:
     steps:
       - name: Install Nix
         uses: nixbuild/nix-quick-install-action@9f63be77f412a248c9d9a65a4c82cf066cdf8f0c # v35
+      - name: Install Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
       - name: Run Renovate
         run: npm install --global renovate@44.79.2 && renovate
         env:
@@ -25,4 +29,5 @@ jobs:
           RENOVATE_PLATFORM: github
           RENOVATE_REPOSITORIES: honnip/dotfiles
           RENOVATE_ALLOWED_COMMANDS: "^nix flake lock$"
+          RENOVATE_EXIT_CODE_FOR_ERRORS: "true"
           LOG_LEVEL: info
