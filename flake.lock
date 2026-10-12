@@ -183,16 +183,16 @@
     "legalize-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1782916716,
-        "narHash": "sha256-boPAmhoeb9xsAGDA4/oWEd7LaYlE0PUmiz4uVFdTjTA=",
+        "lastModified": 1791722823,
+        "narHash": "sha256-S/6woZekQpXJZ9ZQe1YrZTqki5m935/PY0RxZc6KAss=",
         "owner": "legalize-kr",
         "repo": "agent-skills",
-        "rev": "0ce6ce596e755d7a65aa4c41a3cc09a1dab3fdf8",
+        "rev": "51c065a3da22f41dd49a271906d6f0cd891f3eb9",
         "type": "github"
       },
       "original": {
         "owner": "legalize-kr",
-        "ref": "v0.1.1",
+        "ref": "v0.2.2",
         "repo": "agent-skills",
         "type": "github"
       }
