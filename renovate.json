@@ -1,5 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:best-practices"],
+  "dependencyDashboard": false,
   "nix": { "enabled": true },
   "lockFileMaintenance": { "enabled": true },
   "postUpgradeTasks": {
@@ -17,6 +19,14 @@
       ],
       "datasourceTemplate": "github-tags",
       "versioningTemplate": "loose"
+    },
+    {
+      "customType": "regex",
+      "description": "Bump the Renovate CLI version in the runner workflow",
+      "managerFilePatterns": ["/(^|/)\\.github/workflows/renovate\\.yml$/"],
+      "matchStrings": ["npm install --global renovate@(?<currentValue>[\\d.]+)"],
+      "datasourceTemplate": "npm",
+      "depNameTemplate": "renovate"
     }
   ]
 }
