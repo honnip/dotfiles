@@ -49,7 +49,7 @@
       flake = false;
     };
     superpowers = {
-      url = "github:obra/superpowers?ref=v6.4.2";
+      url = "github:obra/superpowers?ref=v7.0.0";
       flake = false;
     };
     humanizer = {
