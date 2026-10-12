@@ -43,7 +43,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     legalize-cli = {
-      url = "github:legalize-kr/cli-tools?ref=v0.4.0";
+      url = "github:legalize-kr/cli-tools?ref=v0.5.2";
       flake = false;
     };
     legalize-skills = {

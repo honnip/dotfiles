@@ -166,16 +166,16 @@
     "legalize-cli": {
       "flake": false,
       "locked": {
-        "lastModified": 1788613497,
-        "narHash": "sha256-XbojMQo+nNRYUyKkzjQuPl+BfRPNbzUhcLz44S8rhcE=",
+        "lastModified": 1791722617,
+        "narHash": "sha256-TfXSalikIWwQ9t0uJGX9WD52eAIYx7YY/88pn8IPsAo=",
         "owner": "legalize-kr",
         "repo": "cli-tools",
-        "rev": "cb04e56977484756e761e9f3263746c07e0cfe7d",
+        "rev": "ca8d87e7c5f3b80622e4eb9e06eadc1a5ece4ca9",
         "type": "github"
       },
       "original": {
         "owner": "legalize-kr",
-        "ref": "v0.4.0",
+        "ref": "v0.5.2",
         "repo": "cli-tools",
         "type": "github"
       }
