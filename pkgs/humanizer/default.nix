@@ -2,11 +2,12 @@
   src,
   lib,
   stdenvNoCC,
+  version,
   ...
 }:
 stdenvNoCC.mkDerivation {
   pname = "humanizer";
-  version = "3.1.0";
+  inherit version;
   inherit src;
 
   dontConfigure = true;

@@ -1,7 +1,7 @@
-{ stdenvNoCC, src, ... }:
+{ stdenvNoCC, src, version, ... }:
 stdenvNoCC.mkDerivation {
   pname = "superpowers";
-  version = "7.0.0";
+  inherit version;
   inherit src;
 
   dontConfigure = true;

@@ -2,16 +2,16 @@
   src,
   lib,
   stdenvNoCC,
+  version,
   ...
 }:
 stdenvNoCC.mkDerivation {
   pname = "SimpleEnglish";
-  version = "2.1.1";
+  inherit version;
   inherit src;
 
   dontConfigure = true;
   dontBuild = true;
-
   installPhase = ''
     runHook preInstall
     cp -r skills/simple-english $out
@@ -25,5 +25,4 @@ stdenvNoCC.mkDerivation {
     maintainers = [ lib.maintainers.honnip ];
     platforms = lib.platforms.all;
   };
-
 }

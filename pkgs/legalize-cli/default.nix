@@ -1,12 +1,13 @@
 {
   lib,
   src,
+  version,
   python3Packages,
   withMcp ? true,
 }:
 python3Packages.buildPythonApplication (finalAttrs: {
   pname = "legalize-cli";
-  version = "0.4.0";
+  inherit version;
   pyproject = true;
   inherit src;
 
