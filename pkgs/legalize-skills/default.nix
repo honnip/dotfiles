@@ -2,16 +2,16 @@
   stdenvNoCC,
   src,
   lib,
+  version,
   ...
 }:
 stdenvNoCC.mkDerivation {
   pname = "legalize-skills";
-  version = "0.1.1";
+  inherit version;
   inherit src;
 
   dontConfigure = true;
   dontBuild = true;
-
   installPhase = ''
     runHook preInstall
     cp -r skills/legalize-kr $out
