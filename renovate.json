@@ -1,0 +1,17 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "nix": { "enabled": true },
+  "lockFileMaintenance": { "enabled": true },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Bump tagged flake input refs in flake.nix",
+      "managerFilePatterns": ["/(^|/)flake\\.nix$/"],
+      "matchStrings": [
+        "(?<depName>[\\w.-]+) = \\{[^}]*?url = \"github:(?<packageName>[^\"?]+)\\?(?:&)?ref=v(?<currentValue>[\\d.]+)\""
+      ],
+      "datasourceTemplate": "github-tags",
+      "versioningTemplate": "loose"
+    }
+  ]
+}
