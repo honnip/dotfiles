@@ -28,5 +28,12 @@
       "datasourceTemplate": "npm",
       "depNameTemplate": "renovate"
     }
+  ],
+  "packageRules": [
+    {
+      "description": "Hermes moved from CalVer tags to semver tags, and canary tags exist. Keep both out of version lookups.",
+      "matchPackageNames": ["hermes"],
+      "allowedVersions": "/^0\\.\\d+\\.\\d+$/"
+    }
   ]
 }
