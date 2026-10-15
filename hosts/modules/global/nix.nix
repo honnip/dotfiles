@@ -13,6 +13,11 @@
         nix-fast-build
         colmena
         ;
+      # lixPackageSets defines nix-direnv as an override on the outer
+      # pkgs.nix-direnv, so `inherit` above would recurse here.
+      nix-direnv = prev.nix-direnv.override {
+        nix = prev.lixPackageSets.stable.lix;
+      };
     })
   ];
   nix = {
