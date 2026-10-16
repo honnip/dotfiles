@@ -87,6 +87,8 @@
 
       packages = forEachSystem (pkgs: import ./pkgs { inherit inputs pkgs; });
 
+      checks = forEachSystem (pkgs: import ./pkgs { inherit inputs pkgs; });
+
       overlays = import ./overlays { inherit inputs outputs; };
 
       nixosConfigurations = {

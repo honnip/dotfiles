@@ -1,0 +1,37 @@
+name: Lint Check
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Install Nix
+        uses: nixbuild/nix-quick-install-action@9f63be77f412a248c9d9a65a4c82cf066cdf8f0c # v35
+      - name: Caches the inputs
+        uses: nix-community/cache-nix-action@7df957e333c1e5da7721f60227dbba6d06080569 # v7.0.2
+        with:
+          primary-key: nix-store-${{ hashFiles('**/flake.lock') }}
+          restore-prefixes-first-match: nix-store-
+      - name: Lint workflows
+        run: nix run nixpkgs#actionlint
+      - name: Check for unused bindings
+        run: nix run nixpkgs#deadnix -- --fail -_ .
+      - name: Check formatting
+        run: git ls-files -z '*.nix' | xargs -0 -r nix run nixpkgs#nixfmt -- --check
