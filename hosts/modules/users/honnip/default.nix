@@ -24,6 +24,7 @@ in
     openssh.authorizedKeys.keys = [
       (builtins.readFile ../../../${hostName}/ssh_host_ed25519_key.pub)
       (builtins.readFile ../../../../home/honnip/ssh.pub)
+      (builtins.readFile ../../../../home/honnip/id_ed25519.pub)
     ];
     hashedPasswordFile = config.sops.secrets.honnip-password.path;
   };
