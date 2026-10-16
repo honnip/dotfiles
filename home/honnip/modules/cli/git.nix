@@ -10,7 +10,10 @@
       user = {
         name = "Honnip";
         email = "me@honnip.page";
-        signing.key = "576E43EF8482E415";
+        signing.key = "~/.ssh/id_ed25519.pub";
+      };
+      gpg = {
+        format = "ssh";
       };
       core = {
         editor = "hx";

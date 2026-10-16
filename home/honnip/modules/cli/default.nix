@@ -4,7 +4,6 @@
     ./bat.nix
     ./direnv.nix
     ./git.nix
-    ./gpg.nix
     ./helix.nix
     ./shell.nix
     ./ssh.nix
