@@ -12,11 +12,7 @@ stdenvNoCC.mkDerivation {
 
   dontBuild = true;
 
-  installPhase = ''
-    preInstall
-    cp -r . $out
-    postInstall
-  '';
+  installPhase = "cp -r . $out";
 
   meta = {
     description = "GNOME theme for Firefox";
