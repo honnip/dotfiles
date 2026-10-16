@@ -8,7 +8,8 @@
 {
   imports = [
     inputs.nix-index-database.homeModules.nix-index
-  ] ++ (builtins.attrValues outputs.homeManagerModules);
+  ]
+  ++ (builtins.attrValues outputs.homeManagerModules);
 
   systemd.user.startServices = "sd-switch";
 
