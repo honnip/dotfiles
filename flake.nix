@@ -39,7 +39,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hermes = {
-      url = "github:NousResearch/hermes-agent?ref=v0.22.0";
+      url = "github:NousResearch/hermes-agent?ref=v0.22.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     legalize-cli = {
