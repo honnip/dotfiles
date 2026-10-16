@@ -34,4 +34,4 @@ jobs:
       - name: Check for unused bindings
         run: nix run nixpkgs#deadnix -- --fail -_ .
       - name: Check formatting
-        run: git ls-files -z '*.nix' | xargs -0 -r nix run nixpkgs#nixfmt -- --check
+        run: nix fmt -- --ci
