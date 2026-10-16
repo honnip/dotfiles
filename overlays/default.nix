@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   additions =
-    final: prev:
+    final: _prev:
     import ../pkgs {
       inherit inputs;
       pkgs = final;
