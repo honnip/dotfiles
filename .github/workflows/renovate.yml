@@ -35,7 +35,7 @@ jobs:
         env:
           RENOVATE_TOKEN: ${{ steps.app-token.outputs.token }}
       - name: Run Renovate
-        run: npm install --global renovate@44.151.2 && renovate
+        run: npm install --global renovate@44.155.1 && renovate
         env:
           RENOVATE_TOKEN: ${{ steps.app-token.outputs.token }}
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
