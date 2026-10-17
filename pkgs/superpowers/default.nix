@@ -1,4 +1,9 @@
-{ stdenvNoCC, src, version, ... }:
+{
+  stdenvNoCC,
+  src,
+  version,
+  ...
+}:
 stdenvNoCC.mkDerivation {
   pname = "superpowers";
   inherit version;
