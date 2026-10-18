@@ -7,6 +7,9 @@ in
   users.mutableUsers = false;
   users.users.honnip = {
     isNormalUser = true;
+    # Start user units at boot so that the SSH agent works
+    # over SSH without a desktop login.
+    linger = true;
     shell = pkgs.fish;
     extraGroups = [
       "wheel"
