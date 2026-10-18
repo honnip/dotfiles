@@ -87,8 +87,6 @@
 
       packages = forEachSystem (pkgs: import ./pkgs { inherit inputs pkgs; });
 
-      checks = forEachSystem (pkgs: import ./pkgs { inherit inputs pkgs; });
-
       formatter = forEachSystem (pkgs: pkgs.nixfmt-tree);
 
       overlays = import ./overlays { inherit inputs outputs; };
