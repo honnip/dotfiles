@@ -15,4 +15,17 @@
       set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gcr/ssh"
     end
   '';
+
+  # Unlock GNOME Keyring from an SSH session. The keyring then
+  # serves stored SSH keys without ssh-add for the rest of the boot.
+  programs.fish.functions.keyring-unlock = {
+    description = "Unlock the GNOME Keyring for this boot";
+    body = ''
+      read --silent --prompt-str 'Keyring password: ' pw
+      gnome-keyring-daemon --start > /dev/null
+      printf '%s' $pw | gnome-keyring-daemon --unlock
+      and echo 'Keyring unlocked'
+      set -e pw
+    '';
+  };
 }
