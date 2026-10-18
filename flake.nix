@@ -42,6 +42,10 @@
       url = "github:NousResearch/hermes-agent?ref=v0.22.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hindsight-plugin = {
+      url = "github:vectorize-io/hindsight?ref=integrations/hermes/v1.2.3";
+      flake = false;
+    };
     legalize-cli = {
       url = "github:legalize-kr/cli-tools?ref=v0.5.3";
       flake = false;

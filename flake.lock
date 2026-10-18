@@ -105,6 +105,23 @@
         "type": "github"
       }
     },
+    "hindsight-plugin": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792080786,
+        "narHash": "sha256-qEjN1JRGLH7iGDkCEEeIG5ciFRpggvMbjjmrQP+ThCo=",
+        "owner": "vectorize-io",
+        "repo": "hindsight",
+        "rev": "d952b6e655fccab4581ee0722b51c5f103873d12",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vectorize-io",
+        "ref": "integrations/hermes/v1.2.3",
+        "repo": "hindsight",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -310,6 +327,7 @@
         "firefox-gnome-theme": "firefox-gnome-theme",
         "hardware": "hardware",
         "hermes": "hermes",
+        "hindsight-plugin": "hindsight-plugin",
         "home-manager": "home-manager_2",
         "humanizer": "humanizer",
         "legalize-cli": "legalize-cli",
