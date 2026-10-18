@@ -26,5 +26,20 @@
       printf '%s %s %s\n' (string replace -r '^/dev/' "" -- $t) $kind (date +%s) > "$XDG_RUNTIME_DIR/active-session"
     end
     __record_session
+
+    # Expire the askpass unlock at session end. When this login
+    # shell's tty unlocked a key, restart gcr-ssh-agent so the
+    # next session prompts again. GNOME Keyring has no lock
+    # command, and other sessions never see a stale key.
+    function __relock_at_exit --on-event fish_exit
+      status is-login; or return
+      set -l f "$XDG_RUNTIME_DIR/askpass-unlocked-by"
+      test -f $f; or return
+      set -l t (tty 2>/dev/null | string replace -r '^/dev/' "")
+      test -n "$t"; or return
+      test (cat $f) = "$t"; or return
+      systemctl --user restart gcr-ssh-agent.service 2>/dev/null
+      rm -f $f
+    end
   '';
 }

@@ -44,6 +44,10 @@ printf '\n%s ' "$prompt" >"$target"
 IFS= read -r pass <"$target" || exit 1
 printf '\n' >"$target"
 
+# Record that this session unlocked a key, so the login shell
+# can expire the grant when the session ends.
+printf '%s\n' "$tty_name" >"${XDG_RUNTIME_DIR:-/tmp}/askpass-unlocked-by"
+
 if [ -n "$saved" ]; then
   stty -F "$target" "$saved" 2>/dev/null || true
   trap - EXIT
