@@ -24,8 +24,8 @@ jobs:
       - name: Caches the inputs
         uses: nix-community/cache-nix-action@7df957e333c1e5da7721f60227dbba6d06080569 # v7.0.2
         with:
-          primary-key: eval-${{ hashFiles('**/flake.lock') }}
-          restore-prefixes-first-match: eval-
+          primary-key: nix-store-${{ hashFiles('**/flake.lock') }}
+          restore-prefixes-first-match: nix-store-
       - name: Compare derivations and comment
         uses: natsukium/nix-diff-action@4091452e4c7b3c7ea4ecbaec84be7f0066d810d7 # v1.1.1
         with:

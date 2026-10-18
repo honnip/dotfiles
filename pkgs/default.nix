@@ -4,7 +4,8 @@ let
   # original ref of each input, so bumping a tag updates the version for free.
   versionOf =
     name:
-    pkgs.lib.removePrefix "v" (builtins.fromJSON (builtins.readFile ../flake.lock)).nodes.${name}.original.ref;
+    pkgs.lib.removePrefix "v"
+      (builtins.fromJSON (builtins.readFile ../flake.lock)).nodes.${name}.original.ref;
 in
 {
   firefox-gnome-theme = pkgs.callPackage ./firefox-gnome-theme { src = inputs.firefox-gnome-theme; };

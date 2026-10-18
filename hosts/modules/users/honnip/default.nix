@@ -8,19 +8,18 @@ in
   users.users.honnip = {
     isNormalUser = true;
     shell = pkgs.fish;
-    extraGroups =
-      [
-        "wheel"
-        "video"
-        "audio"
-      ]
-      ++ ifTheyExist [
-        "network"
-        "docker"
-        "podman"
-        "git"
-        "libvirtd"
-      ];
+    extraGroups = [
+      "wheel"
+      "video"
+      "audio"
+    ]
+    ++ ifTheyExist [
+      "network"
+      "docker"
+      "podman"
+      "git"
+      "libvirtd"
+    ];
 
     openssh.authorizedKeys.keys = [
       (builtins.readFile ../../../${hostName}/ssh_host_ed25519_key.pub)

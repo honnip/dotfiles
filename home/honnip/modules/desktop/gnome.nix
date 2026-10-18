@@ -8,7 +8,7 @@ let
     just-perfection
     smile-complementary-extension
 
-    (copyous.overrideAttrs (old: {
+    (copyous.overrideAttrs (_old: {
       buildInputs = [
         pkgs.libgda5
       ];
