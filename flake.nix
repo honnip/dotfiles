@@ -4,7 +4,7 @@
   nixConfig.allow-import-from-derivation = false;
 
   inputs = {
-    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
+    nixpkgs.url = "github:NixOS/nixpkgs/ff097a34c0bd0781e16b3917d964455d785536ae";
     hardware = {
       url = "github:NixOS/nixos-hardware/master";
       inputs.nixpkgs.follows = "nixpkgs";
