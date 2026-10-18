@@ -14,18 +14,17 @@
     if not set -q SSH_AUTH_SOCK
       set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gcr/ssh"
     end
-  '';
 
-  # Unlock GNOME Keyring from an SSH session. The keyring then
-  # serves stored SSH keys without ssh-add for the rest of the boot.
-  programs.fish.functions.keyring-unlock = {
-    description = "Unlock the GNOME Keyring for this boot";
-    body = ''
-      read --silent --prompt-str 'Keyring password: ' pw
-      gnome-keyring-daemon --start > /dev/null
-      printf '%s' $pw | gnome-keyring-daemon --unlock
-      and echo 'Keyring unlocked'
-      set -e pw
-    '';
-  };
+    # Record the active session for the askpass dispatcher as
+    # "<tty> <ssh|local> <epoch>". The dispatcher prompts on the
+    # tty of an SSH session and falls back to the graphical askpass.
+    function __record_session --on-event fish_postexec
+      set -l t (tty 2>/dev/null)
+      or return
+      set -l kind local
+      set -q SSH_CONNECTION; and set kind ssh
+      printf '%s %s %s\n' (string replace -r '^/dev/' "" -- $t) $kind (date +%s) > "$XDG_RUNTIME_DIR/active-session"
+    end
+    __record_session
+  '';
 }
