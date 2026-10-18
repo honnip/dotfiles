@@ -22,7 +22,7 @@ python3Packages.buildPythonApplication (finalAttrs: {
       regex
       python-dateutil
     ]
-    ++ lib.optional withMcp mcp;
+    ++ lib.optional withMcp mcp_2;
 
   nativeCheckInputs = with python3Packages; [
     pytestCheckHook
