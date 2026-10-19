@@ -35,12 +35,12 @@
     configFile = pkgs.writeText "config.yaml" (
       builtins.toJSON {
         model = {
-          provider = "xiaomi";
-          model = "mimo-v2.6-pro";
-        };
-        fallback_providers = {
           provider = "deepseek";
           model = "deepseek-flash";
+        };
+        fallback_providers = {
+          provider = "xiaomi";
+          model = "mimo-v2.6-pro";
         };
         auxiliary = {
           title_generation = {
@@ -56,7 +56,7 @@
             model = "deepseek-flash";
           };
           approval = {
-            provider = "xiaomi";
+            provider = "deepseek";
             model = "deepseek-flash";
           };
         };
