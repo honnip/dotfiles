@@ -4,7 +4,7 @@
   nixConfig.allow-import-from-derivation = false;
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/86621d45826059b3b4e96742fb25bfe234e475d7";
+    nixpkgs.url = "github:NixOS/nixpkgs/cecebc784c34f63292a3d041642040e1fa536a55";
     hardware = {
       url = "github:NixOS/nixos-hardware/master";
       inputs.nixpkgs.follows = "nixpkgs";
