@@ -27,6 +27,8 @@
     };
   };
 
+  virtualisation.libvirtd.enable = true;
+
   hardware.enableRedistributableFirmware = true;
 
   boot.tmp.cleanOnBoot = lib.mkDefault true;
