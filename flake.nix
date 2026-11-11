@@ -59,7 +59,7 @@
       flake = false;
     };
     simple-english = {
-      url = "github:AminBlg/SimpleEnglish?ref=v2.1.1";
+      url = "github:AminBlg/SimpleEnglish?ref=v2.1.2";
       flake = false;
     };
   };

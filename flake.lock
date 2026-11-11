@@ -323,16 +323,16 @@
     "simple-english": {
       "flake": false,
       "locked": {
-        "lastModified": 1790781264,
-        "narHash": "sha256-mWs9n465FMiMcyxD9diTV6olXWuTy2wW+bZ475Vc3to=",
+        "lastModified": 1794331093,
+        "narHash": "sha256-/2IZGQg5RaXsbB2a+anFlD6lLFIOuBzJxXCZVDNhW8I=",
         "owner": "AminBlg",
         "repo": "SimpleEnglish",
-        "rev": "32ea2d3f4404bfbff162c1861e5ae4f1bcc628b3",
+        "rev": "300432a9e4c473229a7049ab61b8ca2522d9214c",
         "type": "github"
       },
       "original": {
         "owner": "AminBlg",
-        "ref": "v2.1.1",
+        "ref": "v2.1.2",
         "repo": "SimpleEnglish",
         "type": "github"
       }
