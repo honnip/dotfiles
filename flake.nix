@@ -55,7 +55,7 @@
       flake = false;
     };
     humanizer = {
-      url = "github:blader/humanizer?ref=v3.1.0";
+      url = "github:blader/humanizer?ref=v4.0.0";
       flake = false;
     };
     simple-english = {
