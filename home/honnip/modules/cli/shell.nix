@@ -112,4 +112,5 @@
 
   programs.eza.enable = lib.mkDefault true;
   programs.mcfly.enable = lib.mkDefault true;
+  programs.zellij.enable = lib.mkDefault true;
 }
