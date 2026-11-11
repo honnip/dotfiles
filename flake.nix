@@ -1,8 +1,6 @@
 {
   description = "NixOS configuration";
 
-  nixConfig.allow-import-from-derivation = false;
-
   inputs = {
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     hardware = {
