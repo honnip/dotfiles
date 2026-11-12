@@ -32,4 +32,7 @@ in
     src = inputs.simple-english;
     version = versionOf "simple-english";
   };
+  hindsight-client = pkgs.callPackage ./hindsight-client { };
+  hindsight-embed = pkgs.callPackage ./hindsight-embed { };
+  aiohttp-retry = pkgs.callPackage ./aiohttp-retry { };
 }
