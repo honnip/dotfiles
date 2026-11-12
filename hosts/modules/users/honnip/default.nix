@@ -7,6 +7,9 @@ in
   users.mutableUsers = false;
   users.users.honnip = {
     isNormalUser = true;
+    # Start user units at boot so that the SSH agent works
+    # over SSH without a desktop login.
+    linger = true;
     shell = pkgs.fish;
     extraGroups = [
       "wheel"
@@ -24,6 +27,7 @@ in
     openssh.authorizedKeys.keys = [
       (builtins.readFile ../../../${hostName}/ssh_host_ed25519_key.pub)
       (builtins.readFile ../../../../home/honnip/ssh.pub)
+      (builtins.readFile ../../../../home/honnip/id_ed25519.pub)
     ];
     hashedPasswordFile = config.sops.secrets.honnip-password.path;
   };
